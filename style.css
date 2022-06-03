@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0.883);
+}
+
+.score-board {
+    color: rgb(190, 255, 255);
+}
+
+.game-board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 24rem;
+    height: 24rem;
+    background-color: gray;
+}
+
+.game-square {
+    width: 6rem;
+    height: 6rem;
+    font-size: 4rem;
+    background-color: rgb(164, 185, 255);
+    
+}
