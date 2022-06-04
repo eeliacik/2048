@@ -1,35 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
   const score = document.querySelector('.score');
+
   const squares = [];
 
-  createBoard();
+  fillSquaresArray();
+  generateNumber();
+  generateNumber();
+  fillBoard();
 
-  function createBoard() {
+  function fillSquaresArray() {
+    for (let i = 0; i < 16; i++) {
+      squares.push(0);
+    }
+  };
+
+  function fillBoard() {
     for (let i = 0; i < 16; i++) {
       const square = document.createElement('div');
       square.className = 'game-square';
-      square.innerHTML = 0;
+      square.innerHTML = squares[i];
       gameBoard.appendChild(square);
-      squares.push(square);
     }
-    generateNumber();
-    generateNumber();
-  }
+  };
 
   // Random number generator
   function generateNumber() {
     let num = Math.floor(Math.random() * squares.length);
-    if (squares[num].innerHTML == 0) {
-      squares[num].innerHTML = 2;
+    if (squares[num] === 0) {
+      squares[num] = 2;
     } else {
       generateNumber();
     }
-  }
+  };
 
   // Move right
-  function moveRight() {
-    for (let i = 0; i < 16; i++) {}
-  }
-
+  // function moveRight() {
+  //   const firstRow = [];
+  //   const secondRow = [];
+  //   for (let i = 0; i < 16; i++) {
+  //   }
+  // }
 });
