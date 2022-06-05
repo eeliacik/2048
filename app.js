@@ -2,18 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
   const score = document.querySelector('.score');
 
-  const squares = [];
+  const squares = Array(16).fill(0);
 
-  fillSquaresArray();
   generateNumber();
   generateNumber();
   fillBoard();
-
-  function fillSquaresArray() {
-    for (let i = 0; i < 16; i++) {
-      squares.push(0);
-    }
-  }
 
   function fillBoard() {
     for (let i = 0; i < 16; i++) {
@@ -27,11 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Random number generator
   function generateNumber() {
     let num = Math.floor(Math.random() * squares.length);
-    if (squares[num] === 0) {
-      squares[num] = 2;
-    } else {
-      generateNumber();
-    }
+    squares[num] === 0 ? (squares[num] = 2) : generateNumber();
   }
 
   const rows = [];
@@ -39,10 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Creating operation arrays on horizantal move
   function horizontalMove() {
-    const firstRow = [];
-    const secondRow = [];
-    const thirdRow = [];
-    const fourthRow = [];
+    const [firstRow, secondRow, thirdRow, fourthRow] = [[], [], [], []];
 
     for (let i = 0; i < 16; i++) {
       if (i < 4) {
@@ -61,10 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Creating operation arrays on vertical move
   function verticalMove() {
-    const firstColumn = [];
-    const secondColumn = [];
-    const thirdColumn = [];
-    const fourthColumn = [];
+    const [firstColumn, secondColumn, thirdColumn, fourthColumn] = [
+      [],
+      [],
+      [],
+      [],
+    ];
 
     for (let i = 0; i < 16; i++) {
       if (i % 4 === 0) {
@@ -81,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     columns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
   }
 
-  console.log(columns);
+  console.log('columns', columns);
 
   // Move up
   function moveUp() {
@@ -91,19 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const nums = [];
       const zeros = [];
       for (let j = 0; j < 4; j++) {
-        console.log(columns[i][j]);
-
-        if (columns[i][j] !== 0) {
-          nums.push(columns[i][j]);
-        } else {
-          zeros.push(columns[i][j]);
-        }
+        columns[i][j] ? nums.push(columns[i][j]) : zeros.push(columns[i][j]);
       }
-      console.log('nums & zeros', nums, zeros);
       const newColumn = nums.concat(zeros);
       newOrder.push(newColumn);
-      console.log('new order:', newOrder);
     }
+    console.log('new order:', newOrder);
 
     // for (let i = 0; i < 4; i++) {
     //   for (let j = 3; j > -1; j--) {
