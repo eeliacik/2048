@@ -9,12 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   generateNumber();
   fillBoard();
 
-
   function fillSquaresArray() {
     for (let i = 0; i < 16; i++) {
       squares.push(0);
     }
-  };
+  }
 
   function fillBoard() {
     for (let i = 0; i < 16; i++) {
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
       square.innerHTML = squares[i];
       gameBoard.appendChild(square);
     }
-  };
+  }
 
   // Random number generator
   function generateNumber() {
@@ -33,33 +32,40 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       generateNumber();
     }
-  };
+  }
 
-  // Creating operaiton arrays on horizantal move
+  const rows = [];
+  const columns = [];
+
+  // Creating operation arrays on horizantal move
   function horizontalMove() {
     const firstRow = [];
     const secondRow = [];
     const thirdRow = [];
     const fourthRow = [];
+
     for (let i = 0; i < 16; i++) {
       if (i < 4) {
         firstRow.push(squares[i]);
-      } else if (3 < i < 8) {
+      } else if (i < 8) {
         secondRow.push(squares[i]);
-      } else if (7 < i < 12) {
+      } else if (i < 12) {
         thirdRow.push(squares[i]);
       } else {
         fourthRow.push(squares[i]);
       }
     }
-  };
-  
-  // Creating operaiton arrays on vertical move
+
+    rows.push(firstRow, secondRow, thirdRow, fourthRow);
+  }
+
+  // Creating operation arrays on vertical move
   function verticalMove() {
     const firstColumn = [];
     const secondColumn = [];
     const thirdColumn = [];
     const fourthColumn = [];
+
     for (let i = 0; i < 16; i++) {
       if (i % 4 === 0) {
         firstColumn.push(squares[i]);
@@ -71,12 +77,45 @@ document.addEventListener('DOMContentLoaded', () => {
         fourthColumn.push(squares[i]);
       }
     }
-  };
+
+    columns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
+  }
+
+  console.log(columns);
 
   // Move up
   function moveUp() {
-    
+    verticalMove();
+    const newOrder = [];
+    for (let i = 0; i < 4; i++) {
+      const nums = [];
+      const zeros = [];
+      for (let j = 0; j < 4; j++) {
+        console.log(columns[i][j]);
+
+        if (columns[i][j] !== 0) {
+          nums.push(columns[i][j]);
+        } else {
+          zeros.push(columns[i][j]);
+        }
+      }
+      console.log('nums & zeros', nums, zeros);
+      const newColumn = nums.concat(zeros);
+      newOrder.push(newColumn);
+      console.log('new order:', newOrder);
+    }
+
+    // for (let i = 0; i < 4; i++) {
+    //   for (let j = 3; j > -1; j--) {
+    //     const firstSquare = squares[i][j];
+    //     const secondSquare = squares[i][j - 1];
+    //     if (firstSquare !== 0 && firstSquare === secondSquare) {
+    //       secondSquare = firstSquare + secondSquare;
+    //       firstSquare = 0;
+    //     } else return;
+    //   }
+    // }
   }
 
-
+  moveUp();
 });
