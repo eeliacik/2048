@@ -21,7 +21,7 @@ body {
 .game-square {
     width: 6rem;
     height: 6rem;
-    font-size: 4rem;
+    font-size: 3rem;
     background-color: rgb(164, 185, 255);
     
 }
