@@ -2,11 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
   const score = document.querySelector('.score');
 
-  const squares = Array(16).fill(0);
+  let squares = Array(16).fill(0);
 
   generateNumber();
   generateNumber();
   fillBoard();
+
+  function generateNumber() {
+    let num = Math.floor(Math.random() * squares.length);
+    squares[num] === 0 ? (squares[num] = 2) : generateNumber();
+  }
 
   function fillBoard() {
     for (let i = 0; i < 16; i++) {
@@ -17,12 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Random number generator
-  function generateNumber() {
-    let num = Math.floor(Math.random() * squares.length);
-    squares[num] === 0 ? (squares[num] = 2) : generateNumber();
-  }
-
+  // Horizontal and vertical moves
   const rows = [];
   const columns = [];
 
@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fourthRow.push(squares[i]);
       }
     }
-
     rows.push(firstRow, secondRow, thirdRow, fourthRow);
   }
 
@@ -65,16 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fourthColumn.push(squares[i]);
       }
     }
-
     columns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
   }
 
-  console.log('columns', columns);
 
   // Move up
   function moveUp() {
     verticalMove();
-    const newOrder = [];
+    const orderedColumns = [];
     for (let i = 0; i < 4; i++) {
       const nums = [];
       const zeros = [];
@@ -82,27 +79,39 @@ document.addEventListener('DOMContentLoaded', () => {
         columns[i][j] ? nums.push(columns[i][j]) : zeros.push(columns[i][j]);
       }
       const newColumn = nums.concat(zeros);
-      newOrder.push(newColumn);
+      orderedColumns.push(newColumn);
     }
-    console.log('new order:', newOrder);
 
-    // for (let i = 0; i < 4; i++) {
-    //   for (let j = 3; j > -1; j--) {
-    //     const firstSquare = squares[i][j];
-    //     const secondSquare = squares[i][j - 1];
-    //     if (firstSquare !== 0 && firstSquare === secondSquare) {
-    //       secondSquare = firstSquare + secondSquare;
-    //       firstSquare = 0;
-    //     } else return;
-    //   }
-    // }
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 3; j++) {
+        const firstNum = orderedColumns[i][j];
+        const secondNum = orderedColumns[i][j + 1];
+        if (firstNum === secondNum) {
+          orderedColumns[i][j] = firstNum + secondNum;
+          orderedColumns[i][j + 1] = 0;
+        } else if (firstNum === 0 && secondNum !== 0) {
+          orderedColumns[i][j] = secondNum;
+          orderedColumns[i][j + 1] = 0;
+        }
+      }
+    }
+
+    const mergedSquares = [];
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        mergedSquares.push(orderedColumns[i][j]);
+      }
+    }
+    squares = mergedSquares;
   }
 
+  // Move direction controller
   function arrows(x) {
     if (x.keyCode === 38) {
       moveUp();
     }
   }
-
+  
   document.addEventListener('keyup', arrows);
+  
 });
