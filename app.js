@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
   createBoard();
 
   function createRandomSquare() {
-    let num = Math.floor(Math.random() * squares.length);
-    squares[num] === 0 ? (squares[num] = 2) : createRandomSquare();
+    if (squares.includes(0)) {
+      let num = Math.floor(Math.random() * squares.length);
+      squares[num] === 0 ? (squares[num] = 2) : createRandomSquare();
+    } else return;
   }
 
   function createBoard() {
