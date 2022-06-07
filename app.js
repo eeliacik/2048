@@ -98,5 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // }
   }
 
-  moveUp();
+  function arrows(x) {
+    if (x.keyCode === 38) {
+      moveUp();
+    }
+  }
+
+  document.addEventListener('keyup', arrows);
 });
