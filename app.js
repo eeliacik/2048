@@ -4,32 +4,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let squares = Array(16).fill(0);
 
-  generateNumber();
-  generateNumber();
-  fillBoard();
+  createRandomSquare();
+  createRandomSquare();
 
-  function generateNumber() {
+  createBoard();
+
+  function createRandomSquare() {
     let num = Math.floor(Math.random() * squares.length);
-    squares[num] === 0 ? (squares[num] = 2) : generateNumber();
+    squares[num] === 0 ? (squares[num] = 2) : createRandomSquare();
   }
 
-  function fillBoard() {
+  function createBoard() {
     for (let i = 0; i < 16; i++) {
-      const square = document.createElement('div');
+      let square = document.createElement('div');
       square.className = 'game-square';
+      square.id = 'sq-' + i;
       square.innerHTML = squares[i];
       gameBoard.appendChild(square);
     }
   }
 
-  // Horizontal and vertical moves
-  const rows = [];
-  const columns = [];
+  function fillBoard() {
+    for (let i = 0; i < 16; i++) {
+      let square = document.getElementById('sq-' + i);
+      square.innerHTML = squares[i];
+    }
+  }
 
+  // Horizontal and vertical moves
+  let rows = [];
+  let columns = [];
   // Creating operation arrays on horizantal move
   function horizontalMove() {
     const [firstRow, secondRow, thirdRow, fourthRow] = [[], [], [], []];
-
+    const newRows = [];
     for (let i = 0; i < 16; i++) {
       if (i < 4) {
         firstRow.push(squares[i]);
@@ -41,9 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
         fourthRow.push(squares[i]);
       }
     }
-    rows.push(firstRow, secondRow, thirdRow, fourthRow);
+    newRows.push(firstRow, secondRow, thirdRow, fourthRow);
+    rows = newRows;
   }
-
   // Creating operation arrays on vertical move
   function verticalMove() {
     const [firstColumn, secondColumn, thirdColumn, fourthColumn] = [
@@ -52,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       [],
       [],
     ];
-
+    const newColumns = [];
     for (let i = 0; i < 16; i++) {
       if (i % 4 === 0) {
         firstColumn.push(squares[i]);
@@ -64,28 +72,27 @@ document.addEventListener('DOMContentLoaded', () => {
         fourthColumn.push(squares[i]);
       }
     }
-    columns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
+    newColumns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
+    columns = newColumns;
   }
-
-
   // Move up
   function moveUp() {
     verticalMove();
-    const orderedColumns = [];
+    let orderedColumns = [];
     for (let i = 0; i < 4; i++) {
-      const nums = [];
-      const zeros = [];
+      let nums = [];
+      let zeros = [];
       for (let j = 0; j < 4; j++) {
         columns[i][j] ? nums.push(columns[i][j]) : zeros.push(columns[i][j]);
       }
-      const newColumn = nums.concat(zeros);
+      let newColumn = nums.concat(zeros);
       orderedColumns.push(newColumn);
     }
-
+    let mergedColumns = [];
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 3; j++) {
-        const firstNum = orderedColumns[i][j];
-        const secondNum = orderedColumns[i][j + 1];
+        let firstNum = orderedColumns[i][j];
+        let secondNum = orderedColumns[i][j + 1];
         if (firstNum === secondNum) {
           orderedColumns[i][j] = firstNum + secondNum;
           orderedColumns[i][j + 1] = 0;
@@ -94,24 +101,88 @@ document.addEventListener('DOMContentLoaded', () => {
           orderedColumns[i][j + 1] = 0;
         }
       }
+      mergedColumns = orderedColumns;
     }
 
-    const mergedSquares = [];
+    let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        mergedSquares.push(orderedColumns[i][j]);
-      }
+      mergedSquares.push(mergedColumns[i][0]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedColumns[i][1]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedColumns[i][2]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedColumns[i][3]);
     }
     squares = mergedSquares;
-  }
 
-  // Move direction controller
-  function arrows(x) {
-    if (x.keyCode === 38) {
-      moveUp();
+    createRandomSquare();
+    createRandomSquare();
+    fillBoard();
+  }
+  // Move down
+  function moveDown() {
+    verticalMove();
+    let orderedColumns = [];
+    for (let i = 0; i < 4; i++) {
+      let nums = [];
+      let zeros = [];
+      for (let j = 0; j < 4; j++) {
+        columns[i][j] ? nums.push(columns[i][j]) : zeros.push(columns[i][j]);
+      }
+      let newColumn = zeros.concat(nums);
+      orderedColumns.push(newColumn);
     }
+    let mergedColumns = [];
+    for (let i = 3; i > -1; i--) {
+      for (let j = 3; j > 1; j--) {
+        let firstNum = orderedColumns[i][j];
+        let secondNum = orderedColumns[i][j - 1];
+        if (firstNum === secondNum) {
+          orderedColumns[i][j] = firstNum + secondNum;
+          orderedColumns[i][j - 1] = 0;
+        } else if (firstNum === 0 && secondNum !== 0) {
+          orderedColumns[i][j] = secondNum;
+          orderedColumns[i][j - 1] = 0;
+        }
+      }
+      mergedColumns = orderedColumns;
+    }
+
+    let mergedSquares = [];
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedColumns[i][0]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedColumns[i][1]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedColumns[i][2]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedColumns[i][3]);
+    }
+    squares = mergedSquares;
+
   }
   
+  // // Move direction controller
+  // function arrows(x) {
+  //   if (x.keyCode === 38) {
+  //     moveUp();
+  //     createRandomSquare();
+  //     createRandomSquare();
+  //     fillBoard();
+  //   } else if (x.keyCode === 40) {
+  //     moveDown();
+  //     createRandomSquare();
+  //     createRandomSquare();
+  //     fillBoard();
+  //   }
+  // }
+
   document.addEventListener('keyup', arrows);
-  
 });
