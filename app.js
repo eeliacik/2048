@@ -166,23 +166,23 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     squares = mergedSquares;
-
   }
   
-  // // Move direction controller
-  // function arrows(x) {
-  //   if (x.keyCode === 38) {
-  //     moveUp();
-  //     createRandomSquare();
-  //     createRandomSquare();
-  //     fillBoard();
-  //   } else if (x.keyCode === 40) {
-  //     moveDown();
-  //     createRandomSquare();
-  //     createRandomSquare();
-  //     fillBoard();
-  //   }
-  // }
+  // Move direction controller
+  function arrows(x) {
+    if (x.keyCode === 38) {
+      moveUp();
+      createRandomSquare();
+      createRandomSquare();
+      fillBoard();
+    } else if (x.keyCode === 40) {
+      moveDown();
+      createRandomSquare();
+      createRandomSquare();
+      fillBoard();
+    }
+  }
 
   document.addEventListener('keyup', arrows);
+  
 });
