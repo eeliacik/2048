@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
       orderedColumns.push(newColumn);
     }
     let mergedColumns = [];
-    for (let i = 3; i > -1; i--) {
-      for (let j = 3; j > 1; j--) {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 3; j > 0; j--) {
         let firstNum = orderedColumns[i][j];
         let secondNum = orderedColumns[i][j - 1];
         if (firstNum === secondNum) {
@@ -183,8 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
       orderedRows.push(newRow);
     }
     let mergedRows = [];
-    for (let i = 3; i > -1; i--) {
-      for (let j = 3; j > 1; j--) {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 3; j > 0; j--) {
         let firstNum = orderedRows[i][j];
         let secondNum = orderedRows[i][j - 1];
         if (firstNum === secondNum) {
