@@ -200,20 +200,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
-      mergedSquares.push(mergedRows[i][0]);
+      mergedSquares.push(mergedRows[0][i]);
     }
     for (let i = 0; i < 4; i++) {
-      mergedSquares.push(mergedRows[i][1]);
+      mergedSquares.push(mergedRows[1][i]);
     }
     for (let i = 0; i < 4; i++) {
-      mergedSquares.push(mergedRows[i][2]);
+      mergedSquares.push(mergedRows[2][i]);
     }
     for (let i = 0; i < 4; i++) {
-      mergedSquares.push(mergedRows[i][3]);
+      mergedSquares.push(mergedRows[3][i]);
     }
     squares = mergedSquares;
   }
-  
+  // Move left
+  function moveLeft() {
+    horizontalMove();
+    let orderedRows = [];
+    for (let i = 0; i < 4; i++) {
+      let nums = [];
+      let zeros = [];
+      for (let j = 0; j < 4; j++) {
+        rows[i][j] ? nums.push(rows[i][j]) : zeros.push(rows[i][j]);
+      }
+      let newRow = nums.concat(zeros);
+      orderedRows.push(newRow);
+    }
+    let mergedRows = [];
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 3; j++) {
+        let firstNum = orderedRows[i][j];
+        let secondNum = orderedRows[i][j + 1];
+        if (firstNum === secondNum) {
+          orderedRows[i][j] = firstNum + secondNum;
+          orderedRows[i][j + 1] = 0;
+        } else if (firstNum === 0 && secondNum !== 0) {
+          orderedRows[i][j] = secondNum;
+          orderedRows[i][j + 1] = 0;
+        }
+      }
+      mergedRows = orderedRows;
+    }
+
+    let mergedSquares = [];
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedRows[0][i]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedRows[1][i]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedRows[2][i]);
+    }
+    for (let i = 0; i < 4; i++) {
+      mergedSquares.push(mergedRows[3][i]);
+    }
+    squares = mergedSquares;
+  }
+
   // Move direction controller
   function arrows(x) {
     if (x.keyCode === 38) {
@@ -231,5 +275,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('keyup', arrows);
-  
 });
