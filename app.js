@@ -1,28 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
-  const newGame = document.querySelector('.new-game-button');
-  newGame.addEventListener('click', resetGame);
-  // const score = document.querySelector('.score');
+  const newGameEl = document.querySelector('.new-game-button');
+  newGameEl.addEventListener('click', resetGame);
+  const gameScoreEl = document.getElementById('game-score');
+  const highScoreEl = document.getElementById('high-score');
 
   let squares = [];
+  let gameScore = 0
+  let highScore = 0;
+
   fillSquares();
   createBoard();
 
   function fillSquares() {
     let emptySquares = Array(16).fill(0);
     squares = emptySquares;
-  };
+  }
 
-  function createRandomSquare() {
+  function fillRandomSquare() {
     if (squares.includes(0)) {
       let num = Math.floor(Math.random() * squares.length);
-      squares[num] === 0 ? (squares[num] = 2) : createRandomSquare();
+      squares[num] === 0 ? (squares[num] = 2) : fillRandomSquare();
     } else return;
   }
 
   function createBoard() {
-    createRandomSquare();
-    createRandomSquare();
+    fillRandomSquare();
+    fillRandomSquare();
     for (let i = 0; i < 16; i++) {
       let square = document.createElement('div');
       square.className = 'game-square';
@@ -32,9 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function fillGameScore() {
+    gameScoreEl.innerHTML = gameScore;
+  }
+
   function fillBoard() {
-    createRandomSquare();
-    createRandomSquare();
+    fillRandomSquare();
+    fillRandomSquare();
+    fillGameScore();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       square.innerHTML = squares[i];
@@ -42,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Reset game
   function resetGame() {
+    gameScore = 0;
     fillSquares();
     fillBoard();
   }
@@ -122,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let firstNum = orderedColumns[i][j];
         let secondNum = orderedColumns[i][j + 1];
         if (firstNum === secondNum) {
+          gameScore += firstNum;
           orderedColumns[i][j] = firstNum + secondNum;
           orderedColumns[i][j + 1] = 0;
         } else if (firstNum === 0 && secondNum !== 0) {
@@ -165,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let firstNum = orderedColumns[i][j];
         let secondNum = orderedColumns[i][j - 1];
         if (firstNum === secondNum) {
+          gameScore += firstNum;
           orderedColumns[i][j] = firstNum + secondNum;
           orderedColumns[i][j - 1] = 0;
         } else if (firstNum === 0 && secondNum !== 0) {
@@ -208,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let firstNum = orderedRows[i][j];
         let secondNum = orderedRows[i][j - 1];
         if (firstNum === secondNum) {
+          gameScore += firstNum;
           orderedRows[i][j] = firstNum + secondNum;
           orderedRows[i][j - 1] = 0;
         } else if (firstNum === 0 && secondNum !== 0) {
@@ -251,6 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let firstNum = orderedRows[i][j];
         let secondNum = orderedRows[i][j + 1];
         if (firstNum === secondNum) {
+          gameScore += firstNum;
           orderedRows[i][j] = firstNum + secondNum;
           orderedRows[i][j + 1] = 0;
         } else if (firstNum === 0 && secondNum !== 0) {
