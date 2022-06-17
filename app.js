@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
-  const score = document.querySelector('.score');
+  const newGame = document.querySelector('.new-game-button');
+  newGame.addEventListener('click', resetGame);
+  // const score = document.querySelector('.score');
 
-  let squares = Array(16).fill(0);
-
-  createRandomSquare();
-  createRandomSquare();
-
+  let squares = [];
+  fillSquares();
   createBoard();
+
+  function fillSquares() {
+    let emptySquares = Array(16).fill(0);
+    squares = emptySquares;
+  };
 
   function createRandomSquare() {
     if (squares.includes(0)) {
@@ -17,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createBoard() {
+    createRandomSquare();
+    createRandomSquare();
     for (let i = 0; i < 16; i++) {
       let square = document.createElement('div');
       square.className = 'game-square';
@@ -27,12 +33,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function fillBoard() {
+    createRandomSquare();
+    createRandomSquare();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       square.innerHTML = squares[i];
     }
   }
-
+  // Reset game
+  function resetGame() {
+    fillSquares();
+    fillBoard();
+  }
+  // Move direction controller
+  document.addEventListener('keyup', arrows);
+  function arrows(x) {
+    if (x.keyCode === 38) {
+      moveUp();
+    } else if (x.keyCode === 40) {
+      moveDown();
+    } else if (x.keyCode === 37) {
+      moveLeft();
+    } else if (x.keyCode === 39) {
+      moveRight();
+    }
+    fillBoard();
+  }
   // Horizontal and vertical moves
   let rows = [];
   let columns = [];
@@ -105,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedColumns = orderedColumns;
     }
-
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][0]);
@@ -120,10 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     squares = mergedSquares;
-
-    createRandomSquare();
-    createRandomSquare();
-    fillBoard();
   }
   // Move down
   function moveDown() {
@@ -153,7 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedColumns = orderedColumns;
     }
-
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][0]);
@@ -197,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedRows = orderedRows;
     }
-
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedRows[0][i]);
@@ -241,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedRows = orderedRows;
     }
-
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedRows[0][i]);
@@ -257,22 +275,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     squares = mergedSquares;
   }
-
-  // Move direction controller
-  function arrows(x) {
-    if (x.keyCode === 38) {
-      moveUp();
-    } else if (x.keyCode === 40) {
-      moveDown();
-    } else if (x.keyCode === 37) {
-      moveLeft();
-    } else if (x.keyCode === 39) {
-      moveRight();
-    }
-    createRandomSquare();
-    createRandomSquare();
-    fillBoard();
-  }
-
-  document.addEventListener('keyup', arrows);
 });
