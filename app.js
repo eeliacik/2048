@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const highScoreEl = document.getElementById('high-score');
 
   let squares = [];
-  let gameScore = 0
+  let gameScore = 0;
   let highScore = 0;
 
   fillSquares();
@@ -127,6 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
       orderedColumns.push(newColumn);
     }
     let mergedColumns = [];
+    // for (let i = 0; i < 4; i++) {
+    //   if (
+    //     orderedColumns[i][0] === orderedColumns[i][1] &&
+    //     orderedColumns[i][2] === orderedColumns[i][3]
+    //   ) {
+    //     gameScore += orderedColumns[i][0] + orderedColumns[i][2];
+    //     orderedColumns[i][0] = orderedColumns[i][1] * 2;
+    //     orderedColumns[i][1] = orderedColumns[i][2] * 2;
+    //     orderedColumns[i][2] = 0;
+    //     orderedColumns[i][3] = 0;
+    //   }
+    // }
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 3; j++) {
         let firstNum = orderedColumns[i][j];
