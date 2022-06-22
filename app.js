@@ -42,8 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function fillBoard() {
-    fillRandomSquare();
-    fillRandomSquare();
     fillGameScore();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
@@ -54,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetGame() {
     gameScore = 0;
     fillSquares();
+    fillRandomSquare();
+    fillRandomSquare();
     fillBoard();
   }
   // Move direction controller
@@ -168,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     squares = mergedSquares;
+    fillRandomSquare();
   }
   // Move down
   function moveDown() {
@@ -223,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     squares = mergedSquares;
+    fillRandomSquare();
   }
   // Move right
   function moveRight() {
@@ -278,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedRows[3][i]);
     }
     squares = mergedSquares;
+    fillRandomSquare();
   }
   // Move left
   function moveLeft() {
@@ -333,5 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedRows[3][i]);
     }
     squares = mergedSquares;
+    fillRandomSquare();
   }
 });
