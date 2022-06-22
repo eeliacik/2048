@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function fillRandomSquare() {
     if (squares.includes(0)) {
       let num = Math.floor(Math.random() * squares.length);
-      squares[num] === 0 ? (squares[num] = 2) : fillRandomSquare();
+      let twoOrFour = Math.random() > 0.1 ? 2 : 4;
+      squares[num] === 0 ? (squares[num] = twoOrFour) : fillRandomSquare();
     } else return;
   }
 
