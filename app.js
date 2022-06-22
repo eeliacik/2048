@@ -9,14 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameScore = 0;
   let highScore = 0;
 
+  let rows = [];
+  let columns = [];
+
   fillSquares();
   createBoard();
+  lastMoveControl();
 
   function fillSquares() {
     let emptySquares = Array(16).fill(0);
     squares = emptySquares;
   }
-
   function fillRandomSquare() {
     if (squares.includes(0)) {
       let num = Math.floor(Math.random() * squares.length);
@@ -24,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       squares[num] === 0 ? (squares[num] = twoOrFour) : fillRandomSquare();
     } else return;
   }
-
   function createBoard() {
     fillRandomSquare();
     fillRandomSquare();
@@ -36,11 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
       gameBoard.appendChild(square);
     }
   }
-
   function fillGameScore() {
     gameScoreEl.innerHTML = gameScore;
   }
-
   function fillBoard() {
     fillGameScore();
     for (let i = 0; i < 16; i++) {
@@ -48,31 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
       square.innerHTML = squares[i];
     }
   }
-  // Reset game
-  function resetGame() {
-    gameScore = 0;
-    fillSquares();
-    fillRandomSquare();
-    fillRandomSquare();
-    fillBoard();
-  }
-  // Move direction controller
-  document.addEventListener('keyup', arrows);
-  function arrows(x) {
-    if (x.keyCode === 38) {
-      moveUp();
-    } else if (x.keyCode === 40) {
-      moveDown();
-    } else if (x.keyCode === 37) {
-      moveLeft();
-    } else if (x.keyCode === 39) {
-      moveRight();
-    }
-    fillBoard();
-  }
-  // Horizontal and vertical moves
-  let rows = [];
-  let columns = [];
   // Creating operation arrays on horizantal move
   function horizontalMove() {
     const [firstRow, secondRow, thirdRow, fourthRow] = [[], [], [], []];
@@ -114,9 +89,64 @@ document.addEventListener('DOMContentLoaded', () => {
     newColumns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
     columns = newColumns;
   }
+  function lastMoveControl() {
+    horizontalMove();
+    verticalMove();
+    let checkedRowSquares = 0;
+    let checkedColumnSquares = 0;
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (rows[i][j] === rows[i][j + 1]) {
+          checkedRowSquares++;
+        }
+      }
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (columns[i][j] === columns[i][j + 1]) {
+            checkedColumnSquares++;
+          }
+        }
+      }
+    }
+    if ((checkedRowSquares + checkedColumnSquares < 1) && !squares.includes(0) ) {
+      gameOver();
+    } else if (squares.includes(2048)) {
+      gameWin();
+    }
+  }
+  // Win
+  function gameWin() {
+    console.log('YOU WIN!');
+  }
+  // Game over
+  function gameOver() {
+    console.log('GAME OVER');
+  }
+  // Reset game
+  function resetGame() {
+    gameScore = 0;
+    fillSquares();
+    fillRandomSquare();
+    fillRandomSquare();
+    fillBoard();
+  }
+  // Move direction controller
+  document.addEventListener('keyup', arrows);
+  function arrows(x) {
+    if (x.keyCode === 38) {
+      moveUp();
+    } else if (x.keyCode === 40) {
+      moveDown();
+    } else if (x.keyCode === 37) {
+      moveLeft();
+    } else if (x.keyCode === 39) {
+      moveRight();
+    }
+    fillBoard();
+  }
   // Move up
   function moveUp() {
-    verticalMove();
+    // verticalMove();
     let orderedColumns = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -128,12 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
       orderedColumns.push(newColumn);
     }
     let mergedColumns = [];
+    let moveScore = 0;
     for (let i = 0; i < 4; i++) {
       if (
         orderedColumns[i][0] === orderedColumns[i][1] &&
         orderedColumns[i][2] === orderedColumns[i][3]
       ) {
-        gameScore += orderedColumns[i][0] + orderedColumns[i][2];
+        moveScore += orderedColumns[i][0] + orderedColumns[i][2];
         orderedColumns[i][0] *= 2;
         orderedColumns[i][1] = orderedColumns[i][2] * 2;
         orderedColumns[i][2] = 0;
@@ -143,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let firstNum = orderedColumns[i][j];
           let secondNum = orderedColumns[i][j + 1];
           if (firstNum === secondNum) {
-            gameScore += firstNum;
+            moveScore += firstNum;
             orderedColumns[i][j] = firstNum + secondNum;
             orderedColumns[i][j + 1] = 0;
           } else if (firstNum === 0 && secondNum !== 0) {
@@ -168,11 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     squares = mergedSquares;
+    gameScore += moveScore;
     fillRandomSquare();
+    lastMoveControl();
   }
   // Move down
   function moveDown() {
-    verticalMove();
+    // verticalMove();
     let orderedColumns = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -184,12 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
       orderedColumns.push(newColumn);
     }
     let mergedColumns = [];
+    let moveScore = 0;
     for (let i = 0; i < 4; i++) {
       if (
         orderedColumns[i][0] === orderedColumns[i][1] &&
         orderedColumns[i][2] === orderedColumns[i][3]
       ) {
-        gameScore += orderedColumns[i][0] + orderedColumns[i][2];
+        moveScore += orderedColumns[i][0] + orderedColumns[i][2];
         orderedColumns[i][3] *= 2;
         orderedColumns[i][2] = orderedColumns[i][1] * 2;
         orderedColumns[i][1] = 0;
@@ -199,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let firstNum = orderedColumns[i][j];
           let secondNum = orderedColumns[i][j - 1];
           if (firstNum === secondNum) {
-            gameScore += firstNum;
+            moveScore += firstNum;
             orderedColumns[i][j] = firstNum + secondNum;
             orderedColumns[i][j - 1] = 0;
           } else if (firstNum === 0 && secondNum !== 0) {
@@ -224,11 +258,13 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     squares = mergedSquares;
+    gameScore += moveScore;
     fillRandomSquare();
+    lastMoveControl();
   }
   // Move right
   function moveRight() {
-    horizontalMove();
+    // horizontalMove();
     let orderedRows = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -240,12 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
       orderedRows.push(newRow);
     }
     let mergedRows = [];
+    let moveScore = 0;
     for (let i = 0; i < 4; i++) {
       if (
         orderedRows[i][0] === orderedRows[i][1] &&
         orderedRows[i][2] === orderedRows[i][3]
       ) {
-        gameScore += orderedRows[i][0] + orderedRows[i][2];
+        moveScore += orderedRows[i][0] + orderedRows[i][2];
         orderedRows[i][3] *= 2;
         orderedRows[i][2] = orderedRows[i][1] * 2;
         orderedRows[i][1] = 0;
@@ -255,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let firstNum = orderedRows[i][j];
           let secondNum = orderedRows[i][j - 1];
           if (firstNum === secondNum) {
-            gameScore += firstNum;
+            moveScore += firstNum;
             orderedRows[i][j] = firstNum + secondNum;
             orderedRows[i][j - 1] = 0;
           } else if (firstNum === 0 && secondNum !== 0) {
@@ -280,11 +317,13 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedRows[3][i]);
     }
     squares = mergedSquares;
+    gameScore += moveScore;
     fillRandomSquare();
+    lastMoveControl();
   }
   // Move left
   function moveLeft() {
-    horizontalMove();
+    // horizontalMove();
     let orderedRows = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -296,12 +335,13 @@ document.addEventListener('DOMContentLoaded', () => {
       orderedRows.push(newRow);
     }
     let mergedRows = [];
+    let moveScore = 0;
     for (let i = 0; i < 4; i++) {
       if (
         orderedRows[i][0] === orderedRows[i][1] &&
         orderedRows[i][2] === orderedRows[i][3]
       ) {
-        gameScore += orderedRows[i][0] + orderedRows[i][2];
+        moveScore += orderedRows[i][0] + orderedRows[i][2];
         orderedRows[i][0] *= 2;
         orderedRows[i][1] = orderedRows[i][2] * 2;
         orderedRows[i][2] = 0;
@@ -311,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let firstNum = orderedRows[i][j];
           let secondNum = orderedRows[i][j + 1];
           if (firstNum === secondNum) {
-            gameScore += firstNum;
+            moveScore += firstNum;
             orderedRows[i][j] = firstNum + secondNum;
             orderedRows[i][j + 1] = 0;
           } else if (firstNum === 0 && secondNum !== 0) {
@@ -336,6 +376,8 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedRows[3][i]);
     }
     squares = mergedSquares;
+    gameScore += moveScore;
     fillRandomSquare();
+    lastMoveControl();
   }
 });
