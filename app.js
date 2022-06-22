@@ -110,7 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if ((checkedRowSquares + checkedColumnSquares < 1) && !squares.includes(0) ) {
       gameOver();
+    } else if (squares.includes(2048)) {
+      gameWin();
     }
+  }
+  // Win
+  function gameWin() {
+    console.log('YOU WIN!');
   }
   // Game over
   function gameOver() {
