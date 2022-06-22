@@ -140,16 +140,27 @@ document.addEventListener('DOMContentLoaded', () => {
     //   }
     // }
     for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 3; j++) {
-        let firstNum = orderedColumns[i][j];
-        let secondNum = orderedColumns[i][j + 1];
-        if (firstNum === secondNum) {
-          gameScore += firstNum;
-          orderedColumns[i][j] = firstNum + secondNum;
-          orderedColumns[i][j + 1] = 0;
-        } else if (firstNum === 0 && secondNum !== 0) {
-          orderedColumns[i][j] = secondNum;
-          orderedColumns[i][j + 1] = 0;
+      if (
+        orderedColumns[i][0] === orderedColumns[i][1] &&
+        orderedColumns[i][2] === orderedColumns[i][3]
+      ) {
+        gameScore += orderedColumns[i][0] + orderedColumns[i][2];
+        orderedColumns[i][0] = orderedColumns[i][1] * 2;
+        orderedColumns[i][1] = orderedColumns[i][2] * 2;
+        orderedColumns[i][2] = 0;
+        orderedColumns[i][3] = 0;
+      } else {
+        for (let j = 0; j < 3; j++) {
+          let firstNum = orderedColumns[i][j];
+          let secondNum = orderedColumns[i][j + 1];
+          if (firstNum === secondNum) {
+            gameScore += firstNum;
+            orderedColumns[i][j] = firstNum + secondNum;
+            orderedColumns[i][j + 1] = 0;
+          } else if (firstNum === 0 && secondNum !== 0) {
+            orderedColumns[i][j] = secondNum;
+            orderedColumns[i][j + 1] = 0;
+          }
         }
       }
       mergedColumns = orderedColumns;
