@@ -6,11 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const highScoreEl = document.getElementById('high-score');
 
   let squares = [];
-  let gameScore = 0;
-  let highScore = 0;
-
   let rows = [];
   let columns = [];
+  let gameScore = 0;
+  let highScore = 0;
 
   fillSquares();
   createBoard();
@@ -41,18 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function fillGameScore() {
     gameScoreEl.innerHTML = gameScore;
   }
-  function digitControl(num) {
-    if (num > 3 && num < 7) {
-      return console.log('4');
-    } else if (num > 7) {
-      return console.log('>7');
+  function digitControl(index, num) {
+    let square = document.getElementById('sq-' + index);
+    square.classList.remove('three-digits', 'four-digits');
+    if (num > 99 && num < 1000) {
+      square.classList.add('three-digits'); 
+    } else if (num > 999) {
+      square.classList.add('four-digits');
     }
   }
   function fillBoard() {
     fillGameScore();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
-      digitControl(squares[i]);
+      digitControl(i ,squares[i]);
       square.innerHTML = squares[i];
     }
   }
