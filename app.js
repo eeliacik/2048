@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fillSquares();
   createBoard();
-  lastMoveControl();
+  createOperationArrays();
 
   function fillSquares() {
-    let emptySquares = Array(16).fill(0);
-    squares = emptySquares;
+    let zeroSquares = Array(16).fill(0);
+    squares = zeroSquares;
   }
   function fillRandomSquare() {
     if (squares.includes(0)) {
@@ -41,15 +41,23 @@ document.addEventListener('DOMContentLoaded', () => {
   function fillGameScore() {
     gameScoreEl.innerHTML = gameScore;
   }
+  function digitControl(num) {
+    if (num > 3 && num < 7) {
+      return console.log('4');
+    } else if (num > 7) {
+      return console.log('>7');
+    }
+  }
   function fillBoard() {
     fillGameScore();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
+      digitControl(squares[i]);
       square.innerHTML = squares[i];
     }
   }
-  // Creating operation arrays on horizantal move
-  function horizontalMove() {
+  // Creating operation arrays on horizontal and vertical moves
+  function createOperationArrays() {
     const [firstRow, secondRow, thirdRow, fourthRow] = [[], [], [], []];
     const newRows = [];
     for (let i = 0; i < 16; i++) {
@@ -65,9 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     newRows.push(firstRow, secondRow, thirdRow, fourthRow);
     rows = newRows;
-  }
-  // Creating operation arrays on vertical move
-  function verticalMove() {
     const [firstColumn, secondColumn, thirdColumn, fourthColumn] = [
       [],
       [],
@@ -93,8 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return current.every((num, index) => num === previous[index]);
   }
   function lastMoveControl() {
-    horizontalMove();
-    verticalMove();
     let checkedRowSquares = 0;
     let checkedColumnSquares = 0;
     for (let i = 0; i < 4; i++) {
@@ -129,6 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetGame() {
     gameScore = 0;
     fillSquares();
+    createOperationArrays();
+    lastMoveControl();
     fillRandomSquare();
     fillRandomSquare();
     fillBoard();
@@ -201,10 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     if (!noMoveControl(mergedSquares, squares)) {
-      (squares = mergedSquares),
-        (gameScore += moveScore),
-        fillRandomSquare(),
-        lastMoveControl();
+      squares = mergedSquares;
+      gameScore += moveScore;
+      fillRandomSquare();
+      createOperationArrays();
+      lastMoveControl();
     }
   }
   // Move down
@@ -261,10 +267,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedColumns[i][3]);
     }
     if (!noMoveControl(mergedSquares, squares)) {
-      (squares = mergedSquares),
-        (gameScore += moveScore),
-        fillRandomSquare(),
-        lastMoveControl();
+      squares = mergedSquares;
+      gameScore += moveScore;
+      fillRandomSquare();
+      createOperationArrays();
+      lastMoveControl();
     }
   }
   // Move right
@@ -321,10 +328,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedRows[3][i]);
     }
     if (!noMoveControl(mergedSquares, squares)) {
-      (squares = mergedSquares),
-        (gameScore += moveScore),
-        fillRandomSquare(),
-        lastMoveControl();
+      squares = mergedSquares;
+      gameScore += moveScore;
+      fillRandomSquare();
+      createOperationArrays();
+      lastMoveControl();
     }
   }
   // Move left
@@ -381,10 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mergedSquares.push(mergedRows[3][i]);
     }
     if (!noMoveControl(mergedSquares, squares)) {
-      (squares = mergedSquares),
-        (gameScore += moveScore),
-        fillRandomSquare(),
-        lastMoveControl();
+      squares = mergedSquares;
+      gameScore += moveScore;
+      fillRandomSquare();
+      createOperationArrays();
+      lastMoveControl();
     }
   }
 });
