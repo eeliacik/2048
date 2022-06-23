@@ -89,6 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
     newColumns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
     columns = newColumns;
   }
+  function noMoveControl(current, previous) {
+    return current.every((num, index) => num === previous[index]);
+  }
   function lastMoveControl() {
     horizontalMove();
     verticalMove();
@@ -108,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-    if ((checkedRowSquares + checkedColumnSquares < 1) && !squares.includes(0) ) {
+    if (checkedRowSquares + checkedColumnSquares < 1 && !squares.includes(0)) {
       gameOver();
     } else if (squares.includes(2048)) {
       gameWin();
@@ -146,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Move up
   function moveUp() {
-    // verticalMove();
     let orderedColumns = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -198,14 +200,15 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][3]);
     }
-    squares = mergedSquares;
-    gameScore += moveScore;
-    fillRandomSquare();
-    lastMoveControl();
+    if (!noMoveControl(mergedSquares, squares)) {
+      (squares = mergedSquares),
+        (gameScore += moveScore),
+        fillRandomSquare(),
+        lastMoveControl();
+    }
   }
   // Move down
   function moveDown() {
-    // verticalMove();
     let orderedColumns = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -257,14 +260,15 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][3]);
     }
-    squares = mergedSquares;
-    gameScore += moveScore;
-    fillRandomSquare();
-    lastMoveControl();
+    if (!noMoveControl(mergedSquares, squares)) {
+      (squares = mergedSquares),
+        (gameScore += moveScore),
+        fillRandomSquare(),
+        lastMoveControl();
+    }
   }
   // Move right
   function moveRight() {
-    // horizontalMove();
     let orderedRows = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -316,14 +320,15 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedRows[3][i]);
     }
-    squares = mergedSquares;
-    gameScore += moveScore;
-    fillRandomSquare();
-    lastMoveControl();
+    if (!noMoveControl(mergedSquares, squares)) {
+      (squares = mergedSquares),
+        (gameScore += moveScore),
+        fillRandomSquare(),
+        lastMoveControl();
+    }
   }
   // Move left
   function moveLeft() {
-    // horizontalMove();
     let orderedRows = [];
     for (let i = 0; i < 4; i++) {
       let nums = [];
@@ -375,9 +380,11 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedRows[3][i]);
     }
-    squares = mergedSquares;
-    gameScore += moveScore;
-    fillRandomSquare();
-    lastMoveControl();
+    if (!noMoveControl(mergedSquares, squares)) {
+      (squares = mergedSquares),
+        (gameScore += moveScore),
+        fillRandomSquare(),
+        lastMoveControl();
+    }
   }
 });
