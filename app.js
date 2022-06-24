@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let num = Math.floor(Math.random() * squares.length);
       let twoOrFour = Math.random() > 0.1 ? 2 : 4;
       squares[num] === 0 ? (squares[num] = twoOrFour) : fillRandomSquare();
-    } else return;
+    }
   }
   function createBoard() {
     fillRandomSquare();
@@ -33,8 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
       let square = document.createElement('div');
       square.className = 'game-square';
       square.id = 'sq-' + i;
-      square.innerHTML = squares[i];
+      squares[i] === 0
+      ? (square.innerHTML = '')
+      : (square.innerHTML = squares[i]);
       gameBoard.appendChild(square);
+      numberControl(i, squares[i]);
     }
   }
   function fillGameScore() {
@@ -44,17 +47,50 @@ document.addEventListener('DOMContentLoaded', () => {
     let square = document.getElementById('sq-' + index);
     square.classList.remove('three-digits', 'four-digits');
     if (num > 99 && num < 1000) {
-      square.classList.add('three-digits'); 
+      square.classList.add('three-digits');
     } else if (num > 999) {
       square.classList.add('four-digits');
+    }
+  }
+  function numberControl(index, num) {
+    let square = document.getElementById('sq-' + index);
+    square.classList.remove(...square.classList)
+    square.classList.add('game-square');
+    if (num === 2) {
+      square.classList.add('color-2');
+    } else if (num === 4) {
+      square.classList.add('color-4');
+    } else if (num === 8) {
+      square.classList.add('color-8');
+    } else if (num === 16) {
+      square.classList.add('color-16');
+    } else if (num === 32) {
+      square.classList.add('color-32');
+    } else if (num === 64) {
+      square.classList.add('color-64');
+    } else if (num === 128) {
+      square.classList.add('color-128');
+    } else if (num === 256) {
+      square.classList.add('color-256');
+    } else if (num === 512) {
+      square.classList.add('color-512');
+    } else if (num === 1024) {
+      square.classList.add('color-1024');
+    } else if (num === 2048) {
+      square.classList.add('color-1024');
+    } else if (num === 4096) {
+      square.classList.add('color-4096');
     }
   }
   function fillBoard() {
     fillGameScore();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
-      digitControl(i ,squares[i]);
-      square.innerHTML = squares[i];
+      numberControl(i, squares[i]);
+      digitControl(i, squares[i]);
+      squares[i] === 0
+        ? (square.innerHTML = '')
+        : (square.innerHTML = squares[i]);
     }
   }
   // Creating operation arrays on horizontal and vertical moves
@@ -133,10 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetGame() {
     gameScore = 0;
     fillSquares();
+    fillRandomSquare();
+    fillRandomSquare();
     createOperationArrays();
-    lastMoveControl();
-    fillRandomSquare();
-    fillRandomSquare();
     fillBoard();
   }
   // Move direction controller
