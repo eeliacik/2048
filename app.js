@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function createBoard() {
+    // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096];
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -34,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
       square.className = 'game-square';
       square.id = 'sq-' + i;
       squares[i] === 0
-      ? (square.innerHTML = '')
-      : (square.innerHTML = squares[i]);
+        ? (square.innerHTML = '')
+        : (square.innerHTML = squares[i]);
       gameBoard.appendChild(square);
       numberControl(i, squares[i]);
     }
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function numberControl(index, num) {
     let square = document.getElementById('sq-' + index);
-    square.classList.remove(...square.classList)
+    square.classList.remove(...square.classList);
     square.classList.add('game-square');
     if (num === 2) {
       square.classList.add('color-2');
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (num === 1024) {
       square.classList.add('color-1024');
     } else if (num === 2048) {
-      square.classList.add('color-1024');
+      square.classList.add('color-2048');
     } else if (num === 4096) {
       square.classList.add('color-4096');
     }

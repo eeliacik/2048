@@ -3,14 +3,38 @@
 :root {
   --base-font: 'Kdam Thmor Pro', sans-serif;
 
-  --color-01: #36151e;
-  --color-02: #0d1f2d;
-  --color-03: #546a7b;
-  --color-04: #4b6858;
-  --color-05: #51bbfe;
-  --color-06: #cab6cd;
-  --color-07: #e6e49f;
-  --color-08: #edf0f1;
+  --color-01: #ebebeb;
+  --color-01-light: #f5f5f5;
+  --color-02: #99cc33;
+  --color-03: #c6c8ce;
+  --color-04: #dcdfe5;
+  --color-05: #c18cf9;
+  --color-05-light: #c798f8;
+  --color-06: #0096c7;
+  --color-sq-bg-1: #fffae5;
+  --color-sq-bg-2: #fff6cc;
+  --color-sq-bg-3: #fff2b2;
+  --color-sq-bg-4: #faa307;
+  --color-sq-bg-5: #f48c06;
+  --color-sq-bg-6: #e85d04;
+  --color-sq-bg-7: #ffdd00;
+  --color-sq-bg-8: #ffd000;
+  --color-sq-bg-9: #ffc300;
+  /* --color-sq-bg-4: #ffdd00;
+  --color-sq-bg-5: #ffd000;
+  --color-sq-bg-6: #ffc300;
+  --color-sq-bg-7: #faa307;
+  --color-sq-bg-8: #f48c06;
+  --color-sq-bg-9: #e85d04; */
+  --color-sq-bg-10: #dc2f02;
+  --color-sq-bg-11: #27a300;
+  --color-sq-bg-12: #4361ee;
+  --color-sq-1: #89c2d9;
+  --color-sq-2: #61a5c2;
+  --color-sq-3: #468faf;
+  --color-sq-4: #fafafa;
+  --color-sq-5: #f5f5f5;
+  --color-sq-6: #ebebeb;
 }
 * {
   box-sizing: border-box;
@@ -18,7 +42,7 @@
 body {
   cursor: default;
   margin: 0;
-  background-color: var(--color-08);
+  background-color: var(--color-01);
   font-family: var(--base-font);
 }
 .page-wrapper {
@@ -39,9 +63,9 @@ body {
   padding-bottom: 0;
 }
 .logo {
-    margin-bottom: -1rem;
+  margin-bottom: -1rem;
   font-size: 4rem;
-  color: var(--color-03);
+  color: var(--color-02);
 }
 .header-line {
   width: 100%;
@@ -50,9 +74,8 @@ body {
   margin-bottom: 0.6rem;
   font-size: 0.8rem;
   border-radius: 0.2rem;
-  color: var(--color-08);
-  background-color: var(--color-03);
-  /* background: linear-gradient(90deg, var(--color-03) 30%, var(--color-08)); */
+  background-color: var(--color-02);
+  /* background: linear-gradient(90deg, var(--color-03) 30%, var(--color-sq-bg-3)); */
 }
 .main-wrapper {
   padding: 0 1rem;
@@ -76,7 +99,7 @@ body {
   justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-04);
+  color: var(--color-06);
 }
 .score-title {
   font-size: 0.8rem;
@@ -93,14 +116,14 @@ body {
   border-radius: 0.3rem;
   font-size: 1rem;
   text-align: center;
-  color: var(--color-08);
+  color: var(--color-01);
   /* color: white; */
   background-color: var(--color-05);
 }
 .new-game-button:hover {
   cursor: pointer;
   color: white;
-  background-color: var(--color-05);
+  background-color: var(--color-05-light);
 }
 .game-container {
   display: flex;
@@ -115,7 +138,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  background-color: var(--color-06);
+  background-color: var(--color-03);
 }
 .game-square {
   width: 6rem;
@@ -124,25 +147,61 @@ body {
   border-radius: 0.3rem;
   font-size: 3.4rem;
   text-align: center;
-  background-color: var(--color-07);
+  background-color: var(--color-04);
 }
 .three-digits {
   padding-top: 1rem;
   font-size: 2.85rem;
 }
 .four-digits {
-  padding: 1.3rem 0.2rem 1rem 0.2rem;
+  padding: 1.3rem 0.1rem 1rem 0.1rem;
   font-size: 2.2rem;
 }
 .color-2 {
-  color: var(--color-05);
-  background-color: var(--color-08);
+  color: var(--color-sq-2);
+  background-color: var(--color-sq-bg-1);
 }
 .color-4 {
-  color: var(--color-04);
-  background-color: var(--color-08);
+  color: var(--color-sq-2);
+  background-color: var(--color-sq-bg-2);
 }
 .color-8 {
-  color: var(--color-06);
-  background-color: var(--color-08);
+  color: var(--color-sq-3);
+  background-color: var(--color-sq-bg-3);
+}
+.color-16 {
+  color: var(--color-sq-6);
+  background-color: var(--color-sq-bg-4);
+}
+.color-32 {
+  color: var(--color-sq-6);
+  background-color: var(--color-sq-bg-5);
+}
+.color-64 {
+  color: var(--color-sq-6);
+  background-color: var(--color-sq-bg-6);
+}
+.color-128 {
+  color: var(--color-sq-4);
+  background-color: var(--color-sq-bg-7);
+}
+.color-256 {
+  color: var(--color-sq-5);
+  background-color: var(--color-sq-bg-8);
+}
+.color-512 {
+  color: var(--color-sq-6);
+  background-color: var(--color-sq-bg-9);
+}
+.color-1024 {
+  color: var(--color-sq-6);
+  background-color: var(--color-sq-bg-10);
+}
+.color-2048 {
+  color: var(--color-sq-6);
+  background-color: var(--color-sq-bg-11);
+}
+.color-4096 {
+  color: var(--color-sq-6);
+  background-color: var(--color-sq-bg-12);
 }
