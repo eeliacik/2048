@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
-  const newGameEl = document.querySelector('.new-game-button');
-  newGameEl.addEventListener('click', resetGame);
   const gameScoreEl = document.getElementById('game-score');
-  const highScoreEl = document.getElementById('high-score');
+  // const highScoreEl = document.getElementById('high-score');
+  document.querySelector('.new-game-button').addEventListener('click', resetGame);
+  document.querySelector('.dialog-button').addEventListener('click', closeDialog);
 
   let squares = [];
   let rows = [];
   let columns = [];
   let gameScore = 0;
-  let highScore = 0;
+  // let highScore = 0;
 
   fillSquares();
   createBoard();
@@ -165,6 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Game over
   function gameOver() {
     console.log('GAME OVER');
+    document.getElementById('end-score').innerHTML = gameScore;
+    document.getElementById('dialog').classList.add('dialog-show');
+  }
+  // Close Dialog
+  function closeDialog() {
+    document.getElementById('dialog').classList.remove('dialog-show');
   }
   // Reset game
   function resetGame() {
