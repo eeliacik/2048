@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameScore = 0;
   // let highScore = 0;
   let gameWon = false; 
+  let dialogOpen = false;
 
   fillSquares();
   createBoard();
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function createBoard() {
-    squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096];
+    // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096];
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -169,17 +170,20 @@ document.addEventListener('DOMContentLoaded', () => {
     gameWon = true;
     document.getElementById('game-win-score').innerHTML = gameScore;
     document.getElementById('game-win-dialog').classList.add('dialog-show');
+    dialogOpen = true;
   }
   // Game over
   function gameOver() {
     console.log('GAME OVER');
     document.getElementById('game-over-score').innerHTML = gameScore;
     document.getElementById('game-over-dialog').classList.add('dialog-show');
+    dialogOpen = true;
   }
   // Close Dialog
   function closeDialog() {
     document.getElementById('game-over-dialog').classList.remove('dialog-show');
     document.getElementById('game-win-dialog').classList.remove('dialog-show');
+    dialogOpen = false;
   }
   // Reset game
   function resetGame() {
@@ -193,16 +197,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Move direction controller
   document.addEventListener('keyup', arrows);
   function arrows(x) {
-    if (x.keyCode === 38) {
+    if (!dialogOpen && x.keyCode === 38) {
       moveUp();
-    } else if (x.keyCode === 40) {
+    } else if (!dialogOpen && x.keyCode === 40) {
       moveDown();
-    } else if (x.keyCode === 37) {
+    } else if (!dialogOpen && x.keyCode === 37) {
       moveLeft();
-    } else if (x.keyCode === 39) {
+    } else if (!dialogOpen && x.keyCode === 39) {
       moveRight();
     }
-    fillBoard();
   }
   // Move up
   function moveUp() {
@@ -263,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveControl();
+      fillBoard();
     }
   }
   // Move down
@@ -324,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveControl();
+      fillBoard();
     }
   }
   // Move right
@@ -385,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveControl();
+      fillBoard();
     }
   }
   // Move left
@@ -446,6 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveControl();
+      fillBoard();
     }
   }
 });
