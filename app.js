@@ -2,8 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
   const gameScoreEl = document.getElementById('game-score');
   // const highScoreEl = document.getElementById('high-score');
-  document.querySelector('.new-game-button').addEventListener('click', resetGame);
-  document.querySelector('.dialog-button').addEventListener('click', closeDialog);
+  document
+    .querySelector('.new-game-button')
+    .addEventListener('click', resetGame);
+  document.querySelectorAll('.dialog-button').forEach((element) => {
+    element.addEventListener('click', closeDialog);
+  });
 
   let squares = [];
   let rows = [];
@@ -161,16 +165,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Win
   function gameWin() {
     console.log('YOU WIN!');
+    document.getElementById('game-win-score').innerHTML = gameScore;
+    document.getElementById('game-win-dialog').classList.add('dialog-show');
   }
   // Game over
   function gameOver() {
     console.log('GAME OVER');
-    document.getElementById('end-score').innerHTML = gameScore;
-    document.getElementById('dialog').classList.add('dialog-show');
+    document.getElementById('game-over-score').innerHTML = gameScore;
+    document.getElementById('game-over-dialog').classList.add('dialog-show');
   }
   // Close Dialog
   function closeDialog() {
-    document.getElementById('dialog').classList.remove('dialog-show');
+    document.getElementById('game-over-dialog').classList.remove('dialog-show');
+    document.getElementById('game-win-dialog').classList.remove('dialog-show');
   }
   // Reset game
   function resetGame() {

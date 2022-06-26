@@ -9,14 +9,24 @@
     <title>2048</title>
   </head>
   <body>
-    <div class="dialog-wrapper" id="dialog">
+    <div class="dialog-wrapper" id="game-over-dialog">
       <div class="dialog-container">
         <div class="dialog-title">GAME OVER</div>
         <div class="dialog-item">
           <span class="dialog-text">SCORE</span>
-          <span class="dialog-score" id="end-score"></span>
+          <span class="dialog-score" id="game-over-score"></span>
         </div>
         <div class="dialog-button">CLOSE</div>
+      </div>
+    </div>
+    <div class="dialog-wrapper" id="game-win-dialog">
+      <div class="dialog-container">
+        <div class="dialog-title">YOU WIN!</div>
+        <div class="dialog-item">
+          <span class="dialog-text">SCORE</span>
+          <span class="dialog-score" id="game-win-score"></span>
+        </div>
+        <div class="dialog-button">CONTINUE</div>
       </div>
     </div>
     <div class="page-wrapper">
