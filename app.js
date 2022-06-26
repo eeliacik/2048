@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let columns = [];
   let gameScore = 0;
   // let highScore = 0;
+  let gameWon = false; 
 
   fillSquares();
   createBoard();
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function createBoard() {
-    // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096];
+    squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096];
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -158,13 +159,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (checkedRowSquares + checkedColumnSquares < 1 && !squares.includes(0)) {
       gameOver();
-    } else if (squares.includes(2048)) {
+    } else if (!gameWon && squares.includes(2048)) {
       gameWin();
     }
   }
   // Win
   function gameWin() {
     console.log('YOU WIN!');
+    gameWon = true;
     document.getElementById('game-win-score').innerHTML = gameScore;
     document.getElementById('game-win-dialog').classList.add('dialog-show');
   }
