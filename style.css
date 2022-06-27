@@ -56,14 +56,12 @@ body {
 .dialog-show {
   display: block;
   background-color: rgba(32, 46, 46 , 0.4);
-  animation-name: open-dialog;
-  animation-duration: 1000ms;
+  animation: opacity-increase 500ms;
 }
 .dialog-hide {
   display: block;
   background-color: rgba(32, 46, 46 , 0.4);
-  animation-name: close-dialog;
-  animation-duration: 500ms;
+  animation: opacity-decrease 500ms;
 }
 .dialog-container {
   position: relative;
@@ -272,12 +270,12 @@ body {
   color: var(--color-sq-6);
   background-color: var(--color-sq-bg-12);
 }
-@keyframes open-dialog {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-@keyframes close-dialog {
+@keyframes opacity-decrease {
   from {opacity: 1;}
   to {opacity: 0;}
+}
+@keyframes opacity-increase {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
