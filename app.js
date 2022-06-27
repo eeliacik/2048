@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
   const gameScoreEl = document.getElementById('game-score');
-  // const highScoreEl = document.getElementById('high-score');
+  const highScoreEl = document.getElementById('high-score');
   document
     .querySelector('.new-game-button')
     .addEventListener('click', resetGame);
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let rows = [];
   let columns = [];
   let gameScore = 0;
-  // let highScore = 0;
+  let highScore = 0;
   let gameWon = false;
   let dialogOpen = false;
 
@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ? (square.innerHTML = '')
         : (square.innerHTML = squares[i]);
       gameBoard.appendChild(square);
-      numberControl(i, squares[i]);
+      numberCheck(i, squares[i]);
     }
   }
   function fillGameScore() {
     gameScoreEl.innerHTML = gameScore;
   }
-  function digitControl(index, num) {
+  function digitCheck(index, num) {
     let square = document.getElementById('sq-' + index);
     square.classList.remove('three-digits', 'four-digits');
     if (num > 99 && num < 1000) {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       square.classList.add('four-digits');
     }
   }
-  function numberControl(index, num) {
+  function numberCheck(index, num) {
     let square = document.getElementById('sq-' + index);
     square.classList.remove(...square.classList);
     square.classList.add('game-square');
@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fillGameScore();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
-      numberControl(i, squares[i]);
-      digitControl(i, squares[i]);
+      numberCheck(i, squares[i]);
+      digitCheck(i, squares[i]);
       squares[i] === 0
         ? (square.innerHTML = '')
         : (square.innerHTML = squares[i]);
@@ -141,10 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
     newColumns.push(firstColumn, secondColumn, thirdColumn, fourthColumn);
     columns = newColumns;
   }
-  function noMoveControl(current, previous) {
+  function noMoveCheck(current, previous) {
     return current.every((num, index) => num === previous[index]);
   }
-  function lastMoveControl() {
+  function lastMoveCheck() {
     let checkedRowSquares = 0;
     let checkedColumnSquares = 0;
     for (let i = 0; i < 4; i++) {
@@ -167,6 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
       gameWin();
     }
   }
+  function highScoreCheck() {
+    if (gameScore > highScore) {
+      highScore = gameScore;
+      highScoreEl.innerHTML = highScore;
+    } 
+  }
   // Win game
   function gameWin() {
     console.log('YOU WIN!');
@@ -178,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Game over
   function gameOver() {
     console.log('GAME OVER');
+    highScoreCheck();
     document.getElementById('game-over-score').innerHTML = gameScore;
     document.getElementById('game-over-dialog').classList.add('dialog-show');
     dialogOpen = true;
@@ -213,8 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fillBoard();
   }
   // Move direction controller
-  document.addEventListener('keyup', arrows);
-  function arrows(x) {
+  document.addEventListener('keyup', controlArrows);
+  function controlArrows(x) {
     if (!dialogOpen && x.keyCode === 38) {
       moveUp();
     } else if (!dialogOpen && x.keyCode === 40) {
@@ -278,12 +285,12 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][3]);
     }
-    if (!noMoveControl(mergedSquares, squares)) {
+    if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
       fillRandomSquare();
       createOperationArrays();
-      lastMoveControl();
+      lastMoveCheck();
       fillBoard();
     }
   }
@@ -340,12 +347,12 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][3]);
     }
-    if (!noMoveControl(mergedSquares, squares)) {
+    if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
       fillRandomSquare();
       createOperationArrays();
-      lastMoveControl();
+      lastMoveCheck();
       fillBoard();
     }
   }
@@ -402,12 +409,12 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedRows[3][i]);
     }
-    if (!noMoveControl(mergedSquares, squares)) {
+    if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
       fillRandomSquare();
       createOperationArrays();
-      lastMoveControl();
+      lastMoveCheck();
       fillBoard();
     }
   }
@@ -464,12 +471,12 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedRows[3][i]);
     }
-    if (!noMoveControl(mergedSquares, squares)) {
+    if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
       fillRandomSquare();
       createOperationArrays();
-      lastMoveControl();
+      lastMoveCheck();
       fillBoard();
     }
   }
