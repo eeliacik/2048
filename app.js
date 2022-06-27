@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let columns = [];
   let gameScore = 0;
   // let highScore = 0;
-  let gameWon = false; 
+  let gameWon = false;
   let dialogOpen = false;
 
   fillSquares();
@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function createBoard() {
-    // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096];
+    squares = [
+      0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,
+    ];
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -164,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameWin();
     }
   }
-  // Win
+  // Win game
   function gameWin() {
     console.log('YOU WIN!');
     gameWon = true;
@@ -179,10 +181,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('game-over-dialog').classList.add('dialog-show');
     dialogOpen = true;
   }
-  // Close Dialog
+  // Close dialog
   function closeDialog() {
-    document.getElementById('game-over-dialog').classList.remove('dialog-show');
+    // document.getElementById('game-over-dialog').classList.remove('dialog-show');
+    // document.getElementById('game-over-dialog').classList.add('dialog-hide');
     document.getElementById('game-win-dialog').classList.remove('dialog-show');
+    document.getElementById('game-win-dialog').classList.add('dialog-hide');
+    setTimeout(() => {
+      // document
+      //   .getElementById('game-over-dialog')
+      //   .classList.remove('dialog-hide');
+      document
+        .getElementById('game-win-dialog')
+        .classList.remove('dialog-hide');
+    }, 500);
     dialogOpen = false;
   }
   // Reset game
