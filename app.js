@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function createBoard() {
-    squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
+    // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -171,7 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gameScore > highScore) {
       highScore = gameScore;
       highScoreEl.innerHTML = highScore;
-    } 
+      document.getElementById('game-over-score-title').style.display = 'none';
+      document.getElementById('new-high-score-title').style.display = 'block';
+    } else {
+      document.getElementById('game-over-score-title').style.display = 'block';
+      document.getElementById('new-high-score-title').style.display = 'none';
+    }
   }
   // Win game
   function gameWin() {

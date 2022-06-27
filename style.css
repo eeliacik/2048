@@ -65,8 +65,9 @@ body {
 }
 .dialog-container {
   position: relative;
-  top: 18.3rem;
-  width: 18rem;
+  top: 18rem;
+  width: 19rem;
+  height: 19rem;
   margin: auto;
   padding: 1.5rem 1rem;
   border-radius: 0.3rem;
@@ -75,7 +76,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1rem;
 }
 .dialog-title {
   font-size: 2rem;
@@ -83,13 +84,17 @@ body {
 }
 .dialog-item {
   width: 100%;
-  padding: 0 2.4rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
+.dialog-message {
+  color: var(--color-02);
+  font-size: 1.5rem;
+}
 .dialog-text {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .dialog-score {
   font-size: 1.5rem;
@@ -169,7 +174,7 @@ body {
 .score-title {
   font-size: 0.8rem;
 }
-.score {
+.score-text {
   width: 6rem;
   font-size: 1.7rem;
   text-align: right;

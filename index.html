@@ -11,12 +11,14 @@
   <body>
     <div class="dialog-wrapper" id="game-over-dialog">
       <div class="dialog-container">
-        <div class="dialog-message">NEW HIGH-SCORE!</div>
         <div class="dialog-title">GAME OVER</div>
         <div class="dialog-item">
-          <span class="dialog-text">SCORE</span>
-          <span class="dialog-score" id="game-over-score"></span>
+          <span class="dialog-message" id="new-high-score-title"
+            >NEW HIGH-SCORE!</span
+          >
+          <span class="dialog-text" id="game-over-score-title">SCORE</span>
         </div>
+        <div class="dialog-score" id="game-over-score">000000</div>
         <div class="dialog-button" id="game-over-button">OK</div>
       </div>
     </div>
@@ -25,7 +27,7 @@
         <div class="dialog-title">YOU WIN!</div>
         <div class="dialog-item">
           <span class="dialog-text">SCORE</span>
-          <span class="dialog-score" id="game-win-score"></span>
+          <span class="dialog-score" id="game-win-score">000000</span>
         </div>
         <div class="dialog-button" id="game-win-button">CONTINUE</div>
       </div>
@@ -42,11 +44,11 @@
           <div class="score-container">
             <div class="score-board">
               <div class="score-title">HIGH</div>
-              <div class="score" id="high-score">0</div>
+              <div class="score-text" id="high-score">0</div>
             </div>
             <div class="score-board">
               <div class="score-title">SCORE</div>
-              <div class="score" id="game-score">0</div>
+              <div class="score-text" id="game-score">0</div>
             </div>
             <div class="new-game-button">NEW GAME</div>
           </div>
