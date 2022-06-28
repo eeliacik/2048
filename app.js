@@ -64,32 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function numberCheck(index, num) {
     let square = document.getElementById('sq-' + index);
-    square.classList.remove(...square.classList);
+    square.classList.remove(...Array.from(square.classList));
     square.classList.add('game-square');
-    if (num === 2) {
-      square.classList.add('color-2');
-    } else if (num === 4) {
-      square.classList.add('color-4');
-    } else if (num === 8) {
-      square.classList.add('color-8');
-    } else if (num === 16) {
-      square.classList.add('color-16');
-    } else if (num === 32) {
-      square.classList.add('color-32');
-    } else if (num === 64) {
-      square.classList.add('color-64');
-    } else if (num === 128) {
-      square.classList.add('color-128');
-    } else if (num === 256) {
-      square.classList.add('color-256');
-    } else if (num === 512) {
-      square.classList.add('color-512');
-    } else if (num === 1024) {
-      square.classList.add('color-1024');
-    } else if (num === 2048) {
-      square.classList.add('color-2048');
-    } else if (num === 4096) {
-      square.classList.add('color-4096');
+    if (num !== 0) {
+      square.classList.add('colored-square', `color-${num}`)
     }
   }
   function fillBoard() {
@@ -99,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
       numberCheck(i, squares[i]);
       digitCheck(i, squares[i]);
       squares[i] === 0
-        ? (square.innerHTML = '')
-        : (square.innerHTML = squares[i]);
+      ? (square.innerHTML = '')
+      : (square.innerHTML = squares[i]);
     }
   }
   // Creating operation arrays on horizontal and vertical moves
@@ -183,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('YOU WIN!');
     gameWon = true;
     document.getElementById('game-win-score').innerHTML = gameScore;
-    document.getElementById('game-win-dialog').classList.add('dialog-show');
+    document.getElementById('game-win-dialog').classList.add('dialog-fade-in');
     dialogOpen = true;
   }
   // Game over
@@ -191,27 +169,27 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('GAME OVER');
     highScoreCheck();
     document.getElementById('game-over-score').innerHTML = gameScore;
-    document.getElementById('game-over-dialog').classList.add('dialog-show');
+    document.getElementById('game-over-dialog').classList.add('dialog-fade-in');
     dialogOpen = true;
   }
   // Close dialogs
   function closeGameWinDialog() {
-    document.getElementById('game-win-dialog').classList.remove('dialog-show');
-    document.getElementById('game-win-dialog').classList.add('dialog-hide');
+    document.getElementById('game-win-dialog').classList.remove('dialog-fade-in');
+    document.getElementById('game-win-dialog').classList.add('dialog-fade-out');
     setTimeout(() => {
       document
         .getElementById('game-win-dialog')
-        .classList.remove('dialog-hide');
+        .classList.remove('dialog-fade-out');
     }, 500);
     dialogOpen = false;
   }
   function closeGameOverDialog() {
-    document.getElementById('game-over-dialog').classList.remove('dialog-show');
-    document.getElementById('game-over-dialog').classList.add('dialog-hide');
+    document.getElementById('game-over-dialog').classList.remove('dialog-fade-in');
+    document.getElementById('game-over-dialog').classList.add('dialog-fade-out');
     setTimeout(() => {
       document
         .getElementById('game-over-dialog')
-        .classList.remove('dialog-hide');
+        .classList.remove('dialog-fade-out');
     }, 500);
     dialogOpen = false;
   }
@@ -486,3 +464,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+
+function animatenumber(element, count, direction) {
+  const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${count * 0.6}rem)`;
+  element.style.transform = `translate(${direction === 'x' ? value : 0}, ${
+    direction === 'y' ? value : 0
+  })`;
+}
+
+function cloneEl(element) {
+  element.cloneNode()
+  const clone = element.cloneNode(true)
+  const newEl = document.createElement('div')
+  document.body.appendChild(newEl)
+  document.body.appendChild(clone)
+}
