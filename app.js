@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let squares = [];
   let rows = [];
   let columns = [];
+  let animationData = [];
   let gameScore = 0;
   let highScore = 0;
   let gameWon = false;
@@ -67,7 +68,32 @@ document.addEventListener('DOMContentLoaded', () => {
     square.classList.remove(...Array.from(square.classList));
     square.classList.add('game-square');
     if (num !== 0) {
-      square.classList.add('colored-square', `color-${num}`)
+      square.classList.add('colored-square', `color-${num}`);
+    }
+  }
+  function columnsMoveCheck() {
+    animationData = [];
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        let moveCount = 0;
+        if (
+          columns[i][j + 1] !== 0 &&
+          (columns[i][j + 1] === columns[i][j] || columns[i][j] === 0)
+        ) {
+          moveCount++;
+          let moveData = {
+            count: moveCount,
+            axis: 'y',
+          };
+          animationData.push(moveData);
+        } else {
+          let moveData = {
+            count: 0,
+            axis: 'y',
+          };
+          animationData.push(moveData);
+        }
+      }
     }
   }
   function fillBoard() {
@@ -77,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
       numberCheck(i, squares[i]);
       digitCheck(i, squares[i]);
       squares[i] === 0
-      ? (square.innerHTML = '')
-      : (square.innerHTML = squares[i]);
+        ? (square.innerHTML = '')
+        : (square.innerHTML = squares[i]);
     }
   }
   // Creating operation arrays on horizontal and vertical moves
@@ -174,7 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Close dialogs
   function closeGameWinDialog() {
-    document.getElementById('game-win-dialog').classList.remove('dialog-fade-in');
+    document
+      .getElementById('game-win-dialog')
+      .classList.remove('dialog-fade-in');
     document.getElementById('game-win-dialog').classList.add('dialog-fade-out');
     setTimeout(() => {
       document
@@ -184,8 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
     dialogOpen = false;
   }
   function closeGameOverDialog() {
-    document.getElementById('game-over-dialog').classList.remove('dialog-fade-in');
-    document.getElementById('game-over-dialog').classList.add('dialog-fade-out');
+    document
+      .getElementById('game-over-dialog')
+      .classList.remove('dialog-fade-in');
+    document
+      .getElementById('game-over-dialog')
+      .classList.add('dialog-fade-out');
     setTimeout(() => {
       document
         .getElementById('game-over-dialog')
@@ -274,6 +306,8 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveCheck();
+      columnsMoveCheck();
+      animateNum();
       fillBoard();
     }
   }
@@ -463,20 +497,33 @@ document.addEventListener('DOMContentLoaded', () => {
       fillBoard();
     }
   }
+
+  function animateNum() {
+    console.log(animationData);
+    for (let i = 0; i < animationData.length; i++) {
+      const el = document.getElementById('sq-' + i);
+      const count = animationData[i].count;
+      console.log(el, count);
+      value = count * -6.6;
+      el.style.transform = `translateY(${value}rem)`;
+      console.log(value)
+    }
+  }
 });
 
-
-function animatenumber(element, count, direction) {
-  const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${count * 0.6}rem)`;
-  element.style.transform = `translate(${direction === 'x' ? value : 0}, ${
-    direction === 'y' ? value : 0
+function animateNumber(element, count, axis) {
+  const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${
+    count * 0.6
+  }rem)`;
+  element.style.transform = `translate(${axis === 'x' ? value : 0}, ${
+    axis === 'y' ? value : 0
   })`;
 }
 
 function cloneEl(element) {
-  element.cloneNode()
-  const clone = element.cloneNode(true)
-  const newEl = document.createElement('div')
-  document.body.appendChild(newEl)
-  document.body.appendChild(clone)
+  element.cloneNode();
+  const clone = element.cloneNode(true);
+  const newEl = document.createElement('div');
+  document.body.appendChild(newEl);
+  document.body.appendChild(clone);
 }
