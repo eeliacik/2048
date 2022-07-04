@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
+  const gameBoardBase = document.querySelector('.game-board-base');
   const gameScoreEl = document.getElementById('game-score');
   const highScoreEl = document.getElementById('high-score');
   document
@@ -41,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
+      let squareBase = document.createElement('div');
+      squareBase.className = 'game-square-base';
+      gameBoardBase.appendChild(squareBase);
       let square = document.createElement('div');
       square.className = 'game-square';
       square.id = 'sq-' + i;
@@ -71,31 +75,54 @@ document.addEventListener('DOMContentLoaded', () => {
       square.classList.add('colored-square', `color-${num}`);
     }
   }
-  function columnsMoveCheck() {
+  function columnsMoveCheck(direction) {
     animationData = [];
+    animationColumns = [[], [], [], []];
+    // separate loops for each direction
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        let moveCount = 0;
-        if (
-          columns[i][j + 1] !== 0 &&
-          (columns[i][j + 1] === columns[i][j] || columns[i][j] === 0)
-        ) {
-          moveCount++;
-          let moveData = {
-            count: moveCount,
-            axis: 'y',
-          };
-          animationData.push(moveData);
+        if (columns[i][j] === 0) {
+          animationColumns[i].push(0);
+        } else if (columns[i][j] !== 0 && columns[i][j] === columns[i][j + 1]) {
+          animationColumns[i].push(j + 1);
         } else {
-          let moveData = {
-            count: 0,
-            axis: 'y',
-          };
-          animationData.push(moveData);
+          animationColumns[i].push(j);
         }
       }
     }
+    animationColumns.forEach((column) => {
+      animationData.push(column[0]);
+    });
+    animationColumns.forEach((column) => {
+      animationData.push(column[1]);
+    });
+    animationColumns.forEach((column) => {
+      animationData.push(column[2]);
+    });
+    animationColumns.forEach((column) => {
+      animationData.push(column[3]);
+    });
   }
+  function rowsMoveCheck(direction) {
+    animationData = [];
+    animationRows = [[], [], [], []];
+    // separate loops for each direction
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        if (rows[i][j] === 0) {
+          animationRows[i].push(0);
+        } else if (rows[i][j] !== 0 && rows[i][j] === rows[i][j + 1]) {
+          animationRows[i].push(j + 1);
+        } else {
+          animationRows[i].push(j);
+        }
+      }
+    }
+    animationRows.forEach((row) => {
+      animationData.push(row[i]);
+    });
+  }
+
   function fillBoard() {
     fillGameScore();
     for (let i = 0; i < 16; i++) {
@@ -306,8 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveCheck();
-      columnsMoveCheck();
-      animateNum();
       fillBoard();
     }
   }
@@ -498,16 +523,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function animateNum() {
+  function animateNum(animationData) {
     console.log(animationData);
-    for (let i = 0; i < animationData.length; i++) {
-      const el = document.getElementById('sq-' + i);
-      const count = animationData[i].count;
-      console.log(el, count);
-      value = count * -6.6;
-      el.style.transform = `translateY(${value}rem)`;
-      console.log(value)
-    }
+    // for (let i = 0; i < animationData.length; i++) {
+    //   const el = document.getElementById('sq-' + i);
+    //   const count = animationData[i];
+    //   console.log(el, count);
+    //   value = count * -6.6;
+    //   el.style.transform = `translateY(${value}rem)`;
+    // console.log(value)
+    // }
   }
 });
 

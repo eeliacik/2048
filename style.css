@@ -48,6 +48,7 @@ body {
   font-family: var(--base-font);
 }
 .dialog-wrapper {
+  z-index: 4;
   position: fixed;
   display: none;
   width: 100%;
@@ -145,7 +146,6 @@ body {
   font-size: 0.8rem;
   border-radius: 0.2rem;
   background-color: var(--color-02);
-  /* background: linear-gradient(90deg, var(--color-03) 30%, var(--color-sq-bg-3)); */
 }
 .main-wrapper {
   padding: 0 1rem;
@@ -210,7 +210,28 @@ body {
   gap: 0.6rem;
   background-color: var(--color-03);
 }
+.game-board-base {
+  z-index: 1;
+  position: absolute;
+  width: 27rem;
+  height: 27rem;
+  padding: 0.6rem;
+  border-radius: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  background-color: var(--color-03);
+}
+.game-square-base {
+  z-index: 2;
+  width: 6rem;
+  height: 6rem;
+  padding: 0.5rem 0.5rem 1rem 0.5rem;
+  border-radius: 0.3rem;
+  background-color: var(--color-04);
+}
 .game-square {
+  z-index: 3;
   width: 6rem;
   height: 6rem;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
