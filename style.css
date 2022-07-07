@@ -56,12 +56,12 @@ body {
 }
 .dialog-fade-in {
   display: block;
-  background-color: rgba(32, 46, 46 , 0.4);
+  background-color: rgba(32, 46, 46, 0.4);
   animation: opacity-increase 500ms;
 }
 .dialog-fade-out {
   display: block;
-  background-color: rgba(32, 46, 46 , 0.4);
+  background-color: rgba(32, 46, 46, 0.4);
   animation: opacity-decrease 500ms;
 }
 .dialog-container {
@@ -248,7 +248,7 @@ body {
   padding: 1.3rem 0.1rem 1rem 0.1rem;
   font-size: 2.2rem;
 }
-.colored-square{
+.colored-square {
   animation: pop-up 200ms;
   transform-origin: center;
 }
@@ -300,19 +300,37 @@ body {
   color: var(--color-sq-6);
   background-color: var(--color-sq-bg-12);
 }
+.move-up-1 {
+  animation: move-up-1 200ms;
+}
 
 @keyframes opacity-decrease {
-  from {opacity: 1;}
-  to {opacity: 0;}
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 @keyframes opacity-increase {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
+@keyframes move-up-1 {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6.6rem);
+  }
+}
 @keyframes pop-up {
   0% {
-    transform: scale(0)
+    transform: scale(0);
   }
   90% {
     transform: scale(1.2);
@@ -321,4 +339,3 @@ body {
     transform: scale(1);
   }
 }
-

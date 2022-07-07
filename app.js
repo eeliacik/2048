@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function createBoard() {
     // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
+    squares = [2,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0]
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -75,18 +76,25 @@ document.addEventListener('DOMContentLoaded', () => {
       square.classList.add('colored-square', `color-${num}`);
     }
   }
-  function columnsMoveCheck(direction) {
+
+  function columnsMoveCheck() {
     animationData = [];
-    animationColumns = [[], [], [], []];
-    // separate loops for each direction
+    animationColumns = [[0], [0], [0], [0]];
+    // *** separate loops for each direction
     for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        if (columns[i][j] === 0) {
-          animationColumns[i].push(0);
-        } else if (columns[i][j] !== 0 && columns[i][j] === columns[i][j + 1]) {
-          animationColumns[i].push(j + 1);
-        } else {
-          animationColumns[i].push(j);
+      for (let j = 1; j < 4; j++) {
+        let moveCount = 0
+        let num = columns[i][j];
+        if (num === 0) {
+          animationColumns[i].push(moveCount);
+        }
+        else if (num !== 0) {
+          for (let k = 1; k < 4; k++) {
+            (columns[i][j - k] && columns[i][j - k] === 0 || columns[i][j - k] && columns[i][j - k] === num)
+              ? moveCount++
+              : moveCount
+          }
+          animationColumns[i].push(moveCount)
         }
       }
     }
@@ -103,7 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
       animationData.push(column[3]);
     });
   }
-  function rowsMoveCheck(direction) {
+
+  function rowsMoveCheck() {
     animationData = [];
     animationRows = [[], [], [], []];
     // separate loops for each direction
@@ -124,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function fillBoard() {
-    fillGameScore();
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       numberCheck(i, squares[i]);
@@ -302,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let j = 0; j < 3; j++) {
           let firstNum = orderedColumns[i][j];
           let secondNum = orderedColumns[i][j + 1];
-          if (firstNum === secondNum) {
+          if (firstNum !== 0 & firstNum === secondNum) {
             moveScore += firstNum;
             orderedColumns[i][j] = firstNum + secondNum;
             orderedColumns[i][j + 1] = 0;
@@ -330,10 +338,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
-      fillRandomSquare();
-      createOperationArrays();
-      lastMoveCheck();
-      fillBoard();
+
+      columnsMoveCheck();
+      animateNum();
+
+      setTimeout(() => {
+        fillRandomSquare();
+        createOperationArrays();
+        lastMoveCheck();
+        fillGameScore();
+        fillBoard();
+      }, 100)
     }
   }
   // Move down
@@ -395,6 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveCheck();
+      fillGameScore();
       fillBoard();
     }
   }
@@ -457,6 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveCheck();
+      fillGameScore();
       fillBoard();
     }
   }
@@ -519,20 +536,19 @@ document.addEventListener('DOMContentLoaded', () => {
       fillRandomSquare();
       createOperationArrays();
       lastMoveCheck();
+      fillGameScore();
       fillBoard();
     }
   }
 
-  function animateNum(animationData) {
+  function animateNum() {
     console.log(animationData);
-    // for (let i = 0; i < animationData.length; i++) {
-    //   const el = document.getElementById('sq-' + i);
-    //   const count = animationData[i];
-    //   console.log(el, count);
-    //   value = count * -6.6;
-    //   el.style.transform = `translateY(${value}rem)`;
-    // console.log(value)
-    // }
+    for (let i = 0; i < 16; i++) {
+      let square = document.getElementById('sq-' + i);
+      if (animationData[i] !== 0) {
+        square.classList.add(`move-up-${animationData[i]}`);
+      }
+    }
   }
 });
 
