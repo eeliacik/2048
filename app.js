@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function createBoard() {
     // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
-    squares = [2,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0]
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -77,27 +76,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function columnsMoveCheck() {
+  function columnsMoveCheck(direction) {
     animationData = [];
     animationColumns = [[0], [0], [0], [0]];
-    // *** separate loops for each direction
+
     for (let i = 0; i < 4; i++) {
-      for (let j = 1; j < 4; j++) {
-        let moveCount = 0
-        let num = columns[i][j];
-        if (num === 0) {
-          animationColumns[i].push(moveCount);
-        }
-        else if (num !== 0) {
-          for (let k = 1; k < 4; k++) {
-            (columns[i][j - k] && columns[i][j - k] === 0 || columns[i][j - k] && columns[i][j - k] === num)
-              ? moveCount++
-              : moveCount
+      if (direction === 'up') {
+        for (let j = 1; j < 4; j++) {
+          let num = columns[i][j];
+          if (num === 0) {
+            animationColumns[i].push(0);
+          } else if (num !== 0) {
+            let moveCount = 0;
+            for (let k = 1; k < 4; k++) {
+              if (columns[i][j - k] === 0 || columns[i][j - k] === num) {
+                moveCount++;
+              }
+            }
+            animationColumns[i].push(moveCount);
           }
-          animationColumns[i].push(moveCount)
+        }
+      } else {
+        for (let j = 2; j > -1; j--) {
+          let num = columns[i][j];
+          if (num === 0) {
+            animationColumns[i].unshift(0);
+          } else if (num !== 0) {
+            let moveCount = 0;
+            for (let k = 1; k < 4; k++) {
+              if (columns[i][j + k] === 0 || columns[i][j + k] === num) {
+                moveCount++;
+              }
+            }
+            animationColumns[i].unshift(moveCount);
+          }
         }
       }
     }
+
     animationColumns.forEach((column) => {
       animationData.push(column[0]);
     });
@@ -310,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let j = 0; j < 3; j++) {
           let firstNum = orderedColumns[i][j];
           let secondNum = orderedColumns[i][j + 1];
-          if (firstNum !== 0 & firstNum === secondNum) {
+          if ((firstNum !== 0) & (firstNum === secondNum)) {
             moveScore += firstNum;
             orderedColumns[i][j] = firstNum + secondNum;
             orderedColumns[i][j + 1] = 0;
@@ -339,8 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
       squares = mergedSquares;
       gameScore += moveScore;
 
-      columnsMoveCheck();
-      animateNum();
+      columnsMoveCheck('up');
+      animateNum('up');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -348,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastMoveCheck();
         fillGameScore();
         fillBoard();
-      }, 100)
+      }, 150);
     }
   }
   // Move down
@@ -407,11 +423,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
-      fillRandomSquare();
-      createOperationArrays();
-      lastMoveCheck();
-      fillGameScore();
-      fillBoard();
+
+      columnsMoveCheck('down');
+      animateNum('down');
+
+      setTimeout(() => {
+        fillRandomSquare();
+        createOperationArrays();
+        lastMoveCheck();
+        fillGameScore();
+        fillBoard();
+      }, 150);
     }
   }
   // Move right
@@ -541,30 +563,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function animateNum() {
+  function animateNum(direction) {
     console.log(animationData);
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
-      if (animationData[i] !== 0) {
+      if (animationData[i] !== 0 && direction === 'up') {
         square.classList.add(`move-up-${animationData[i]}`);
+      } else if (animationData[i] !== 0 && direction === 'down') {
+        square.classList.add(`move-down-${animationData[i]}`);
       }
     }
   }
 });
 
-function animateNumber(element, count, axis) {
-  const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${
-    count * 0.6
-  }rem)`;
-  element.style.transform = `translate(${axis === 'x' ? value : 0}, ${
-    axis === 'y' ? value : 0
-  })`;
-}
+// function animateNumber(element, count, axis) {
+//   const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${
+//     count * 0.6
+//   }rem)`;
+//   element.style.transform = `translate(${axis === 'x' ? value : 0}, ${
+//     axis === 'y' ? value : 0
+//   })`;
+// }
 
-function cloneEl(element) {
-  element.cloneNode();
-  const clone = element.cloneNode(true);
-  const newEl = document.createElement('div');
-  document.body.appendChild(newEl);
-  document.body.appendChild(clone);
-}
+// function cloneEl(element) {
+//   element.cloneNode();
+//   const clone = element.cloneNode(true);
+//   const newEl = document.createElement('div');
+//   document.body.appendChild(newEl);
+//   document.body.appendChild(clone);
+// }

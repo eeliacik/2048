@@ -303,6 +303,21 @@ body {
 .move-up-1 {
   animation: move-up-1 200ms;
 }
+.move-up-2 {
+  animation: move-up-2 250ms;
+}
+.move-up-3 {
+  animation: move-up-3 300ms;
+}
+.move-down-1 {
+  animation: move-down-1 200ms;
+}
+.move-down-2 {
+  animation: move-down-2 250ms;
+}
+.move-down-3 {
+  animation: move-down-3 300ms;
+}
 
 @keyframes opacity-decrease {
   from {
@@ -320,6 +335,7 @@ body {
     opacity: 1;
   }
 }
+
 @keyframes move-up-1 {
   from {
     transform: translateY(0);
@@ -328,6 +344,48 @@ body {
     transform: translateY(-6.6rem);
   }
 }
+@keyframes move-up-2 {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-13.2rem);
+  }
+}
+@keyframes move-up-3 {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-19.8rem);
+  }
+}
+
+@keyframes move-down-1 {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6.6rem);
+  }
+}
+@keyframes move-down-2 {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(13.2rem);
+  }
+}
+@keyframes move-down-3 {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(19.8rem);
+  }
+}
+
 @keyframes pop-up {
   0% {
     transform: scale(0);
