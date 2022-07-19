@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (direction === 'up') {
         
         let extraMove = 0;
-        columns[i].reduce((previous, current) => {previous === current
+        columns[i].reduce((previous, current) => { previous === 0 || previous === current
           ? [extraMove++, animationColumns[i].push(extraMove)]
           : animationColumns[i].push(extraMove);}, extraMove)
 
