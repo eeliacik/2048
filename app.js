@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function createBoard() {
     // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
+    squares = [0, 0, 0, 2, 0, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2]
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
