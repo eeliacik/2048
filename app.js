@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function createBoard() {
     // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
-    squares = [0, 0, 0, 2, 0, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2]
+    // squares = [0, 0, 0, 2, 0, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2];
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -89,41 +89,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
-        if (
-          columns[i][0] === columns[i][1] &&
-          columns[i][2] === columns[i][3]
-        ) {
-          animationColumns[i].push(1, 1, 2);
-        } else {
-          for (let j = 1; j < 4; j++) {
-            let num = columns[i][j];
-            let beforeNum = columns[i][j - 1];
-            let moveCount = 0;
-            if (num === 0) {
-              animationColumns[i].push(0);
-              moveCount++;
-            } else if (num !== 0 && beforeNum === num) {
-              moveCount++;
-              animationColumns[i].push(moveCount);
-            } else {
-              animationColumns[i].push(moveCount);
-            }
-          }
-        }
-        // for (let j = 1; j < 4; j++) {
-        //   let num = columns[i][j];
-        //   if (num === 0) {
-        //     animationColumns[i].push(0);
-        //   } else if (num !== 0) {
+        
+        let extraMove = 0;
+        columns[i].reduce((previous, current) => {previous === current
+          ? [extraMove++, animationColumns[i].push(extraMove)]
+          : animationColumns[i].push(extraMove);}, extraMove)
+
+        // if (
+        //   columns[i][0] === columns[i][1] &&
+        //   columns[i][2] === columns[i][3]
+        // ) {
+        //   animationColumns[i].push(1, 1, 2);
+        // } else {
+        //   for (let j = 1; j < 4; j++) {
+        //     let num = columns[i][j];
+        //     let beforeNum = columns[i][j - 1];
         //     let moveCount = 0;
-        //     for (let k = 1; k < 4; k++) {
-        //       if (columns[i][j - k] === 0 || columns[i][j - k] === num) {
-        //         moveCount++;
-        //       }
+        //     if (num === 0) {
+        //       animationColumns[i].push(0);
+        //       moveCount++;
+        //     } else if (num !== 0 && beforeNum === num) {
+        //       moveCount++;
+        //       animationColumns[i].push(moveCount);
+        //     } else if (num !== 0 && beforeNum !== num) {
+        //       animationColumns[i].push(moveCount);
         //     }
-        //     animationColumns[i].push(moveCount);
         //   }
         // }
+
       } else {
         for (let j = 2; j > -1; j--) {
           let num = columns[i][j];
