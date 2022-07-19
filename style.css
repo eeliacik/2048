@@ -248,10 +248,10 @@ body {
   padding: 1.3rem 0.1rem 1rem 0.1rem;
   font-size: 2.2rem;
 }
-.colored-square {
+/* .colored-square {
   animation: pop-up 200ms;
   transform-origin: center;
-}
+} */
 .color-2 {
   color: var(--color-sq-2);
   background-color: var(--color-sq-bg-1);

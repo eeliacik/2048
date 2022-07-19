@@ -69,33 +69,60 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function numberCheck(index, num) {
     let square = document.getElementById('sq-' + index);
-    square.classList.remove(...Array.from(square.classList));
-    square.classList.add('game-square');
+
+    square.classList.remove(
+      ...Array.from(square.classList).filter(
+        (className) => className !== 'game-square'
+      )
+    );
     if (num !== 0) {
       square.classList.add('colored-square', `color-${num}`);
     }
   }
 
   function columnsMoveCheck(direction) {
+    console.log(columns);
+
     animationData = [];
     animationColumns = [[0], [0], [0], [0]];
 
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
-        for (let j = 1; j < 4; j++) {
-          let num = columns[i][j];
-          if (num === 0) {
-            animationColumns[i].push(0);
-          } else if (num !== 0) {
+        if (
+          columns[i][0] === columns[i][1] &&
+          columns[i][2] === columns[i][3]
+        ) {
+          animationColumns[i].push(1, 1, 2);
+        } else {
+          for (let j = 1; j < 4; j++) {
+            let num = columns[i][j];
+            let beforeNum = columns[i][j - 1];
             let moveCount = 0;
-            for (let k = 1; k < 4; k++) {
-              if (columns[i][j - k] === 0 || columns[i][j - k] === num) {
-                moveCount++;
-              }
+            if (num === 0) {
+              animationColumns[i].push(0);
+              moveCount++;
+            } else if (num !== 0 && beforeNum === num) {
+              moveCount++;
+              animationColumns[i].push(moveCount);
+            } else {
+              animationColumns[i].push(moveCount);
             }
-            animationColumns[i].push(moveCount);
           }
         }
+        // for (let j = 1; j < 4; j++) {
+        //   let num = columns[i][j];
+        //   if (num === 0) {
+        //     animationColumns[i].push(0);
+        //   } else if (num !== 0) {
+        //     let moveCount = 0;
+        //     for (let k = 1; k < 4; k++) {
+        //       if (columns[i][j - k] === 0 || columns[i][j - k] === num) {
+        //         moveCount++;
+        //       }
+        //     }
+        //     animationColumns[i].push(moveCount);
+        //   }
+        // }
       } else {
         for (let j = 2; j > -1; j--) {
           let num = columns[i][j];
@@ -364,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastMoveCheck();
         fillGameScore();
         fillBoard();
-      }, 150);
+      }, 200);
     }
   }
   // Move down
@@ -433,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastMoveCheck();
         fillGameScore();
         fillBoard();
-      }, 150);
+      }, 200);
     }
   }
   // Move right
