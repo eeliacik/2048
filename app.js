@@ -89,11 +89,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
-        
-        let extraMove = 0;
-        columns[i].reduce((previous, current) => { previous === 0 || previous === current
-          ? [extraMove++, animationColumns[i].push(extraMove)]
-          : animationColumns[i].push(extraMove);}, extraMove)
+        let blocker = 0;
+        let lastNum = columns[i][0];
+        columns[i].reduce((previous, current, index) => {
+          if (current === 0 && previous === 0) {
+            animationColumns[i].push(0);
+          } else if (current === 0 && previous !== 0) {
+            animationColumns[i].push(0);
+            blocker++;
+          } else if (
+            (current !== 0 && previous === current) ||
+            (current !== 0 && previous === 0)
+          ) {
+            animationColumns[i].push(
+              lastNum === current ? (index) : (index - blocker)
+            );
+            lastNum = current;
+            if (lastNum !== current) {
+              blocker++;
+            } 
+          } else if (
+            current !== 0 && previous !== current && previous !== 0
+          ) {
+            animationColumns[i].push(index - blocker);
+          }
+        });
 
         // if (
         //   columns[i][0] === columns[i][1] &&
@@ -116,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         //     }
         //   }
         // }
-
       } else {
         for (let j = 2; j > -1; j--) {
           let num = columns[i][j];
