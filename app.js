@@ -89,30 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
-        let blocker = 0;
         let lastNum = columns[i][0];
         columns[i].reduce((previous, current, index) => {
-          if (current === 0 && previous === 0) {
+          if (current === 0) {
             animationColumns[i].push(0);
-          } else if (current === 0 && previous !== 0) {
-            animationColumns[i].push(0);
-            blocker++;
-          } else if (
-            (current !== 0 && previous === current) ||
-            (current !== 0 && previous === 0)
-          ) {
-            animationColumns[i].push(
-              lastNum === current ? (index) : (index - blocker)
-            );
+          } else if (current !== 0 && lastNum === 0) {
+            animationColumns[i].push(index);
+            // blocker++;
+          } else if (current !== 0 && lastNum !== 0 && current !== lastNum) {
+            animationColumns[i].push(index-1);
+            // animationColumns[i].push(index - blocker);
             lastNum = current;
-            if (lastNum !== current) {
-              blocker++;
-            } 
-          } else if (
-            current !== 0 && previous !== current && previous !== 0
-          ) {
-            animationColumns[i].push(index - blocker);
+            // blocker++;
           }
+       
         });
 
         // if (
@@ -137,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //   }
         // }
       } else {
+        
         for (let j = 2; j > -1; j--) {
           let num = columns[i][j];
           if (num === 0) {
@@ -149,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
               }
             }
             animationColumns[i].unshift(moveCount);
+            
           }
         }
       }
