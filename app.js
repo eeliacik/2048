@@ -85,23 +85,34 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(columns);
 
     animationData = [];
-    animationColumns = [[], [], [], []];
+    animationColumns = [[0], [0], [0], [0]];
 
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
-        columns[i].reduceRight((previous, current) => {
-          if (previous === 0) {
-            animationColumns[i].unshift(0);
-          } else if (previous !== 0 && current !== previous) {
-            animationColumns[i].unshift(0);
-          } else if (
-            previous !== 0 && current === previous
-          ) {
-            animationColumns[i].unshift(1);
+        columns[i].reduce((previous, current, index) => {
+          if (current === 0) {
+            animationColumns[i].push(0);
+          } else {
+            let moveCount = index;
+            let equalCount = 0;
+            for (let j = (index -1) ; j > -1; j--) {
+              if (columns[i][j] !== 0 && columns[i][j] !== current) {
+                moveCount--;
+              } else if (columns[i][j] !== 0 && columns[i][j] === current) {
+                equalCount++;
+              }
+            }
+            if (equalCount > 1) {
+              moveCount - equalCount;
+            }
+            if (previous === current) {
+              moveCount--;
+            }
+            console.log(moveCount)
+            animationColumns[i].push(moveCount);
           }
         })
       }
-      animationColumns[i].unshift(0);
     }
     animationColumns.forEach((column) => {
       animationData.push(column[0]);
