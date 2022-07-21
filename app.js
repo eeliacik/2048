@@ -85,67 +85,24 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(columns);
 
     animationData = [];
-    animationColumns = [[0], [0], [0], [0]];
+    animationColumns = [[], [], [], []];
 
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
-        let lastNum = columns[i][0];
-        columns[i].reduce((previous, current, index) => {
-          if (current === 0) {
-            animationColumns[i].push(0);
-          } else if (current !== 0 && lastNum === 0) {
-            animationColumns[i].push(index);
-            // blocker++;
-          } else if (current !== 0 && lastNum !== 0 && current !== lastNum) {
-            animationColumns[i].push(index-1);
-            // animationColumns[i].push(index - blocker);
-            lastNum = current;
-            // blocker++;
-          }
-       
-        });
-
-        // if (
-        //   columns[i][0] === columns[i][1] &&
-        //   columns[i][2] === columns[i][3]
-        // ) {
-        //   animationColumns[i].push(1, 1, 2);
-        // } else {
-        //   for (let j = 1; j < 4; j++) {
-        //     let num = columns[i][j];
-        //     let beforeNum = columns[i][j - 1];
-        //     let moveCount = 0;
-        //     if (num === 0) {
-        //       animationColumns[i].push(0);
-        //       moveCount++;
-        //     } else if (num !== 0 && beforeNum === num) {
-        //       moveCount++;
-        //       animationColumns[i].push(moveCount);
-        //     } else if (num !== 0 && beforeNum !== num) {
-        //       animationColumns[i].push(moveCount);
-        //     }
-        //   }
-        // }
-      } else {
-        
-        for (let j = 2; j > -1; j--) {
-          let num = columns[i][j];
-          if (num === 0) {
+        columns[i].reduceRight((previous, current) => {
+          if (previous === 0) {
             animationColumns[i].unshift(0);
-          } else if (num !== 0) {
-            let moveCount = 0;
-            for (let k = 1; k < 4; k++) {
-              if (columns[i][j + k] === 0 || columns[i][j + k] === num) {
-                moveCount++;
-              }
-            }
-            animationColumns[i].unshift(moveCount);
-            
+          } else if (previous !== 0 && current !== previous) {
+            animationColumns[i].unshift(0);
+          } else if (
+            previous !== 0 && current === previous
+          ) {
+            animationColumns[i].unshift(1);
           }
-        }
+        })
       }
+      animationColumns[i].unshift(0);
     }
-
     animationColumns.forEach((column) => {
       animationData.push(column[0]);
     });
