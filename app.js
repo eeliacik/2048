@@ -94,31 +94,61 @@ document.addEventListener('DOMContentLoaded', () => {
           let mergeMove = false;
           if (current === 0) {
             animationColumns[i].push(0);
-          } else {
-            if (previous === current) {
-              moveCount++;
-              mergeMove = true;
-              if (index > 1) {
-                for (let j = index - 2; j < 0; j--) {
-                  if (j === 0 || (j === current && !mergeMove)) {
-                    moveCount++;
-                  }
-                }
+          } else if (previous === current && index <= 1) {
+            moveCount++;
+            mergeMove = true;
+            animationColumns[i].push(moveCount)
+          } else if (previous === current && index > 1) {
+            moveCount++;
+            for (let j = index - 2; j < 0; j--) {
+              console.log('j: ', j)
+              if (j === 0 || (j === current && !mergeMove)) {
+                moveCount++;
               }
-            } else if (previous === 0) {
-              moveCount++;
-              if (index > 1) {
-                for (let j = index - 2; j < 0; j--) {
-                  if (j === 0 || j === current && !mergeMove) {
-                    moveCount++;
-                  }
-                }
-              }
-            } else if (previous !== current && mergeMove) {
-              moveCount++;              
             }
+            animationColumns[i].push(moveCount)
+          } else if (previous === 0 && index <= 1) {
+            moveCount++;
+            animationColumns[i].push(moveCount)
+          } else if (previous === 0 && index > 1) {
+            moveCount++;
+            for (let j = index - 2; j < 0; j--) {
+              console.log('j: ', j)
+              if (j === 0 || j === current && !mergeMove) {
+                moveCount++;
+              }
+            }
+            animationColumns[i].push(moveCount)
+          } else if (previous !== current && mergeMove) {
+            moveCount++;              
+            animationColumns[i].push(moveCount)
+          }
             
-            animationColumns[i].push(moveCount);
+          // else {
+          //   if (previous === current) {
+          //     moveCount++;
+          //     mergeMove = true;
+          //     if (index > 1) {
+          //       for (let j = index - 2; j < 0; j--) {
+          //         if (j === 0 || (j === current && !mergeMove)) {
+          //           moveCount++;
+          //         }
+          //       }
+          //     }
+          //   } else if (previous === 0) {
+          //     moveCount++;
+          //     if (index > 1) {
+          //       for (let j = index - 2; j < 0; j--) {
+          //         if (j === 0 || j === current && !mergeMove) {
+          //           moveCount++;
+          //         }
+          //       }
+          //     }
+          //   } else if (previous !== current && mergeMove) {
+          //     moveCount++;              
+          //   }
+            
+          //   animationColumns[i].push(moveCount);
 
             // let moveCount = index;
             // for (let j = (index -1) ; j > -1; j--) {
@@ -137,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // console.log(moveCount)
             // animationColumns[i].push(moveCount);
             
-          }
+          
         });
       }
     }
