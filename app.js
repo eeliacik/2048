@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function columnsMoveCheck(direction) {
-    console.log(columns);
+    console.log('columns: ', columns);
 
     animationData = [];
     animationColumns = [[0], [0], [0], [0]];
@@ -90,28 +90,55 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
         columns[i].reduce((previous, current, index) => {
+          let moveCount = 0;
+          let mergeMove = false;
           if (current === 0) {
             animationColumns[i].push(0);
           } else {
-            let moveCount = index;
-            let equalCount = 0;
-            for (let j = (index -1) ; j > -1; j--) {
-              if (columns[i][j] !== 0 && columns[i][j] !== current) {
-                moveCount--;
-              } else if (columns[i][j] !== 0 && columns[i][j] === current) {
-                equalCount++;
-              }
-            }
-            if (equalCount > 1) {
-              moveCount - equalCount;
-            }
             if (previous === current) {
-              moveCount--;
+              moveCount++;
+              mergeMove = true;
+              if (index > 1) {
+                for (let j = index - 2; j < 0; j--) {
+                  if (j === 0 || (j === current && !mergeMove)) {
+                    moveCount++;
+                  }
+                }
+              }
+            } else if (previous === 0) {
+              moveCount++;
+              if (index > 1) {
+                for (let j = index - 2; j < 0; j--) {
+                  if (j === 0 || j === current && !mergeMove) {
+                    moveCount++;
+                  }
+                }
+              }
+            } else if (previous !== current && mergeMove) {
+              moveCount++;              
             }
-            console.log(moveCount)
+            
             animationColumns[i].push(moveCount);
+
+            // let moveCount = index;
+            // for (let j = (index -1) ; j > -1; j--) {
+            //   if (columns[i][j] !== 0 && columns[i][j] !== current) {
+            //     moveCount--;
+            //   } else if (columns[i][j] !== 0 && columns[i][j] === current) {
+            //     equalCount++;
+            //   }
+            // }
+            // if (equalCount > 1) {
+            //   moveCount - equalCount;
+            // }
+            // if (previous === current) {
+            //   moveCount--;
+            // }
+            // console.log(moveCount)
+            // animationColumns[i].push(moveCount);
+            
           }
-        })
+        });
       }
     }
     animationColumns.forEach((column) => {
@@ -564,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function animateNum(direction) {
-    console.log(animationData);
+    console.log('animation data: ', animationData);
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       if (animationData[i] !== 0 && direction === 'up') {
