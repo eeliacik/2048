@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function createBoard() {
     // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
+    // squares = [0, 0, 0, 2, 0, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2];
     fillRandomSquare();
     fillRandomSquare();
     for (let i = 0; i < 16; i++) {
@@ -81,66 +82,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function columnsMoveCheck(direction) {
-    console.log(columns);
+    console.log('columns: ', columns);
 
     animationData = [];
     animationColumns = [[0], [0], [0], [0]];
 
     for (let i = 0; i < 4; i++) {
       if (direction === 'up') {
-        if (
-          columns[i][0] === columns[i][1] &&
-          columns[i][2] === columns[i][3]
-        ) {
-          animationColumns[i].push(1, 1, 2);
-        } else {
-          for (let j = 1; j < 4; j++) {
-            let num = columns[i][j];
-            let beforeNum = columns[i][j - 1];
-            let moveCount = 0;
-            if (num === 0) {
-              animationColumns[i].push(0);
-              moveCount++;
-            } else if (num !== 0 && beforeNum === num) {
-              moveCount++;
-              animationColumns[i].push(moveCount);
-            } else {
-              animationColumns[i].push(moveCount);
-            }
-          }
-        }
-        // for (let j = 1; j < 4; j++) {
-        //   let num = columns[i][j];
-        //   if (num === 0) {
-        //     animationColumns[i].push(0);
-        //   } else if (num !== 0) {
-        //     let moveCount = 0;
-        //     for (let k = 1; k < 4; k++) {
-        //       if (columns[i][j - k] === 0 || columns[i][j - k] === num) {
-        //         moveCount++;
-        //       }
-        //     }
-        //     animationColumns[i].push(moveCount);
-        //   }
-        // }
-      } else {
-        for (let j = 2; j > -1; j--) {
-          let num = columns[i][j];
-          if (num === 0) {
-            animationColumns[i].unshift(0);
-          } else if (num !== 0) {
-            let moveCount = 0;
-            for (let k = 1; k < 4; k++) {
-              if (columns[i][j + k] === 0 || columns[i][j + k] === num) {
-                moveCount++;
+        columns[i].reduce((_, current, index) => {
+          if (current === 0) {
+            animationColumns[i].push(0);
+          } else {
+            
+            let moveCount = index;
+            let equalCount = 0;
+            let blocker = false;
+
+            for (let j = index - 1; j > -1; j--) {
+              if (columns[i][j] !== current && columns[i][j] !== 0) {
+                blocker = true;
+                moveCount--;
+              } else if (columns[i][j] === current) {
+                equalCount++;
+                if (blocker) {
+                  moveCount--;
+                }
               }
             }
-            animationColumns[i].unshift(moveCount);
+            if (equalCount > 1) {
+              moveCount--;
+            }
+            animationColumns[i].push(moveCount);
           }
-        }
+        });
       }
     }
-
     animationColumns.forEach((column) => {
       animationData.push(column[0]);
     });
@@ -591,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function animateNum(direction) {
-    console.log(animationData);
+    console.log('animation data: ', animationData);
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       if (animationData[i] !== 0 && direction === 'up') {
