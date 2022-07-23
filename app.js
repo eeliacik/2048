@@ -282,6 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reset game
   function resetGame() {
     gameScore = 0;
+    fillGameScore();
     fillSquares();
     fillRandomSquare();
     fillRandomSquare();
