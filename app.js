@@ -88,34 +88,39 @@ document.addEventListener('DOMContentLoaded', () => {
     animationColumns = [[0], [0], [0], [0]];
 
     for (let i = 0; i < 4; i++) {
-      if (direction === 'up') {
-        columns[i].reduce((_, current, index) => {
-          if (current === 0) {
-            animationColumns[i].push(0);
-          } else {
-            
-            let moveCount = index;
-            let equalCount = 0;
-            let blocker = false;
+      const checkColumn =
+        direction === 'up' ? columns[i] : columns[i].reverse();
 
-            for (let j = index - 1; j > -1; j--) {
-              if (columns[i][j] !== current && columns[i][j] !== 0) {
-                blocker = true;
+      checkColumn.reduce((_, current, index) => {
+        if (current === 0) {
+          animationColumns[i].push(0);
+        } else {
+          let moveCount = index;
+          let equalCount = 0;
+          let blocker = false;
+
+          for (let j = index - 1; j > -1; j--) {
+            if (checkColumn[j] !== current && checkColumn[j] !== 0) {
+              blocker = true;
+              moveCount--;
+            } else if (checkColumn[j] === current) {
+              equalCount++;
+              if (blocker) {
                 moveCount--;
-              } else if (columns[i][j] === current) {
-                equalCount++;
-                if (blocker) {
-                  moveCount--;
-                }
               }
             }
-            if (equalCount > 1) {
-              moveCount--;
-            }
-            animationColumns[i].push(moveCount);
           }
-        });
-      }
+          if (equalCount > 1) {
+            moveCount--;
+          }
+          animationColumns[i].push(moveCount);
+        }
+      });
+    }
+    if (direction !== 'up') {
+      animationColumns.forEach((column) => {
+        column.reverse();
+      });
     }
     animationColumns.forEach((column) => {
       animationData.push(column[0]);
