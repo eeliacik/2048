@@ -122,18 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
         column.reverse();
       });
     }
-    animationColumns.forEach((column) => {
-      animationData.push(column[0]);
-    });
-    animationColumns.forEach((column) => {
-      animationData.push(column[1]);
-    });
-    animationColumns.forEach((column) => {
-      animationData.push(column[2]);
-    });
-    animationColumns.forEach((column) => {
-      animationData.push(column[3]);
-    });
+    for (let i = 0; i < 4; i++) {
+      animationColumns.forEach((column) => {
+        animationData.push(column[i]);
+      });
+    }
   }
 
   function rowsMoveCheck() {
