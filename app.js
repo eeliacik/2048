@@ -129,23 +129,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function rowsMoveCheck() {
+  function rowsMoveCheck(direction) {
+    console.log('rows: ', rows);
+
     animationData = [];
-    animationRows = [[], [], [], []];
-    // separate loops for each direction
+    animationRows = [[0], [0], [0], [0]];
+
     for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        if (rows[i][j] === 0) {
+      const checkRow = direction === 'left' ? rows[i] : rows[i].reverse();
+
+      checkRow.reduce((_, current, index) => {
+        if (current === 0) {
           animationRows[i].push(0);
-        } else if (rows[i][j] !== 0 && rows[i][j] === rows[i][j + 1]) {
-          animationRows[i].push(j + 1);
         } else {
-          animationRows[i].push(j);
+          let moveCount = index;
+          let equalCount = 0;
+          let blocker = false;
+
+          for (let j = index - 1; j > -1; j--) {
+            if (checkRow[j] !== current && checkRow[j] !== 0) {
+              blocker = true;
+              moveCount--;
+            } else if (checkRow[j] === current) {
+              equalCount++;
+              if (blocker) {
+                moveCount--;
+              }
+            }
+          }
+          if (equalCount > 1) {
+            moveCount--;
+          }
+          animationRows[i].push(moveCount);
         }
-      }
+      });
+    }
+    if (direction !== 'left') {
+      animationRows.forEach((row) => {
+        row.reverse();
+      });
     }
     animationRows.forEach((row) => {
-      animationData.push(row[i]);
+    for (let i = 0; i < 4; i++) {
+        animationData.push(row[i]);
+      }
     });
   }
 
@@ -494,11 +521,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
-      fillRandomSquare();
-      createOperationArrays();
-      lastMoveCheck();
-      fillGameScore();
-      fillBoard();
+
+      rowsMoveCheck('right');
+      animateNum('right');
+
+      setTimeout(() => {
+        fillRandomSquare();
+        createOperationArrays();
+        lastMoveCheck();
+        fillGameScore();
+        fillBoard();
+      }, 200);
     }
   }
   // Move left
@@ -557,11 +590,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!noMoveCheck(mergedSquares, squares)) {
       squares = mergedSquares;
       gameScore += moveScore;
-      fillRandomSquare();
-      createOperationArrays();
-      lastMoveCheck();
-      fillGameScore();
-      fillBoard();
+
+      rowsMoveCheck('left');
+      animateNum('left');
+
+      setTimeout(() => {
+        fillRandomSquare();
+        createOperationArrays();
+        lastMoveCheck();
+        fillGameScore();
+        fillBoard();
+      }, 200);
     }
   }
 
@@ -573,6 +612,10 @@ document.addEventListener('DOMContentLoaded', () => {
         square.classList.add(`move-up-${animationData[i]}`);
       } else if (animationData[i] !== 0 && direction === 'down') {
         square.classList.add(`move-down-${animationData[i]}`);
+      } else if (animationData[i] !== 0 && direction === 'right') {
+        square.classList.add(`move-right-${animationData[i]}`);
+      } else if (animationData[i] !== 0 && direction === 'left') {
+        square.classList.add(`move-left-${animationData[i]}`);
       }
     }
   }

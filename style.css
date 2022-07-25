@@ -319,6 +319,24 @@ body {
 .move-down-3 {
   animation: move-down-3 300ms;
 }
+.move-right-1 {
+  animation: move-right-1 200ms;
+}
+.move-right-2 {
+  animation: move-right-2 250ms;
+}
+.move-right-3 {
+  animation: move-right-3 300ms;
+}
+.move-left-1 {
+  animation: move-left-1 200ms;
+}
+.move-left-2 {
+  animation: move-left-2 250ms;
+}
+.move-left-3 {
+  animation: move-left-3 300ms;
+}
 
 @keyframes opacity-decrease {
   from {
@@ -384,6 +402,56 @@ body {
   }
   to {
     transform: translateY(19.8rem);
+  }
+}
+
+@keyframes move-right-1 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(6.6rem);
+  }
+}
+@keyframes move-right-2 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(13.2rem);
+  }
+}
+@keyframes move-right-3 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(19.8rem);
+  }
+}
+
+@keyframes move-left-1 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-6.6rem);
+  }
+}
+@keyframes move-left-2 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-13.2rem);
+  }
+}
+@keyframes move-left-3 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-19.8rem);
   }
 }
 
