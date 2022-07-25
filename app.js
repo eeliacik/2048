@@ -361,10 +361,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // *** 
     // columnsPopUpCheck('up', orderedColumns);
 
+    animationData.popUps = []
+    let animationColumns = [[], [], [], []];
+
     let mergedColumns = [];
     let moveScore = 0;
     for (let i = 0; i < 4; i++) {
       if (
+        orderedColumns[i].every(num => num !== 0) &&
         orderedColumns[i][0] === orderedColumns[i][1] &&
         orderedColumns[i][2] === orderedColumns[i][3]
       ) {
@@ -373,22 +377,42 @@ document.addEventListener('DOMContentLoaded', () => {
         orderedColumns[i][1] = orderedColumns[i][2] * 2;
         orderedColumns[i][2] = 0;
         orderedColumns[i][3] = 0;
+
+        animationColumns[i] = [1, 1, 0, 0];  
+        
       } else {
         for (let j = 0; j < 3; j++) {
           let firstNum = orderedColumns[i][j];
           let secondNum = orderedColumns[i][j + 1];
-          if ((firstNum !== 0) & (firstNum === secondNum)) {
+          if (firstNum !== 0 && firstNum === secondNum) {
             moveScore += firstNum;
             orderedColumns[i][j] = firstNum + secondNum;
             orderedColumns[i][j + 1] = 0;
+
+            animationColumns[i].push(1);
+            
           } else if (firstNum === 0 && secondNum !== 0) {
             orderedColumns[i][j] = secondNum;
             orderedColumns[i][j + 1] = 0;
+
+            animationColumns[i].push(0);
+            
+          } else if (
+            (firstNum === 0 && secondNum === 0) ||
+            (firstNum !== 0 && secondNum === 0)
+          ) {
+            animationColumns[i].push(0);
           }
         }
       }
+      
+      animationColumns[i].push(0);
+      
       mergedColumns = orderedColumns;
     }
+
+    console.log('merge pop-up animation columns', animationColumns)
+    
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][0]);
@@ -643,7 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function animateNumberPopUp() {
-    
+
   }
 });
 
