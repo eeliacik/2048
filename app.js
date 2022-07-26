@@ -627,13 +627,20 @@ document.addEventListener('DOMContentLoaded', () => {
       let newRow = nums.concat(zeros);
       orderedRows.push(newRow);
     }
+
+
+    animationData.popUps = [];
+    let animationRows = [[], [], [], []];
+
     let mergedRows = [];
     let moveScore = 0;
     for (let i = 0; i < 4; i++) {
       if (
+        orderedRows[i].every((num) => num !== 0) &&
         orderedRows[i][0] === orderedRows[i][1] &&
         orderedRows[i][2] === orderedRows[i][3]
       ) {
+        animationRows[i] = [1, 1, 0, 0];
         moveScore += orderedRows[i][0] + orderedRows[i][2];
         orderedRows[i][0] *= 2;
         orderedRows[i][1] = orderedRows[i][2] * 2;
@@ -643,18 +650,41 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let j = 0; j < 3; j++) {
           let firstNum = orderedRows[i][j];
           let secondNum = orderedRows[i][j + 1];
-          if (firstNum === secondNum) {
-            moveScore += firstNum;
-            orderedRows[i][j] = firstNum + secondNum;
-            orderedRows[i][j + 1] = 0;
-          } else if (firstNum === 0 && secondNum !== 0) {
-            orderedRows[i][j] = secondNum;
-            orderedRows[i][j + 1] = 0;
+          if (firstNum !== 0) {
+            if (secondNum === firstNum) {
+              moveScore += firstNum;
+              orderedRows[i][j] = firstNum + secondNum;
+              orderedRows[i][j + 1] = 0;
+              animationRows[i].push(1);
+            } else if (secondNum === 0) {
+              animationRows[i].push(0);
+            } else if (secondNum !== 0 && secondNum !== firstNum) {
+              animationRows[i].push(0);
+            }
+          } else {
+            if (secondNum !== 0) {
+              orderedRows[i][j] = secondNum;
+              orderedRows[i][j + 1] = 0;
+              animationRows[i].push(0);
+            } else {
+              animationRows[i].push(0);
+            }
           }
         }
       }
+      if (animationRows[i].length < 4) {
+        animationRows[i].push(0);
+      }
       mergedRows = orderedRows;
     }
+
+    console.log('merge pop-up animation rows', animationRows);
+    animationRows.forEach((row) => {
+        for (let i = 0; i < 4; i++) {
+        animationData.popUps.push(row[i]);
+      }
+    });
+
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedRows[0][i]);
@@ -681,6 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastMoveCheck();
         fillGameScore();
         fillBoard();
+        animatePopUp();
       }, 200);
     }
   }
