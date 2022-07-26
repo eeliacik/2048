@@ -305,40 +305,40 @@ body {
   z-index: 4;
 }
 .move-up-1 {
-  animation: move-up-1 200ms;
+  animation: move-up-1 100ms;
 }
 .move-up-2 {
-  animation: move-up-2 200ms;
+  animation: move-up-2 100ms;
 }
 .move-up-3 {
-  animation: move-up-3 200ms;
+  animation: move-up-3 100ms;
 }
 .move-down-1 {
-  animation: move-down-1 200ms;
+  animation: move-down-1 100ms;
 }
 .move-down-2 {
-  animation: move-down-2 200ms;
+  animation: move-down-2 100ms;
 }
 .move-down-3 {
-  animation: move-down-3 200ms;
+  animation: move-down-3 100ms;
 }
 .move-right-1 {
-  animation: move-right-1 200ms;
+  animation: move-right-1 100ms;
 }
 .move-right-2 {
-  animation: move-right-2 200ms;
+  animation: move-right-2 100ms;
 }
 .move-right-3 {
-  animation: move-right-3 200ms;
+  animation: move-right-3 100ms;
 }
 .move-left-1 {
-  animation: move-left-1 200ms;
+  animation: move-left-1 100ms;
 }
 .move-left-2 {
-  animation: move-left-2 200ms;
+  animation: move-left-2 100ms;
 }
 .move-left-3 {
-  animation: move-left-3 200ms;
+  animation: move-left-3 100ms;
 }
 
 @keyframes opacity-decrease {
