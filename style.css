@@ -211,7 +211,7 @@ body {
   background-color: var(--color-03);
 }
 .game-board-base {
-  z-index: 2;
+  z-index: 1;
   position: absolute;
   width: 27rem;
   height: 27rem;
@@ -223,7 +223,7 @@ body {
   background-color: var(--color-03);
 }
 .game-square-base {
-  z-index: 3;
+  z-index: 2;
   width: 6rem;
   height: 6rem;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
@@ -231,7 +231,7 @@ body {
   background-color: var(--color-04);
 }
 .game-square {
-  z-index: 4;
+  z-index: 3;
   width: 6rem;
   height: 6rem;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
@@ -300,6 +300,9 @@ body {
 .color-4096 {
   color: var(--color-sq-6);
   background-color: var(--color-sq-bg-12);
+}
+.move-index {
+  z-index: 4;
 }
 .move-up-1 {
   animation: move-up-1 200ms;

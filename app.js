@@ -720,17 +720,20 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       if (animationData.moves[i] !== 0 && direction === 'up') {
+        square.classList.add('move-index');
         square.classList.add(`move-up-${animationData.moves[i]}`);
       } else if (animationData.moves[i] !== 0 && direction === 'down') {
+        square.classList.add('move-index');
         square.classList.add(`move-down-${animationData.moves[i]}`);
       } else if (animationData.moves[i] !== 0 && direction === 'right') {
+        square.classList.add('move-index');
         square.classList.add(`move-right-${animationData.moves[i]}`);
       } else if (animationData[i] !== 0 && direction === 'left') {
+        square.classList.add('move-index');
         square.classList.add(`move-left-${animationData.moves[i]}`);
       }
     }
   }
-
   function animatePopUp() {
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
