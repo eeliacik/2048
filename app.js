@@ -431,34 +431,92 @@ document.addEventListener('DOMContentLoaded', () => {
       let newColumn = zeros.concat(nums);
       orderedColumns.push(newColumn);
     }
-    let mergedColumns = [];
-    let moveScore = 0;
-    for (let i = 0; i < 4; i++) {
-      if (
-        orderedColumns[i][0] === orderedColumns[i][1] &&
-        orderedColumns[i][2] === orderedColumns[i][3]
-      ) {
-        moveScore += orderedColumns[i][0] + orderedColumns[i][2];
-        orderedColumns[i][3] *= 2;
-        orderedColumns[i][2] = orderedColumns[i][1] * 2;
-        orderedColumns[i][1] = 0;
-        orderedColumns[i][0] = 0;
-      } else {
-        for (let j = 3; j > 0; j--) {
-          let firstNum = orderedColumns[i][j];
-          let secondNum = orderedColumns[i][j - 1];
-          if (firstNum === secondNum) {
-            moveScore += firstNum;
-            orderedColumns[i][j] = firstNum + secondNum;
-            orderedColumns[i][j - 1] = 0;
-          } else if (firstNum === 0 && secondNum !== 0) {
-            orderedColumns[i][j] = secondNum;
-            orderedColumns[i][j - 1] = 0;
+
+        animationData.popUps = [];
+        let animationColumns = [[], [], [], []];
+
+        let mergedColumns = [];
+        let moveScore = 0;
+        for (let i = 0; i < 4; i++) {
+          if (
+            orderedColumns[i].every((num) => num !== 0) &&
+            orderedColumns[i][0] === orderedColumns[i][1] &&
+            orderedColumns[i][2] === orderedColumns[i][3]
+          ) {
+            animationColumns[i] = [0, 0, 1, 1];
+            moveScore += orderedColumns[i][0] + orderedColumns[i][2];
+            orderedColumns[i][3] *= 2;
+            orderedColumns[i][2] = orderedColumns[i][1] * 2;
+            orderedColumns[i][1] = 0;
+            orderedColumns[i][0] = 0;
+          } else {
+            for (let j = 3; j > 0; j--) {
+              let firstNum = orderedColumns[i][j];
+              let secondNum = orderedColumns[i][j - 1];
+              if (firstNum !== 0) {
+                if (secondNum === firstNum) {
+                  moveScore += firstNum;
+                  orderedColumns[i][j] = firstNum + secondNum;
+                  orderedColumns[i][j - 1] = 0;
+                  animationColumns[i].unshift(1);
+                } else if (secondNum === 0) {
+                  animationColumns[i].unshift(0);
+                } else if (secondNum !== 0 && secondNum !== firstNum) {
+                  animationColumns[i].unshift(0);
+                }
+              } else {
+                if (secondNum !== 0) {
+                  orderedColumns[i][j] = secondNum;
+                  orderedColumns[i][j - 1] = 0;
+                  animationColumns[i].unshift(0);
+                } else {
+                  animationColumns[i].unshift(0);
+                }
+              }
+            }
           }
+          if (animationColumns[i].length < 4) {
+            animationColumns[i].unshift(0);
+          }
+          mergedColumns = orderedColumns;
         }
-      }
-      mergedColumns = orderedColumns;
-    }
+
+        console.log('merge pop-up animation columns', animationColumns);
+        for (let i = 0; i < 4; i++) {
+          animationColumns.forEach((column) => {
+            animationData.popUps.push(column[i]);
+          });
+        }
+
+    // let mergedColumns = [];
+    // let moveScore = 0;
+    // for (let i = 0; i < 4; i++) {
+    //   if (
+    //     orderedColumns[i][0] === orderedColumns[i][1] &&
+    //     orderedColumns[i][2] === orderedColumns[i][3]
+    //   ) {
+    //     moveScore += orderedColumns[i][0] + orderedColumns[i][2];
+    //     orderedColumns[i][3] *= 2;
+    //     orderedColumns[i][2] = orderedColumns[i][1] * 2;
+    //     orderedColumns[i][1] = 0;
+    //     orderedColumns[i][0] = 0;
+    //   } else {
+    //     for (let j = 3; j > 0; j--) {
+    //       let firstNum = orderedColumns[i][j];
+    //       let secondNum = orderedColumns[i][j - 1];
+    //       if (firstNum === secondNum) {
+    //         moveScore += firstNum;
+    //         orderedColumns[i][j] = firstNum + secondNum;
+    //         orderedColumns[i][j - 1] = 0;
+    //       } else if (firstNum === 0 && secondNum !== 0) {
+    //         orderedColumns[i][j] = secondNum;
+    //         orderedColumns[i][j - 1] = 0;
+    //       }
+    //     }
+    //   }
+    //   mergedColumns = orderedColumns;
+    // }
+
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][0]);
@@ -485,6 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastMoveCheck();
         fillGameScore();
         fillBoard();
+        animatePopUp();
       }, 200);
     }
   }
@@ -644,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       if (animationData.popUps[i]) {
-        square.classList.add('colored-square');
+        square.classList.add('pop-up');
       }
     }
   }

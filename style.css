@@ -248,7 +248,7 @@ body {
   padding: 1.3rem 0.1rem 1rem 0.1rem;
   font-size: 2.2rem;
 }
-.colored-square {
+.pop-up {
   z-index: 4;
   animation: pop-up 100ms;
   transform-origin: center;
