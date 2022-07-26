@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let squares = [];
   let rows = [];
   let columns = [];
-  let animationData = [];
+  let animationData = {
+    moves: [],
+    popUps: [],
+  };
   let gameScore = 0;
   let highScore = 0;
   let gameWon = false;
@@ -70,27 +73,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function numberCheck(index, num) {
     let square = document.getElementById('sq-' + index);
-
     square.classList.remove(
       ...Array.from(square.classList).filter(
         (className) => className !== 'game-square'
       )
     );
     if (num !== 0) {
-      square.classList.add('colored-square', `color-${num}`);
+      square.classList.add(`color-${num}`);
     }
   }
-
   function columnsMoveCheck(direction) {
     console.log('columns: ', columns);
 
-    animationData = [];
+    animationData.moves = [];
     animationColumns = [[0], [0], [0], [0]];
-
     for (let i = 0; i < 4; i++) {
-      const checkColumn =
-        direction === 'up' ? columns[i] : columns[i].reverse();
-
+      const checkColumn = direction === 'up' ? columns[i] : columns[i].reverse();
       checkColumn.reduce((_, current, index) => {
         if (current === 0) {
           animationColumns[i].push(0);
@@ -98,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
           let moveCount = index;
           let equalCount = 0;
           let blocker = false;
-
           for (let j = index - 1; j > -1; j--) {
             if (checkColumn[j] !== current && checkColumn[j] !== 0) {
               blocker = true;
@@ -124,15 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     for (let i = 0; i < 4; i++) {
       animationColumns.forEach((column) => {
-        animationData.push(column[i]);
+        animationData.moves.push(column[i]);
       });
     }
   }
-
   function rowsMoveCheck(direction) {
     console.log('rows: ', rows);
 
-    animationData = [];
+    animationData.moves = [];
     animationRows = [[0], [0], [0], [0]];
 
     for (let i = 0; i < 4; i++) {
@@ -170,12 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
     animationRows.forEach((row) => {
-    for (let i = 0; i < 4; i++) {
-        animationData.push(row[i]);
+      for (let i = 0; i < 4; i++) {
+        animationData.moves.push(row[i]);
       }
     });
   }
-
   function fillBoard() {
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
@@ -327,7 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
       moveRight();
     }
   }
-  // Move up
   function moveUp() {
     let orderedColumns = [];
     for (let i = 0; i < 4; i++) {
@@ -339,13 +333,19 @@ document.addEventListener('DOMContentLoaded', () => {
       let newColumn = nums.concat(zeros);
       orderedColumns.push(newColumn);
     }
+
+    animationData.popUps = [];
+    let animationColumns = [[], [], [], []];
+
     let mergedColumns = [];
     let moveScore = 0;
     for (let i = 0; i < 4; i++) {
       if (
+        orderedColumns[i].every((num) => num !== 0) &&
         orderedColumns[i][0] === orderedColumns[i][1] &&
         orderedColumns[i][2] === orderedColumns[i][3]
       ) {
+        animationColumns[i] = [1, 1, 0, 0];
         moveScore += orderedColumns[i][0] + orderedColumns[i][2];
         orderedColumns[i][0] *= 2;
         orderedColumns[i][1] = orderedColumns[i][2] * 2;
@@ -355,18 +355,41 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let j = 0; j < 3; j++) {
           let firstNum = orderedColumns[i][j];
           let secondNum = orderedColumns[i][j + 1];
-          if ((firstNum !== 0) & (firstNum === secondNum)) {
-            moveScore += firstNum;
-            orderedColumns[i][j] = firstNum + secondNum;
-            orderedColumns[i][j + 1] = 0;
-          } else if (firstNum === 0 && secondNum !== 0) {
-            orderedColumns[i][j] = secondNum;
-            orderedColumns[i][j + 1] = 0;
+          if (firstNum !== 0) {
+            if (secondNum === firstNum) {
+              moveScore += firstNum;
+              orderedColumns[i][j] = firstNum + secondNum;
+              orderedColumns[i][j + 1] = 0;
+              animationColumns[i].push(1);
+            } else if (secondNum === 0) {
+              animationColumns[i].push(0);
+            } else if (secondNum !== 0 && secondNum !== firstNum) {
+              animationColumns[i].push(0);
+            }
+          } else {
+            if (secondNum !== 0) {
+              orderedColumns[i][j] = secondNum;
+              orderedColumns[i][j + 1] = 0;
+              animationColumns[i].push(0);
+            } else {
+              animationColumns[i].push(0);
+            }
           }
         }
       }
+      if (animationColumns[i].length < 4) {
+        animationColumns[i].push(0);
+      }
       mergedColumns = orderedColumns;
     }
+
+    console.log('merge pop-up animation columns', animationColumns);
+    for (let i = 0; i < 4; i++) {
+      animationColumns.forEach((column) => {
+        animationData.popUps.push(column[i]);
+      });
+    }
+
     let mergedSquares = [];
     for (let i = 0; i < 4; i++) {
       mergedSquares.push(mergedColumns[i][0]);
@@ -385,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       columnsMoveCheck('up');
-      animateNum('up');
+      animateNumberMove('up');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -393,10 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
         lastMoveCheck();
         fillGameScore();
         fillBoard();
+        animatePopUp();
       }, 200);
     }
   }
-  // Move down
   function moveDown() {
     let orderedColumns = [];
     for (let i = 0; i < 4; i++) {
@@ -454,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       columnsMoveCheck('down');
-      animateNum('down');
+      animateNumberMove('down');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -465,7 +488,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 200);
     }
   }
-  // Move right
   function moveRight() {
     let orderedRows = [];
     for (let i = 0; i < 4; i++) {
@@ -523,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       rowsMoveCheck('right');
-      animateNum('right');
+      animateNumberMove('right');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -534,7 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 200);
     }
   }
-  // Move left
   function moveLeft() {
     let orderedRows = [];
     for (let i = 0; i < 4; i++) {
@@ -592,7 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       rowsMoveCheck('left');
-      animateNum('left');
+      animateNumberMove('left');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -603,25 +624,33 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 200);
     }
   }
-
-  function animateNum(direction) {
-    console.log('animation data: ', animationData);
+  function animateNumberMove(direction) {
+    console.log('animation data: ', animationData.moves);
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
-      if (animationData[i] !== 0 && direction === 'up') {
-        square.classList.add(`move-up-${animationData[i]}`);
-      } else if (animationData[i] !== 0 && direction === 'down') {
-        square.classList.add(`move-down-${animationData[i]}`);
-      } else if (animationData[i] !== 0 && direction === 'right') {
-        square.classList.add(`move-right-${animationData[i]}`);
+      if (animationData.moves[i] !== 0 && direction === 'up') {
+        square.classList.add(`move-up-${animationData.moves[i]}`);
+      } else if (animationData.moves[i] !== 0 && direction === 'down') {
+        square.classList.add(`move-down-${animationData.moves[i]}`);
+      } else if (animationData.moves[i] !== 0 && direction === 'right') {
+        square.classList.add(`move-right-${animationData.moves[i]}`);
       } else if (animationData[i] !== 0 && direction === 'left') {
-        square.classList.add(`move-left-${animationData[i]}`);
+        square.classList.add(`move-left-${animationData.moves[i]}`);
+      }
+    }
+  }
+
+  function animatePopUp() {
+    for (let i = 0; i < 16; i++) {
+      let square = document.getElementById('sq-' + i);
+      if (animationData.popUps[i]) {
+        square.classList.add('colored-square');
       }
     }
   }
 });
 
-// function animateNumber(element, count, axis) {
+// function animateNumberMoveber(element, count, axis) {
 //   const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${
 //     count * 0.6
 //   }rem)`;

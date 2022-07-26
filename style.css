@@ -250,8 +250,8 @@ body {
 }
 .colored-square {
   z-index: 4;
-  /* animation: pop-up 200ms;
-  transform-origin: center; */
+  animation: pop-up 100ms;
+  transform-origin: center;
 }
 .color-2 {
   color: var(--color-sq-2);
@@ -305,37 +305,37 @@ body {
   animation: move-up-1 200ms;
 }
 .move-up-2 {
-  animation: move-up-2 250ms;
+  animation: move-up-2 200ms;
 }
 .move-up-3 {
-  animation: move-up-3 300ms;
+  animation: move-up-3 200ms;
 }
 .move-down-1 {
   animation: move-down-1 200ms;
 }
 .move-down-2 {
-  animation: move-down-2 250ms;
+  animation: move-down-2 200ms;
 }
 .move-down-3 {
-  animation: move-down-3 300ms;
+  animation: move-down-3 200ms;
 }
 .move-right-1 {
   animation: move-right-1 200ms;
 }
 .move-right-2 {
-  animation: move-right-2 250ms;
+  animation: move-right-2 200ms;
 }
 .move-right-3 {
-  animation: move-right-3 300ms;
+  animation: move-right-3 200ms;
 }
 .move-left-1 {
   animation: move-left-1 200ms;
 }
 .move-left-2 {
-  animation: move-left-2 250ms;
+  animation: move-left-2 200ms;
 }
 .move-left-3 {
-  animation: move-left-3 300ms;
+  animation: move-left-3 200ms;
 }
 
 @keyframes opacity-decrease {
