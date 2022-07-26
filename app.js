@@ -418,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fillGameScore();
         fillBoard();
         animatePopUp();
-      }, 200);
+      }, 80);
     }
   }
   function moveDown() {
@@ -515,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fillGameScore();
         fillBoard();
         animatePopUp();
-      }, 200);
+      }, 80);
     }
   }
   function moveRight() {
@@ -613,7 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fillGameScore();
         fillBoard();
         animatePopUp();
-      }, 200);
+      }, 80);
     }
   }
   function moveLeft() {
@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fillGameScore();
         fillBoard();
         animatePopUp();
-      }, 200);
+      }, 80);
     }
   }
   function animateNumberMove(direction) {
