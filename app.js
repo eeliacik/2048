@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let animationData = {
     moves: [],
     popUps: [],
-    random: null
+    newNumbers: []
   };
   let gameScore = 0;
   let highScore = 0;
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let twoOrFour = Math.random() > 0.1 ? 2 : 4;
       if (squares[num] === 0) {
         squares[num] = twoOrFour;
-        animationData.random = num;
+        animationData.newNumbers.push(num);
       } else fillRandomSquare();
     }
   }
@@ -87,8 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function columnsMoveCheck(direction) {
-    console.log('columns: ', columns);
-
     animationData.moves = [];
     animationColumns = [[0], [0], [0], [0]];
     for (let i = 0; i < 4; i++) {
@@ -131,8 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function rowsMoveCheck(direction) {
-    console.log('rows: ', rows);
-
     animationData.moves = [];
     animationRows = [[0], [0], [0], [0]];
 
@@ -387,8 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedColumns = orderedColumns;
     }
-
-    console.log('merge pop-up animation columns', animationColumns);
     for (let i = 0; i < 4; i++) {
       animationColumns.forEach((column) => {
         animationData.popUps.push(column[i]);
@@ -485,8 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedColumns = orderedColumns;
     }
-
-    console.log('merge pop-up animation columns', animationColumns);
     for (let i = 0; i < 4; i++) {
       animationColumns.forEach((column) => {
         animationData.popUps.push(column[i]);
@@ -582,8 +574,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedRows = orderedRows;
     }
-
-    console.log('merge pop-up animation rows', animationRows);
     animationRows.forEach((row) => {
       for (let i = 0; i < 4; i++) {
         animationData.popUps.push(row[i]);
@@ -681,8 +671,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       mergedRows = orderedRows;
     }
-
-    console.log('merge pop-up animation rows', animationRows);
     animationRows.forEach((row) => {
         for (let i = 0; i < 4; i++) {
         animationData.popUps.push(row[i]);
@@ -720,7 +708,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function animateMove(direction) {
-    console.log('animation data: ', animationData.moves);
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
       if (animationData.moves[i] !== 0 && direction === 'up') {
@@ -745,6 +732,9 @@ document.addEventListener('DOMContentLoaded', () => {
           square.classList.add('pop-up');
         }
     }
+  }
+  function animateNew() {
+    
   }
 });
 
