@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let animationData = {
     moves: [],
     popUps: [],
+    random: null
   };
   let gameScore = 0;
   let highScore = 0;
@@ -37,7 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (squares.includes(0)) {
       let num = Math.floor(Math.random() * squares.length);
       let twoOrFour = Math.random() > 0.1 ? 2 : 4;
-      squares[num] === 0 ? (squares[num] = twoOrFour) : fillRandomSquare();
+      if (squares[num] === 0) {
+        squares[num] = twoOrFour;
+        animationData.random = num;
+      } else fillRandomSquare();
     }
   }
   function createBoard() {
@@ -409,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       columnsMoveCheck('up');
-      animateNumberMove('up');
+      animateMove('up');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -506,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       columnsMoveCheck('down');
-      animateNumberMove('down');
+      animateMove('down');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -604,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       rowsMoveCheck('right');
-      animateNumberMove('right');
+      animateMove('right');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -703,7 +707,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameScore += moveScore;
 
       rowsMoveCheck('left');
-      animateNumberMove('left');
+      animateMove('left');
 
       setTimeout(() => {
         fillRandomSquare();
@@ -715,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 80);
     }
   }
-  function animateNumberMove(direction) {
+  function animateMove(direction) {
     console.log('animation data: ', animationData.moves);
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
@@ -735,16 +739,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function animatePopUp() {
-    for (let i = 0; i < 16; i++) {
-      let square = document.getElementById('sq-' + i);
-      if (animationData.popUps[i]) {
-        square.classList.add('pop-up');
-      }
+      for (let i = 0; i < 16; i++) {
+        if (animationData.popUps[i]) {
+        let square = document.getElementById('sq-' + i);
+          square.classList.add('pop-up');
+        }
     }
   }
 });
 
-// function animateNumberMoveber(element, count, axis) {
+// function animateNumber(element, count, axis) {
 //   const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${
 //     count * 0.6
 //   }rem)`;
