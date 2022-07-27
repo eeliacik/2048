@@ -48,7 +48,7 @@ body {
   font-family: var(--base-font);
 }
 .dialog-wrapper {
-  z-index: 6;
+  z-index: 7;
   position: fixed;
   display: none;
   width: 100%;
@@ -340,6 +340,10 @@ body {
 .move-left-3 {
   animation: move-left-3 100ms;
 }
+.new-number {
+  z-index: 6;
+  animation: new-number 150ms
+}
 
 @keyframes opacity-decrease {
   from {
@@ -467,5 +471,14 @@ body {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes new-number {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1)
   }
 }
