@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fillSquares();
   createBoard();
+  fillRandomSquare();
+  fillRandomSquare();
+  fillBoard();
+  animateNew();
   createOperationArrays();
 
   function fillSquares() {
@@ -46,9 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function createBoard() {
     // squares = [0, 0, 2, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 0, 4096,];
-    // squares = [0, 0, 0, 2, 0, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2];
-    fillRandomSquare();
-    fillRandomSquare();
     for (let i = 0; i < 16; i++) {
       let squareBase = document.createElement('div');
       squareBase.className = 'game-square-base';
@@ -56,11 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let square = document.createElement('div');
       square.className = 'game-square';
       square.id = 'sq-' + i;
-      squares[i] === 0
-        ? (square.innerHTML = '')
-        : (square.innerHTML = squares[i]);
       gameBoard.appendChild(square);
-      numberCheck(i, squares[i]);
     }
   }
   function fillGameScore() {
@@ -303,12 +300,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reset game
   function resetGame() {
     gameScore = 0;
+    animationData.newNumbers = [];
     fillGameScore();
     fillSquares();
     fillRandomSquare();
     fillRandomSquare();
     createOperationArrays();
     fillBoard();
+    animateNew();
   }
   // Move direction controller
   document.addEventListener('keyup', controlArrows);
@@ -334,10 +333,10 @@ document.addEventListener('DOMContentLoaded', () => {
       let newColumn = nums.concat(zeros);
       orderedColumns.push(newColumn);
     }
-
     animationData.popUps = [];
-    let animationColumns = [[], [], [], []];
+    animationData.newNumbers = [];
 
+    let animationColumns = [[], [], [], []];
     let mergedColumns = [];
     let moveScore = 0;
     for (let i = 0; i < 4; i++) {
@@ -416,6 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fillGameScore();
         fillBoard();
         animatePopUp();
+        animateNew();
       }, 80);
     }
   }
@@ -430,10 +430,10 @@ document.addEventListener('DOMContentLoaded', () => {
       let newColumn = zeros.concat(nums);
       orderedColumns.push(newColumn);
     }
-
-    animationData.popUps = [];
+animationData.popUps = [];
+    animationData.newNumbers = [];
+    
     let animationColumns = [[], [], [], []];
-
     let mergedColumns = [];
     let moveScore = 0;
     for (let i = 0; i < 4; i++) {
@@ -525,10 +525,10 @@ document.addEventListener('DOMContentLoaded', () => {
       let newRow = zeros.concat(nums);
       orderedRows.push(newRow);
     }
-
-    animationData.popUps = [];
+animationData.popUps = [];
+    animationData.newNumbers = [];
+    
     let animationRows = [[], [], [], []];
-
     let mergedRows = [];
     let moveScore = 0;
     for (let i = 0; i < 4; i++) {
@@ -621,11 +621,10 @@ document.addEventListener('DOMContentLoaded', () => {
       let newRow = nums.concat(zeros);
       orderedRows.push(newRow);
     }
-
-
-    animationData.popUps = [];
+animationData.popUps = [];
+    animationData.newNumbers = [];
+    
     let animationRows = [[], [], [], []];
-
     let mergedRows = [];
     let moveScore = 0;
     for (let i = 0; i < 4; i++) {
@@ -734,7 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function animateNew() {
-    
+    animationData.newNumbers.forEach(num => document.getElementById('sq-' + num).classList.add('new-number'))
   }
 });
 
