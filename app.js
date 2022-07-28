@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let highScore = 0;
   let gameWon = false;
   let dialogOpen = false;
+  let waitTime = 70;
 
   fillSquares();
   createBoard();
@@ -416,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fillBoard();
         animatePopUp();
         animateNew();
-      }, 80);
+      }, waitTime);
     }
   }
   function moveDown() {
@@ -511,7 +512,7 @@ animationData.popUps = [];
         fillGameScore();
         fillBoard();
         animatePopUp();
-      }, 80);
+      }, waitTime);
     }
   }
   function moveRight() {
@@ -607,7 +608,7 @@ animationData.popUps = [];
         fillGameScore();
         fillBoard();
         animatePopUp();
-      }, 80);
+      }, waitTime);
     }
   }
   function moveLeft() {
@@ -703,7 +704,7 @@ animationData.popUps = [];
         fillGameScore();
         fillBoard();
         animatePopUp();
-      }, 80);
+      }, waitTime);
     }
   }
   function animateMove(direction) {

@@ -37,6 +37,10 @@
   --color-sq-4: #fafafa;
   --color-sq-5: #f5f5f5;
   --color-sq-6: #ebebeb;
+
+  --move-time: 200ms;
+  --pop-up-time: 200ms;
+  --new-number-time: 200ms;
 }
 * {
   box-sizing: border-box;
@@ -248,11 +252,6 @@ body {
   padding: 1.3rem 0.1rem 1rem 0.1rem;
   font-size: 2.2rem;
 }
-.pop-up {
-  z-index: 5;
-  animation: pop-up 100ms;
-  transform-origin: center;
-}
 .color-2 {
   color: var(--color-sq-2);
   background-color: var(--color-sq-bg-1);
@@ -305,44 +304,49 @@ body {
   z-index: 4;
 }
 .move-up-1 {
-  animation: move-up-1 100ms;
+  animation: move-up-1 var(--move-time) ease-out;
 }
 .move-up-2 {
-  animation: move-up-2 100ms;
+  animation: move-up-2 var(--move-time) ease-out;
 }
 .move-up-3 {
-  animation: move-up-3 100ms;
+  animation: move-up-3 var(--move-time) ease-out;
 }
 .move-down-1 {
-  animation: move-down-1 100ms;
+  animation: move-down-1 var(--move-time) ease-out;
 }
 .move-down-2 {
-  animation: move-down-2 100ms;
+  animation: move-down-2 var(--move-time) ease-out;
 }
 .move-down-3 {
-  animation: move-down-3 100ms;
+  animation: move-down-3 var(--move-time) ease-out;
 }
 .move-right-1 {
-  animation: move-right-1 100ms;
+  animation: move-right-1 var(--move-time) ease-out;
 }
 .move-right-2 {
-  animation: move-right-2 100ms;
+  animation: move-right-2 var(--move-time) ease-out;
 }
 .move-right-3 {
-  animation: move-right-3 100ms;
+  animation: move-right-3 var(--move-time) ease-out;
 }
 .move-left-1 {
-  animation: move-left-1 100ms;
+  animation: move-left-1 var(--move-time) ease-out;
 }
 .move-left-2 {
-  animation: move-left-2 100ms;
+  animation: move-left-2 var(--move-time) ease-out;
 }
 .move-left-3 {
-  animation: move-left-3 100ms;
+  animation: move-left-3 var(--move-time) ease-out;
 }
 .new-number {
   z-index: 6;
-  animation: new-number 150ms
+  animation: new-number var(--new-number-time) ease-out;
+}
+.pop-up {
+  z-index: 5;
+  animation: pop-up var(--pop-up-time) ease-out;
+  transform-origin: center;
 }
 
 @keyframes opacity-decrease {
@@ -466,8 +470,8 @@ body {
   0% {
     transform: scale(0);
   }
-  90% {
-    transform: scale(1.2);
+  85% {
+    transform: scale(1.1);
   }
   100% {
     transform: scale(1);
