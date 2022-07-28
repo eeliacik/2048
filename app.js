@@ -510,6 +510,7 @@ animationData.popUps = [];
         fillGameScore();
         fillBoard();
         animatePopUp();
+        animateNew();
       }, waitTime);
     }
   }
@@ -606,6 +607,7 @@ animationData.popUps = [];
         fillGameScore();
         fillBoard();
         animatePopUp();
+        animateNew();
       }, waitTime);
     }
   }
@@ -702,6 +704,7 @@ animationData.popUps = [];
         fillGameScore();
         fillBoard();
         animatePopUp();
+        animateNew();
       }, waitTime);
     }
   }
