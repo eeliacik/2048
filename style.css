@@ -340,7 +340,7 @@ body {
   animation: move-left-3 var(--move-time) ease-out;
 }
 .new-number {
-  z-index: 6;
+  /* z-index: 4; */
   animation: new-number var(--new-number-time) ease-out;
 }
 .pop-up {

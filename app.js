@@ -25,15 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let highScore = 0;
   let gameWon = false;
   let dialogOpen = false;
-  let waitTime = 70;
+  let waitTime = 100;
 
   fillSquares();
   createBoard();
   fillRandomSquare();
   fillRandomSquare();
   fillBoard();
-  animateNew();
   createOperationArrays();
+  animateNew();
 
   function fillSquares() {
     let zeroSquares = Array(16).fill(0);
@@ -129,10 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function rowsMoveCheck(direction) {
     animationData.moves = [];
     animationRows = [[0], [0], [0], [0]];
-
     for (let i = 0; i < 4; i++) {
       const checkRow = direction === 'left' ? rows[i] : rows[i].reverse();
-
       checkRow.reduce((_, current, index) => {
         if (current === 0) {
           animationRows[i].push(0);
@@ -381,8 +379,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (animationColumns[i].length < 4) {
         animationColumns[i].push(0);
       }
-      mergedColumns = orderedColumns;
     }
+    mergedColumns = orderedColumns;
     for (let i = 0; i < 4; i++) {
       animationColumns.forEach((column) => {
         animationData.popUps.push(column[i]);
@@ -478,8 +476,8 @@ animationData.popUps = [];
       if (animationColumns[i].length < 4) {
         animationColumns[i].unshift(0);
       }
-      mergedColumns = orderedColumns;
     }
+    mergedColumns = orderedColumns;
     for (let i = 0; i < 4; i++) {
       animationColumns.forEach((column) => {
         animationData.popUps.push(column[i]);
@@ -573,8 +571,8 @@ animationData.popUps = [];
       if (animationRows[i].length < 4) {
         animationRows[i].unshift(0);
       }
-      mergedRows = orderedRows;
     }
+    mergedRows = orderedRows;
     animationRows.forEach((row) => {
       for (let i = 0; i < 4; i++) {
         animationData.popUps.push(row[i]);
@@ -669,8 +667,8 @@ animationData.popUps = [];
       if (animationRows[i].length < 4) {
         animationRows[i].push(0);
       }
-      mergedRows = orderedRows;
     }
+    mergedRows = orderedRows;
     animationRows.forEach((row) => {
         for (let i = 0; i < 4; i++) {
         animationData.popUps.push(row[i]);
@@ -710,16 +708,20 @@ animationData.popUps = [];
   function animateMove(direction) {
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
-      if (animationData.moves[i] !== 0 && direction === 'up') {
+      if (animationData.moves[i] && direction === 'up') {
+        square.classList.remove('new-number');
         square.classList.add('move-index');
         square.classList.add(`move-up-${animationData.moves[i]}`);
-      } else if (animationData.moves[i] !== 0 && direction === 'down') {
+      } else if (animationData.moves[i] && direction === 'down') {
+        square.classList.remove('new-number');
         square.classList.add('move-index');
         square.classList.add(`move-down-${animationData.moves[i]}`);
-      } else if (animationData.moves[i] !== 0 && direction === 'right') {
+      } else if (animationData.moves[i] && direction === 'right') {
+        square.classList.remove('new-number');
         square.classList.add('move-index');
         square.classList.add(`move-right-${animationData.moves[i]}`);
-      } else if (animationData[i] !== 0 && direction === 'left') {
+      } else if (animationData.moves[i] && direction === 'left') {
+        square.classList.remove('new-number');
         square.classList.add('move-index');
         square.classList.add(`move-left-${animationData.moves[i]}`);
       }
