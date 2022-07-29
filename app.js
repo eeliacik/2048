@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let highScore = 0;
   let gameWon = false;
   let dialogOpen = false;
-  let waitTime = 1950;
+  let waitTime = 250;
 
   fillSquares();
   createBoard();
