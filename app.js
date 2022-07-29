@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let animationData = {
     moves: [],
     popUps: [],
-    newNumbers: []
+    newNumbers: [],
   };
   let gameScore = 0;
   let highScore = 0;
   let gameWon = false;
   let dialogOpen = false;
-  let waitTime = 100;
+  let waitTime = 1950;
 
   fillSquares();
   createBoard();
@@ -429,9 +429,9 @@ document.addEventListener('DOMContentLoaded', () => {
       let newColumn = zeros.concat(nums);
       orderedColumns.push(newColumn);
     }
-animationData.popUps = [];
+    animationData.popUps = [];
     animationData.newNumbers = [];
-    
+
     let animationColumns = [[], [], [], []];
     let mergedColumns = [];
     let moveScore = 0;
@@ -525,9 +525,9 @@ animationData.popUps = [];
       let newRow = zeros.concat(nums);
       orderedRows.push(newRow);
     }
-animationData.popUps = [];
+    animationData.popUps = [];
     animationData.newNumbers = [];
-    
+
     let animationRows = [[], [], [], []];
     let mergedRows = [];
     let moveScore = 0;
@@ -622,9 +622,9 @@ animationData.popUps = [];
       let newRow = nums.concat(zeros);
       orderedRows.push(newRow);
     }
-animationData.popUps = [];
+    animationData.popUps = [];
     animationData.newNumbers = [];
-    
+
     let animationRows = [[], [], [], []];
     let mergedRows = [];
     let moveScore = 0;
@@ -672,7 +672,7 @@ animationData.popUps = [];
     }
     mergedRows = orderedRows;
     animationRows.forEach((row) => {
-        for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         animationData.popUps.push(row[i]);
       }
     });
@@ -711,12 +711,11 @@ animationData.popUps = [];
   function animateMove(direction) {
     for (let i = 0; i < 16; i++) {
       let square = document.getElementById('sq-' + i);
+      square.classList.remove('new-number', 'pop-up');
       if (animationData.moves[i] && direction === 'up') {
-        square.classList.remove('new-number');
         square.classList.add('move-index');
         square.classList.add(`move-up-${animationData.moves[i]}`);
       } else if (animationData.moves[i] && direction === 'down') {
-        square.classList.remove('new-number');
         square.classList.add('move-index');
         square.classList.add(`move-down-${animationData.moves[i]}`);
       } else if (animationData.moves[i] && direction === 'right') {
@@ -731,15 +730,17 @@ animationData.popUps = [];
     }
   }
   function animatePopUp() {
-      for (let i = 0; i < 16; i++) {
-        if (animationData.popUps[i]) {
+    for (let i = 0; i < 16; i++) {
+      if (animationData.popUps[i]) {
         let square = document.getElementById('sq-' + i);
-          square.classList.add('pop-up');
-        }
+        square.classList.add('pop-up');
+      }
     }
   }
   function animateNew() {
-    animationData.newNumbers.forEach(num => document.getElementById('sq-' + num).classList.add('new-number'))
+    animationData.newNumbers.forEach((num) =>
+      document.getElementById('sq-' + num).classList.add('new-number')
+    );
   }
 });
 
