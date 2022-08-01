@@ -38,9 +38,9 @@
   --color-sq-5: #f5f5f5;
   --color-sq-6: #ebebeb;
 
-  --move-time: 250ms;
-  --pop-up-time: 200ms;
-  --new-number-time: 200ms;
+  --move-time: 1000ms;
+  --pop-up-time: 1000ms;
+  --new-number-time: 1000ms;
 }
 * {
   box-sizing: border-box;

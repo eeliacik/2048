@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let highScore = 0;
   let gameWon = false;
   let dialogOpen = false;
-  let waitTime = 250;
+  let waitTime = 950;
 
   fillSquares();
   createBoard();
@@ -90,30 +90,78 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < 4; i++) {
       const checkColumn =
         direction === 'up' ? columns[i] : columns[i].reverse();
-      checkColumn.reduce((_, current, index) => {
-        if (current === 0) {
-          animationColumns[i].push(0);
+
+      if (checkColumn.every((num) => num !== 0)) {
+        if (checkColumn[0] === checkColumn[1]) {
+          checkColumn[2] === checkColumn[3]
+            ? animationColumns[i].push(1, 1, 2)
+            : animationColumns[i].push(1, 1, 1);
         } else {
-          let moveCount = index;
-          let equalCount = 0;
-          let blocker = false;
-          for (let j = index - 1; j > -1; j--) {
-            if (checkColumn[j] !== current && checkColumn[j] !== 0) {
-              blocker = true;
-              moveCount--;
-            } else if (checkColumn[j] === current) {
-              equalCount++;
-              if (blocker) {
+          if (checkColumn[2] === checkColumn[3]) {
+            animationColumns[i].push(0, 0, 1);
+          } else if (checkColumn[1] === checkColumn[2]) {
+            animationColumns[i].push(0, 1, 1);
+          } else {
+            animationColumns[i].push(0, 0, 0);
+          }
+        }
+      } else if (checkColumn[0] !== 0 && checkColumn[0] === checkColumn[1]) {
+        if (checkColumn[2] && !checkColumn[3]) {
+          animationColumns[i].push(1, 1, 0);
+        } else if (!checkColumn[2] && checkColumn[3]) {
+          animationColumns[i].push(1, 0, 2);
+        } else {
+          animationColumns[i].push(1, 0, 0);
+        }
+      } else if (checkColumn[2] !== 0) {
+        if (checkColumn[2] === checkColumn[0] && checkColumn[1] === 0) {
+          checkColumn[3]
+            ? animationColumns[i].push(0, 2, 2)
+            : animationColumns[i].push(0, 2, 0);
+        } else if (checkColumn[2] === checkColumn[1] && checkColumn[0] === 0) {
+          checkColumn[3]
+            ? animationColumns[i].push(1, 2, 2)
+            : animationColumns[i].push(1, 2, 0);
+        } else {
+          checkColumn.reduce((_, current, index) => {
+            if (current === 0) {
+              animationColumns[i].push(0);
+            } else {
+              let moveCount = index;
+              let blocker = false;
+              for (let j = index - 1; j > -1; j--) {
+                let num = checkColumn[j];
+                if (num !== 0 && num !== current) {
+                  blocker = true;
+                  moveCount--;
+                } else if (blocker && num === current) {
+                  moveCount--;
+                }
+              }
+              animationColumns[i].push(moveCount);
+            }
+          });
+        }
+      } else {
+        checkColumn.reduce((_, current, index) => {
+          if (current === 0) {
+            animationColumns[i].push(0);
+          } else {
+            let moveCount = index;
+            let blocker = false;
+            for (let j = index - 1; j > -1; j--) {
+              let num = checkColumn[j];
+              if (num !== 0 && num !== current) {
+                blocker = true;
+                moveCount--;
+              } else if (blocker && num === current) {
                 moveCount--;
               }
             }
+            animationColumns[i].push(moveCount);
           }
-          if (equalCount > 1) {
-            moveCount--;
-          }
-          animationColumns[i].push(moveCount);
-        }
-      });
+        });
+      }
     }
     if (direction !== 'up') {
       animationColumns.forEach((column) => {
@@ -131,31 +179,77 @@ document.addEventListener('DOMContentLoaded', () => {
     animationRows = [[0], [0], [0], [0]];
     for (let i = 0; i < 4; i++) {
       const checkRow = direction === 'left' ? rows[i] : rows[i].reverse();
-      checkRow.reduce((_, current, index) => {
-        if (current === 0) {
-          animationRows[i].push(0);
+      if (checkRow.every((num) => num !== 0)) {
+        if (checkRow[0] === checkRow[1]) {
+          checkRow[2] === checkRow[3]
+            ? animationRows[i].push(1, 1, 2)
+            : animationRows[i].push(1, 1, 1);
         } else {
-          let moveCount = index;
-          let equalCount = 0;
-          let blocker = false;
-
-          for (let j = index - 1; j > -1; j--) {
-            if (checkRow[j] !== current && checkRow[j] !== 0) {
-              blocker = true;
-              moveCount--;
-            } else if (checkRow[j] === current) {
-              equalCount++;
-              if (blocker) {
+          if (checkRow[2] === checkRow[3]) {
+            animationRows[i].push(0, 0, 1);
+          } else if (checkRow[1] === checkRow[2]) {
+            animationRows[i].push(0, 1, 1);
+          } else {
+            animationRows[i].push(0, 0, 0);
+          }
+        }
+      } else if (checkRow[0] !== 0 && checkRow[0] === checkRow[1]) {
+        if (checkRow[2] && !checkRow[3]) {
+          animationRows[i].push(1, 1, 0);
+        } else if (!checkRow[2] && checkRow[3]) {
+          animationRows[i].push(1, 0, 2);
+        } else {
+          animationRows[i].push(1, 0, 0);
+        }
+      } else if (checkRow[2] !== 0) {
+        if (checkRow[2] === checkRow[0] && checkRow[1] === 0) {
+          checkRow[3]
+            ? animationRows[i].push(0, 2, 2)
+            : animationRows[i].push(0, 2, 0);
+        } else if (checkRow[2] === checkRow[1] && checkRow[0] === 0) {
+          checkRow[3]
+            ? animationRows[i].push(1, 2, 2)
+            : animationRows[i].push(1, 2, 0);
+        } else {
+          checkRow.reduce((_, current, index) => {
+            if (current === 0) {
+              animationRows[i].push(0);
+            } else {
+              let moveCount = index;
+              let blocker = false;
+              for (let j = index - 1; j > -1; j--) {
+                let num = checkRow[j];
+                if (num !== 0 && num !== current) {
+                  blocker = true;
+                  moveCount--;
+                } else if (blocker && num === current) {
+                  moveCount--;
+                }
+              }
+              animationRows[i].push(moveCount);
+            }
+          });
+        }
+      } else {
+        checkRow.reduce((_, current, index) => {
+          if (current === 0) {
+            animationRows[i].push(0);
+          } else {
+            let moveCount = index;
+            let blocker = false;
+            for (let j = index - 1; j > -1; j--) {
+              let num = checkRow[j];
+              if (num !== 0 && num !== current) {
+                blocker = true;
+                moveCount--;
+              } else if (blocker && num === current) {
                 moveCount--;
               }
             }
+            animationRows[i].push(moveCount);
           }
-          if (equalCount > 1) {
-            moveCount--;
-          }
-          animationRows[i].push(moveCount);
-        }
-      });
+        });
+      }
     }
     if (direction !== 'left') {
       animationRows.forEach((row) => {
