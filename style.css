@@ -39,8 +39,8 @@
   --color-sq-6: #ebebeb;
 
   --move-time: 250ms;
-  --pop-up-time: 200ms;
-  --new-number-time: 200ms;
+  --pop-up-time: 250ms;
+  --new-number-time: 300ms;
 }
 * {
   box-sizing: border-box;
