@@ -66,8 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function digitCheck(index, num) {
     let square = document.getElementById('sq-' + index);
-    square.classList.remove('three-digits', 'four-digits');
-    if (num > 99 && num < 1000) {
+    square.classList.remove('two-digits', 'three-digits', 'four-digits');
+    if (num > 9 && num < 100) {
+      square.classList.add('two-digits');
+    } else if (num > 99 && num < 1000) {
       square.classList.add('three-digits');
     } else if (num > 999) {
       square.classList.add('four-digits');

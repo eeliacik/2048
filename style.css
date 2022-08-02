@@ -276,13 +276,17 @@ body {
 .link-address:visited {
   color: var(--color-06);
 }
+.two-digits {
+  padding-top: 0.7rem;
+  font-size: 3.1rem;
+}
 .three-digits {
   padding-top: 1rem;
   font-size: 2.85rem;
 }
 .four-digits {
-  padding: 1.3rem 0.1rem 1rem 0.1rem;
-  font-size: 2.2rem;
+  padding: 1.5rem 0 1rem 0;
+  font-size: 2rem;
 }
 .color-2 {
   color: var(--color-sq-2);
