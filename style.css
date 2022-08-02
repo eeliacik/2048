@@ -3,40 +3,44 @@
 :root {
   --base-font: 'Kdam Thmor Pro', sans-serif;
 
-  --color-01: #ebebeb;
-  --color-01-light: #f5f5f5;
-  --color-02: #99cc33;
-  --color-03: #c6c8ce;
-  --color-04: #dcdfe5;
-  --color-05: #c18cf9;
-  --color-05-light: #c798f8;
-  --color-06: #0096c7;
-  --color-06-light: #19a0cc;
-  --color-07: #7209b7;
-  --color-sq-bg-1: #fffae5;
-  --color-sq-bg-2: #fff6cc;
-  --color-sq-bg-3: #fff2b2;
-  --color-sq-bg-4: #faa307;
-  --color-sq-bg-5: #f48c06;
-  --color-sq-bg-6: #e85d04;
-  --color-sq-bg-7: #ffdd00;
-  --color-sq-bg-8: #ffd000;
-  --color-sq-bg-9: #ffc300;
-  /* --color-sq-bg-4: #ffdd00;
-  --color-sq-bg-5: #ffd000;
-  --color-sq-bg-6: #ffc300;
-  --color-sq-bg-7: #faa307;
-  --color-sq-bg-8: #f48c06;
-  --color-sq-bg-9: #e85d04; */
-  --color-sq-bg-10: #dc2f02;
-  --color-sq-bg-11: #27a300;
-  --color-sq-bg-12: #4361ee;
-  --color-sq-1: #89c2d9;
-  --color-sq-2: #61a5c2;
-  --color-sq-3: #468faf;
-  --color-sq-4: #fafafa;
-  --color-sq-5: #f5f5f5;
-  --color-sq-6: #ebebeb;
+  --background-color: #ebebeb;
+  /* --background-color: #212529; */
+  --text-color: #191919;
+  --primary-color: #1d3461;
+  --secondary-color: #892b64;
+  --tertiary-color: #2e6f95;
+
+  --logo-color: var(--primary-color);
+  --score-color: var(--tertiary-color);
+
+  --dialog-background: #202e2e66;
+  --title-color: var(--secondary-color);
+  --message-color: var(--primary-color);
+
+  --button-color: #2e6f95;
+  --button-color-light: #1780a1;
+  --button-text-color: #ebebeb;
+  --button-text-color-light: #f5f5f5;
+
+  --game-board-background: #999ac6;
+  --game-board-background-2: #b8bacf;
+
+  --square-background-2: #0091ad;
+  --square-background-4: #1780a1;
+  --square-background-8: #2e6f95;
+  --square-background-16: #455e89;
+  --square-background-32: #5c4d7d;
+  --square-background-64: #723c70;
+  --square-background-128: #892b64;
+  --square-background-256: #a01a58;
+  --square-background-512: #b7094c;
+  --square-background-1024: #df2935;
+  --square-background-2048: #080708;
+  --square-background-4096: #ec9a29;
+  --square-background-8192: #29bf12;
+
+  --square-text-color-1: #ebebeb;
+  --square-text-color-2: #f5f5f5;
 
   --move-time: 250ms;
   --pop-up-time: 250ms;
@@ -48,7 +52,7 @@
 body {
   cursor: default;
   margin: 0;
-  background-color: var(--color-01);
+  background-color: var(--background-color);
   font-family: var(--base-font);
 }
 .dialog-wrapper {
@@ -60,12 +64,12 @@ body {
 }
 .dialog-fade-in {
   display: block;
-  background-color: rgba(32, 46, 46, 0.4);
+  background-color: var(--dialog-background);
   animation: opacity-increase 500ms;
 }
 .dialog-fade-out {
   display: block;
-  background-color: rgba(32, 46, 46, 0.4);
+  background-color: var(--dialog-background);
   animation: opacity-decrease 500ms;
 }
 .dialog-container {
@@ -76,7 +80,7 @@ body {
   margin: auto;
   padding: 1.5rem 1rem;
   border-radius: 0.3rem;
-  background-color: var(--color-04);
+  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -85,7 +89,7 @@ body {
 }
 .dialog-title {
   font-size: 2rem;
-  color: var(--color-07);
+  color: var(--title-color);
 }
 .dialog-item {
   width: 100%;
@@ -95,7 +99,7 @@ body {
   align-items: center;
 }
 .dialog-message {
-  color: var(--color-02);
+  color: var(--message-color);
   font-size: 1.5rem;
 }
 .dialog-text {
@@ -111,14 +115,13 @@ body {
   border-radius: 0.3rem;
   font-size: 1rem;
   text-align: center;
-  color: var(--color-01);
-  /* color: white; */
-  background-color: var(--color-06);
+  color: var(--button-text-color);
+  background-color: var(--button-color);
 }
 .dialog-button:hover {
   cursor: pointer;
-  color: var(--color-01-light);
-  background-color: var(--color-06-light);
+  color: var(--button-text-color-light);
+  background-color: var(--button-color-light);
 }
 .page-wrapper {
   display: flex;
@@ -140,7 +143,7 @@ body {
 .logo {
   margin-bottom: -1rem;
   font-size: 4rem;
-  color: var(--color-02);
+  color: var(--logo-color);
 }
 .header-line {
   width: 100%;
@@ -149,7 +152,7 @@ body {
   margin-bottom: 0.6rem;
   font-size: 0.8rem;
   border-radius: 0.2rem;
-  background-color: var(--color-02);
+  background-color: var(--logo-color);
 }
 .main-wrapper {
   padding: 0 1rem;
@@ -179,7 +182,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  color: var(--color-06);
+  color: var(--score-color);
 }
 .score-title {
   font-size: 0.8rem;
@@ -196,14 +199,13 @@ body {
   border-radius: 0.3rem;
   font-size: 1rem;
   text-align: center;
-  color: var(--color-01);
-  /* color: white; */
-  background-color: var(--color-05);
+  color: var(--button-text-color);
+  background-color: var(--button-color);
 }
 .new-game-button:hover {
   cursor: pointer;
-  color: var(--color-01-light);
-  background-color: var(--color-05-light);
+  color: var(--button-text-color-light);
+  background-color: var(--button-color-light);
 }
 .game-container {
   display: flex;
@@ -218,7 +220,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  background-color: var(--color-03);
+  background-color: var(--game-board-background);
 }
 .game-board-base {
   z-index: 1;
@@ -230,7 +232,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  background-color: var(--color-03);
+  background-color: var(--game-board-background);
 }
 .game-square-base {
   z-index: 2;
@@ -238,7 +240,7 @@ body {
   height: 6rem;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
   border-radius: 0.3rem;
-  background-color: var(--color-04);
+  background-color: var(--game-board-background-2);
 }
 .game-square {
   z-index: 3;
@@ -248,7 +250,7 @@ body {
   border-radius: 0.3rem;
   font-size: 3.4rem;
   text-align: center;
-  background-color: var(--color-04);
+  background-color: var(--game-board-background-2);
 }
 .footer-wrapper {
   padding: 0 1rem;
@@ -256,7 +258,7 @@ body {
   justify-content: center;
 }
 .footer-container {
-  padding : 3rem 1rem;
+  padding: 3rem 1rem;
   width: 29rem;
   display: flex;
   flex-direction: column;
@@ -267,14 +269,14 @@ body {
 }
 .how-to-play-title {
   font-weight: bold;
-  color: var(--color-07);
+  color: var(--title-color);
 }
 .footer-link {
   font-size: 0.9rem;
 }
 .link-address,
 .link-address:visited {
-  color: var(--color-06);
+  color: var(--tertiary-color);
 }
 .two-digits {
   padding-top: 0.7rem;
@@ -289,52 +291,56 @@ body {
   font-size: 2rem;
 }
 .color-2 {
-  color: var(--color-sq-2);
-  background-color: var(--color-sq-bg-1);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-2);
 }
 .color-4 {
-  color: var(--color-sq-2);
-  background-color: var(--color-sq-bg-2);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-4);
 }
 .color-8 {
-  color: var(--color-sq-3);
-  background-color: var(--color-sq-bg-3);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-8);
 }
 .color-16 {
-  color: var(--color-sq-6);
-  background-color: var(--color-sq-bg-4);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-16);
 }
 .color-32 {
-  color: var(--color-sq-6);
-  background-color: var(--color-sq-bg-5);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-32);
 }
 .color-64 {
-  color: var(--color-sq-6);
-  background-color: var(--color-sq-bg-6);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-64);
 }
 .color-128 {
-  color: var(--color-sq-4);
-  background-color: var(--color-sq-bg-7);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-128);
 }
 .color-256 {
-  color: var(--color-sq-5);
-  background-color: var(--color-sq-bg-8);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-256);
 }
 .color-512 {
-  color: var(--color-sq-6);
-  background-color: var(--color-sq-bg-9);
+  color: var(--square-text-color-1);
+  background-color: var(--square-background-512);
 }
 .color-1024 {
-  color: var(--color-sq-6);
-  background-color: var(--color-sq-bg-10);
+  color: var(--square-text-color-2);
+  background-color: var(--square-background-1024);
 }
 .color-2048 {
-  color: var(--color-sq-6);
-  background-color: var(--color-sq-bg-11);
+  color: var(--square-text-color-2);
+  background-color: var(--square-background-2048);
 }
 .color-4096 {
-  color: var(--color-sq-6);
-  background-color: var(--color-sq-bg-12);
+  color: var(--square-text-color-2);
+  background-color: var(--square-background-4096);
+}
+.color-8192 {
+  color: var(--square-text-color-2);
+  background-color: var(--square-background-8192);
 }
 .move-index {
   z-index: 4;
