@@ -4,7 +4,7 @@
   --base-font: 'Kdam Thmor Pro', sans-serif;
 
   --background-color: #f0f2f3;
-  --text-color: #191919;
+  --text-color: #162a31;
   --primary-color: #d55d92;
   --secondary-color: #0c9b5e;
   --secondary-color-light: #0ead69;
@@ -301,14 +301,16 @@ justify-content: space-between;
   gap: 1rem;
 }
 .how-to-play {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  color: var(--text-color);
 }
 .how-to-play-title {
   font-weight: bold;
   color: var(--title-color);
 }
 .footer-link {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  color: var(--text-color);
 }
 .link-address,
 .link-address:visited {
