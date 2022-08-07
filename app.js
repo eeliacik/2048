@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const gameBoard = document.querySelector('.game-board');
-  const gameBoardBase = document.querySelector('.game-board-base');
-  const gameScoreEl = document.getElementById('game-score');
-  const highScoreEl = document.getElementById('high-score');
+  const gameBoard = document.querySelector('.game-board'),
+    gameBoardBase = document.querySelector('.game-board-base'),
+    gameScoreEl = document.getElementById('game-score'),
+    highScoreEl = document.getElementById('high-score');
+
   document
     .querySelector('.new-game-button')
     .addEventListener('click', resetGame);
@@ -13,19 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
     .getElementById('game-win-button')
     .addEventListener('click', closeGameWinDialog);
 
-  let squares = [];
-  let rows = [];
-  let columns = [];
-  let animationData = {
-    moves: [],
-    popUps: [],
-    newNumbers: [],
-  };
-  let gameScore = 0;
-  let highScore = 0;
-  let gameWon = false;
-  let dialogOpen = false;
-  let waitTime = 170;
+  let squares = [],
+    rows = [],
+    columns = [],
+    animationData = {
+      moves: [],
+      popUps: [],
+      newNumbers: [],
+    },
+    gameScore = 0,
+    highScore = 0,
+    gameWon = false,
+    dialogOpen = false,
+    waitTime = 170;
 
   fillSquares();
   createBoard();
@@ -60,6 +61,69 @@ document.addEventListener('DOMContentLoaded', () => {
       square.id = 'sq-' + i;
       gameBoard.appendChild(square);
     }
+
+    //  touch screen move functions
+
+    let startX, startY, startTime;
+
+    gameBoard.addEventListener('touchstart', function (event) {
+      console.log(event.changedTouches);
+
+      let touchObj = event.changedTouches[0];
+      startX = touchObj.pageX;
+      startY = touchObj.pageY;
+      startTime = new Date().getTime();
+      event.preventDefault();
+    });
+
+    gameBoard.addEventListener('touchmove', function (event) {
+      event.preventDefault();
+    });
+
+    gameBoard.addEventListener('touchend', function (event) {
+      console.log(event.changedTouches);
+
+      let touchObj = event.changedTouches[0],
+        endX = touchObj.pageX,
+        endY = touchObj.pageY,
+        endTime = new Date().getTime(),
+        minTime = 200,
+        minDistance = 100,
+        elapsedTime = endTime - startTime,
+        distanceX = endX - startX,
+        distanceY = endY - startY,
+        absoluteDistanceX = Math.abs(endX - startX),
+        absoluteDistanceY = Math.abs(endY - startY);
+
+      console.log(
+        'distanceX:',
+        distanceX,
+        'distanceY:',
+        distanceY,
+        'absolute distanceX:',
+        absoluteDistanceX,
+        'absolute distanceY:',
+        absoluteDistanceY,
+        'elapsedTime:',
+        elapsedTime
+      );
+
+      if (elapsedTime > minTime) {
+        if (
+          absoluteDistanceY > absoluteDistanceX &&
+          absoluteDistanceY > minDistance
+        ) {
+          distanceY > 0 ? moveDown() : moveUp();
+        } else if (
+          absoluteDistanceX > absoluteDistanceY &&
+          absoluteDistanceX > minDistance
+        ) {
+          distanceX > 0 ? moveRight() : moveLeft();
+        }
+      }
+
+      event.preventDefault();
+    });
   }
   function fillGameScore() {
     gameScoreEl.innerHTML = gameScore;
