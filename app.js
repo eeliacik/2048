@@ -30,44 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fillSquares();
   createBoard();
+  addTouchScreenSwipes();
   fillRandomSquare();
   fillRandomSquare();
   fillBoard();
   createOperationArrays();
   animateNew();
 
-  function fillSquares() {
-    let zeroSquares = Array(16).fill(0);
-    squares = zeroSquares;
-  }
-  function fillRandomSquare() {
-    if (squares.includes(0)) {
-      let num = Math.floor(Math.random() * squares.length);
-      let twoOrFour = Math.random() > 0.1 ? 2 : 4;
-      if (squares[num] === 0) {
-        squares[num] = twoOrFour;
-        animationData.newNumbers.push(num);
-      } else fillRandomSquare();
-    }
-  }
-  function createBoard() {
-    //  squares = [0, 0, 0, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 8192, 4096,];
-    for (let i = 0; i < 16; i++) {
-      let squareBase = document.createElement('div');
-      squareBase.className = 'game-square-base';
-      gameBoardBase.appendChild(squareBase);
-      let square = document.createElement('div');
-      square.className = 'game-square';
-      square.id = 'sq-' + i;
-      gameBoard.appendChild(square);
-    }
-
-    //  touch screen move functions
+  //  touch screen move functions
+  function addTouchScreenSwipes() {
     let startX, startY, startTime;
-    
     gameBoard.addEventListener('touchstart', function (event) {
-      console.log(event.changedTouches);
-
       let touchObj = event.changedTouches[0];
       startX = touchObj.pageX;
       startY = touchObj.pageY;
@@ -80,14 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     gameBoard.addEventListener('touchend', function (event) {
-      console.log(event.changedTouches);
-
       let touchObj = event.changedTouches[0],
         endX = touchObj.pageX,
         endY = touchObj.pageY,
         endTime = new Date().getTime(),
-        minTime = 100,
-        minDistance = 50,
+        minTime = 50,
+        minDistance = 30,
         elapsedTime = endTime - startTime,
         distanceX = endX - startX,
         distanceY = endY - startY,
@@ -122,6 +93,32 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       event.preventDefault();
     });
+  }
+  function fillSquares() {
+    let zeroSquares = Array(16).fill(0);
+    squares = zeroSquares;
+  }
+  function fillRandomSquare() {
+    if (squares.includes(0)) {
+      let num = Math.floor(Math.random() * squares.length);
+      let twoOrFour = Math.random() > 0.1 ? 2 : 4;
+      if (squares[num] === 0) {
+        squares[num] = twoOrFour;
+        animationData.newNumbers.push(num);
+      } else fillRandomSquare();
+    }
+  }
+  function createBoard() {
+    //  squares = [0, 0, 0, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 8192, 4096,];
+    for (let i = 0; i < 16; i++) {
+      let squareBase = document.createElement('div');
+      squareBase.className = 'game-square-base';
+      gameBoardBase.appendChild(squareBase);
+      let square = document.createElement('div');
+      square.className = 'game-square';
+      square.id = 'sq-' + i;
+      gameBoard.appendChild(square);
+    }
   }
   function fillGameScore() {
     gameScoreEl.innerHTML = gameScore;
@@ -901,20 +898,3 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 });
-
-// function animateNumber(element, count, axis) {
-//   const value = `calc(${count * 100}% ${count > 0 ? '+' : '-'} ${
-//     count * 0.6
-//   }rem)`;
-//   element.style.transform = `translate(${axis === 'x' ? value : 0}, ${
-//     axis === 'y' ? value : 0
-//   })`;
-// }
-
-// function cloneEl(element) {
-//   element.cloneNode();
-//   const clone = element.cloneNode(true);
-//   const newEl = document.createElement('div');
-//   document.body.appendChild(newEl);
-//   document.body.appendChild(clone);
-// }
