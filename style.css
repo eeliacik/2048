@@ -605,6 +605,10 @@ body {
 .score-text {
   font-size: calc(2.4 * var(--base-font-size));
 }
+.footer-container {
+  padding: calc(1 * var(--base-font-size)) 0;
+  gap: calc(1 * var(--base-font-size));
+}
 .how-to-play {
 font-size: calc(1.1 * var(--base-font-size));
 }
@@ -626,6 +630,10 @@ font-size: calc(1.1 * var(--base-font-size));
   margin-bottom: calc(0.8 * var(--base-font-size));
   font-size: calc(1.5 * var(--base-font-size));
   }
+  .footer-container {
+  padding: calc(0.5 * var(--base-font-size)) 0;
+  gap: calc(0.5 * var(--base-font-size));
+}
   .how-to-play {
   font-size: calc(1.25 * var(--base-font-size));
 }
