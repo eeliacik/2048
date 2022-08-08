@@ -248,6 +248,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  touch-action: none;
 }
 .game-board {
   width: calc(27 * var(--base-font-size));
@@ -448,7 +449,6 @@ body {
     opacity: 1;
   }
 }
-
 @keyframes move-up-1 {
   from {
     transform: translateY(0);
@@ -473,7 +473,6 @@ body {
     transform: translateY(calc(-19.8 * var(--base-font-size)));
   }
 }
-
 @keyframes move-down-1 {
   from {
     transform: translateY(0);
@@ -498,7 +497,6 @@ body {
     transform: translateY(calc(19.8 * var(--base-font-size)));
   }
 }
-
 @keyframes move-right-1 {
   from {
     transform: translateX(0);
@@ -523,7 +521,6 @@ body {
     transform: translateX(calc(19.8 * var(--base-font-size)));
   }
 }
-
 @keyframes move-left-1 {
   from {
     transform: translateX(0);
@@ -548,7 +545,6 @@ body {
     transform: translateX(calc(-19.8 * var(--base-font-size)));
   }
 }
-
 @keyframes pop-up {
   0% {
     transform: scale(0);
@@ -560,7 +556,6 @@ body {
     transform: scale(1);
   }
 }
-
 @keyframes new-number {
   from {
     transform: scale(0);
