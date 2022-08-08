@@ -219,7 +219,6 @@ body {
   text-align: right;
 }
 .new-game-button {
-  height: calc(2.5 * var(--base-font-size));
   width: calc(7.2 * var(--base-font-size));
   padding: calc(0.5 * var(--base-font-size));
   margin-bottom: calc(0.8 * var(--base-font-size));
@@ -590,10 +589,30 @@ body {
   :root {
     --base-font-size: 12.5px;
   }
+  .dialog-button {
+    min-width: calc(5.5 * var(--base-font-size));
+    font-size: calc(1.25 * var(--base-font-size));
+  }
+  .new-game-button {
+  width: calc(10 * var(--base-font-size));
+  padding: calc(0.5 * var(--base-font-size));
+  margin-bottom: calc(0.8 * var(--base-font-size));
+  font-size: calc(1.25 * var(--base-font-size));
+}
 }
 @media screen and (max-width: 380px) {
   :root {
     --base-font-size: 11.5px;
+  }
+  .dialog-button {
+    min-width: calc(6 * var(--base-font-size));
+    font-size: calc(1.5 * var(--base-font-size));
+  }
+  .new-game-button {
+  width: calc(13 * var(--base-font-size));
+  padding: calc(0.5 * var(--base-font-size));
+  margin-bottom: calc(0.8 * var(--base-font-size));
+  font-size: calc(1.5 * var(--base-font-size));
   }
 }
 @media screen and (max-width: 350px) {
