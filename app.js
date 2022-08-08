@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   function createBoard() {
-     squares = [0, 0, 0, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 8192, 4096,];
+    //  squares = [0, 0, 0, 4, 8, 16, 32, 0, 64, 128, 256, 512, 1024, 2048, 8192, 4096,];
     for (let i = 0; i < 16; i++) {
       let squareBase = document.createElement('div');
       squareBase.className = 'game-square-base';
@@ -63,9 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //  touch screen move functions
-
     let startX, startY, startTime;
-
+    
     gameBoard.addEventListener('touchstart', function (event) {
       console.log(event.changedTouches);
 
@@ -121,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
           distanceX > 0 ? moveRight() : moveLeft();
         }
       }
-
       event.preventDefault();
     });
   }

@@ -26,9 +26,9 @@
   --game-board-background: #c7cfd3;
   --game-board-background-2: #edeff0;
 
-  --square-background-2: #f6e7c3;
-  --square-background-4: #f1dba5;
-  --square-background-8: #e9c46a;
+  --square-background-2: #f9f0db;
+  --square-background-4: #f5e5c0;
+  --square-background-8: #f1dba5;
   --square-background-16: #f4a261;
   --square-background-32: #eb8b73;
   --square-background-64: #e76f51;
@@ -570,7 +570,6 @@ body {
     transform: scale(1);
   }
 }
-
 
 @media screen and (max-width: 2560px) {
   :root {
