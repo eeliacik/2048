@@ -297,8 +297,8 @@ body {
   justify-content: center;
 }
 .footer-container {
-  padding: calc(1.5 * var(--base-font-size)) calc(1 * var(--base-font-size));
-  width: calc(29 * var(--base-font-size));
+  padding: calc(1.5 * var(--base-font-size)) 0;
+  width: calc(27 * var(--base-font-size));
   display: flex;
   flex-direction: column;
   gap: calc(1 * var(--base-font-size));
@@ -599,6 +599,18 @@ body {
   margin-bottom: calc(0.8 * var(--base-font-size));
   font-size: calc(1.25 * var(--base-font-size));
 }
+.score-title {
+  font-size: calc(1.1 * var(--base-font-size));
+}
+.score-text {
+  font-size: calc(2.4 * var(--base-font-size));
+}
+.how-to-play {
+font-size: calc(1.1 * var(--base-font-size));
+}
+.footer-link { 
+font-size: calc(1.1 * var(--base-font-size));
+}
 }
 @media screen and (max-width: 380px) {
   :root {
@@ -614,6 +626,12 @@ body {
   margin-bottom: calc(0.8 * var(--base-font-size));
   font-size: calc(1.5 * var(--base-font-size));
   }
+  .how-to-play {
+  font-size: calc(1.25 * var(--base-font-size));
+}
+.footer-link { 
+  font-size: calc(1.25 * var(--base-font-size));
+}
 }
 @media screen and (max-width: 350px) {
   :root {
