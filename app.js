@@ -465,14 +465,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Move direction controller
   document.addEventListener('keyup', controlArrows);
+  document.addEventListener('keydown', cancelKeyScroll, false);
+  function cancelKeyScroll(x) {
+    let arrowKeys = [37, 38, 39, 40]
+    if (arrowKeys.includes(x.keyCode)) {
+      x.preventDefault();
+      return false;
+    }
+  }  
   function controlArrows(x) {
     if (!dialogOpen && x.keyCode === 38) {
+      x.preventDefault();
       moveUp();
     } else if (!dialogOpen && x.keyCode === 40) {
+      x.preventDefault();
       moveDown();
     } else if (!dialogOpen && x.keyCode === 37) {
+      x.preventDefault();
       moveLeft();
     } else if (!dialogOpen && x.keyCode === 39) {
+      x.preventDefault();
       moveRight();
     }
   }
