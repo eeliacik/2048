@@ -170,6 +170,7 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: calc(0.6 * var(--base-font-size));
+  min-height: calc(100vh - 100px);
 }
 .header-wrapper {
   padding: 0 calc(1 * var(--base-font-size));
@@ -590,27 +591,27 @@ body {
     font-size: calc(1.25 * var(--base-font-size));
   }
   .new-game-button {
-  width: calc(10 * var(--base-font-size));
-  padding: calc(0.5 * var(--base-font-size));
-  margin-bottom: calc(0.8 * var(--base-font-size));
-  font-size: calc(1.25 * var(--base-font-size));
-}
-.score-title {
-  font-size: calc(1.1 * var(--base-font-size));
-}
-.score-text {
-  font-size: calc(2.4 * var(--base-font-size));
-}
-.footer-container {
-  padding: calc(1 * var(--base-font-size)) 0;
-  gap: calc(1 * var(--base-font-size));
-}
-.how-to-play {
-font-size: calc(1.1 * var(--base-font-size));
-}
-.footer-link { 
-font-size: calc(1.1 * var(--base-font-size));
-}
+    width: calc(10 * var(--base-font-size));
+    padding: calc(0.5 * var(--base-font-size));
+    margin-bottom: calc(0.8 * var(--base-font-size));
+    font-size: calc(1.25 * var(--base-font-size));
+  }
+  .score-title {
+    font-size: calc(1.1 * var(--base-font-size));
+  }
+  .score-text {
+    font-size: calc(2.4 * var(--base-font-size));
+  }
+  .footer-container {
+    padding: calc(1 * var(--base-font-size)) 0;
+    gap: calc(1 * var(--base-font-size));
+  }
+  .how-to-play {
+    font-size: calc(1.1 * var(--base-font-size));
+  }
+  .footer-link {
+    font-size: calc(1.1 * var(--base-font-size));
+  }
 }
 @media screen and (max-width: 380px) {
   :root {
@@ -621,21 +622,21 @@ font-size: calc(1.1 * var(--base-font-size));
     font-size: calc(1.5 * var(--base-font-size));
   }
   .new-game-button {
-  width: calc(13 * var(--base-font-size));
-  padding: calc(0.5 * var(--base-font-size));
-  margin-bottom: calc(0.8 * var(--base-font-size));
-  font-size: calc(1.5 * var(--base-font-size));
+    width: calc(13 * var(--base-font-size));
+    padding: calc(0.5 * var(--base-font-size));
+    margin-bottom: calc(0.8 * var(--base-font-size));
+    font-size: calc(1.5 * var(--base-font-size));
   }
   .footer-container {
-  padding: calc(0.5 * var(--base-font-size)) 0;
-  gap: calc(0.5 * var(--base-font-size));
-}
+    padding: calc(0.5 * var(--base-font-size)) 0;
+    gap: calc(0.5 * var(--base-font-size));
+  }
   .how-to-play {
-  font-size: calc(1.25 * var(--base-font-size));
-}
-.footer-link { 
-  font-size: calc(1.25 * var(--base-font-size));
-}
+    font-size: calc(1.25 * var(--base-font-size));
+  }
+  .footer-link {
+    font-size: calc(1.25 * var(--base-font-size));
+  }
 }
 @media screen and (max-width: 350px) {
   :root {
