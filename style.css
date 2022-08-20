@@ -43,9 +43,9 @@
   --square-text-color-1: #3b5864;
   --square-text-color-2: #fafbfb;
 
-  --move-time: 180ms;
+  --move-time: 200ms;
   --pop-up-time: 200ms;
-  --new-number-time: 230ms;
+  --new-number-time: 200ms;
 }
 * {
   box-sizing: border-box;
@@ -511,7 +511,7 @@ body {
     transform: scale(0);
   }
   85% {
-    transform: scale(1.1);
+    transform: scale(1.25);
   }
   100% {
     transform: scale(1);

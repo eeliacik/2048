@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     gameWon = false,
     dialogOpen = false,
-    waitTime = 170,
+    waitTime = 50,
     gameScore = 0,
     storedHighScore = localStorage.getItem('stored-high-score'),
     highScore = storedHighScore ? storedHighScore : 0;
