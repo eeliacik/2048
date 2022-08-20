@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document
     .getElementById('game-win-button')
     .addEventListener('click', closeGameWinDialog);
-
+  
   let squares = [],
     rows = [],
     columns = [],
@@ -22,11 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
       popUps: [],
       newNumbers: [],
     },
-    gameScore = 0,
-    highScore = 0,
     gameWon = false,
     dialogOpen = false,
-    waitTime = 170;
+    waitTime = 170,
+    gameScore = 0,
+    storedHighScore = localStorage.getItem('stored-high-score'),
+    highScore = storedHighScore ? storedHighScore : 0;
+  
+    highScoreEl.innerHTML = highScore;
 
   fillSquares();
   createBoard();
@@ -401,6 +404,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gameScore > highScore) {
       highScore = gameScore;
       highScoreEl.innerHTML = highScore;
+
+      // Passing high score data to local storage
+      localStorage.setItem('stored-high-score', highScore);
+
       document.getElementById('game-over-score-title').style.display = 'none';
       document.getElementById('new-high-score-title').style.display = 'block';
     } else {
