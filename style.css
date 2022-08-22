@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Slackey&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ranchers&display=swap');
 
 :root {
   --base-font: 'Kdam Thmor Pro', sans-serif;
+  --logo-font-1: 'Slackey', cursive;
+  --logo-font-2: 'Ranchers', cursive;
+ 
   --base-length: 1rem;
 
   --background-color: #e9f5f3;
@@ -149,8 +154,8 @@ body {
   align-items: flex-start;
 }
 .logo {
-  font-size: calc(5 * var(--base-length));
-  /* font-size: calc(5.2 * var(--base-length)); */
+  font-family: var(--logo-font-2);
+  font-size: calc(6.2 * var(--base-length));
   color: var(--logo-color);
 }
 .score-wrapper {
