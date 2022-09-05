@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderedColumns[i][2] === orderedColumns[i][3]
       ) {
         animationColumns[i] = [1, 1, 0, 0];
-        moveScore += orderedColumns[i][0] + orderedColumns[i][2];
+        moveScore += ((orderedColumns[i][0] + orderedColumns[i][2]) * 2);
         orderedColumns[i][0] *= 2;
         orderedColumns[i][1] = orderedColumns[i][2] * 2;
         orderedColumns[i][2] = 0;
@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let secondNum = orderedColumns[i][j + 1];
           if (firstNum !== 0) {
             if (secondNum === firstNum) {
-              moveScore += firstNum;
+              moveScore += (firstNum * 2);
               orderedColumns[i][j] = firstNum + secondNum;
               orderedColumns[i][j + 1] = 0;
               animationColumns[i].push(1);
@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderedColumns[i][2] === orderedColumns[i][3]
       ) {
         animationColumns[i] = [0, 0, 1, 1];
-        moveScore += orderedColumns[i][0] + orderedColumns[i][2];
+        moveScore += ((orderedColumns[i][0] + orderedColumns[i][2])* 2);
         orderedColumns[i][3] *= 2;
         orderedColumns[i][2] = orderedColumns[i][1] * 2;
         orderedColumns[i][1] = 0;
@@ -627,7 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let secondNum = orderedColumns[i][j - 1];
           if (firstNum !== 0) {
             if (secondNum === firstNum) {
-              moveScore += firstNum;
+              moveScore += (firstNum * 2);
               orderedColumns[i][j] = firstNum + secondNum;
               orderedColumns[i][j - 1] = 0;
               animationColumns[i].unshift(1);
@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderedRows[i][2] === orderedRows[i][3]
       ) {
         animationRows[i] = [0, 0, 1, 1];
-        moveScore += orderedRows[i][0] + orderedRows[i][2];
+        moveScore += (orderedRows[i][0] + orderedRows[i][2]) * 2;
         orderedRows[i][3] *= 2;
         orderedRows[i][2] = orderedRows[i][1] * 2;
         orderedRows[i][1] = 0;
@@ -723,7 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let secondNum = orderedRows[i][j - 1];
           if (firstNum !== 0) {
             if (secondNum === firstNum) {
-              moveScore += firstNum;
+              moveScore += firstNum * 2;
               orderedRows[i][j] = firstNum + secondNum;
               orderedRows[i][j - 1] = 0;
               animationRows[i].unshift(1);
@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderedRows[i][2] === orderedRows[i][3]
       ) {
         animationRows[i] = [1, 1, 0, 0];
-        moveScore += orderedRows[i][0] + orderedRows[i][2];
+        moveScore += (orderedRows[i][0] + orderedRows[i][2]) * 2;
         orderedRows[i][0] *= 2;
         orderedRows[i][1] = orderedRows[i][2] * 2;
         orderedRows[i][2] = 0;
@@ -820,7 +820,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let secondNum = orderedRows[i][j + 1];
           if (firstNum !== 0) {
             if (secondNum === firstNum) {
-              moveScore += firstNum;
+              moveScore += firstNum * 2;
               orderedRows[i][j] = firstNum + secondNum;
               orderedRows[i][j + 1] = 0;
               animationRows[i].push(1);
